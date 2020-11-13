@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{asset('css/ionicons.min.css')}}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <!-- Tempusdominus Bbootstrap 4 -->
     <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
     <!-- iCheck -->
@@ -127,10 +129,19 @@
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <!-- bs-custom-file-input -->
 <script src="{{asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+<!-- DataTables -->
+<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
         bsCustomFileInput.init();
+    });
+
+    $(function () {
+        $("#example1").DataTable();
     });
 </script>
 </body>

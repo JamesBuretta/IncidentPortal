@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="0686b181-5d7a-4e39-abc9-8b1b461eb690" name="Default Changelist" comment="" />
+    <list default="true" id="0686b181-5d7a-4e39-abc9-8b1b461eb690" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/citizen_portal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/citizen_portal.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/main_frame.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/main_frame.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,6 +28,9 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/resources/views/auth/login.blade.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -122,9 +143,11 @@
       <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
       <path value="$PROJECT_DIR$/vendor/laravel/ui" />
       <path value="$PROJECT_DIR$/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/vendor/laravelcollective/html" />
     </include_path>
   </component>
   <component name="ProjectId" id="1k5cnLZFxa5t6WYemYnQu2hOkHf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -132,21 +155,21 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\auth" />
-      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views" />
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages\users" />
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\public\images" />
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\auth" />
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages" />
-      <recent name="C:\xampp\htdocs\bcx\citizen_portal\public" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\auth" />
+      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages" />
     </key>
   </component>
   <component name="RunManager">
@@ -169,21 +192,33 @@
       <workItem from="1605103787430" duration="1606000" />
       <workItem from="1605159865979" duration="3710000" />
       <workItem from="1605164836842" duration="631000" />
+      <workItem from="1605247209430" duration="7606000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
     <state x="451" y="220" key="#Composer" timestamp="1604994067801">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="451" y="220" key="#Composer/0.0.1280.680@0.0.1280.680" timestamp="1604994067801" />
-    <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605078559393">
+    <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605251946328">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.680@0.0.1280.680" timestamp="1605078559393" />
+    <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.680@0.0.1280.680" timestamp="1605251946328" />
     <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1605164441545">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -214,5 +249,9 @@
     </state>
     <state x="477" y="264" key="NewPhpFileDialog/0.0.1280.680/1920.0.1280.984@0.0.1280.680" timestamp="1605019995543" />
     <state x="477" y="264" key="NewPhpFileDialog/0.0.1280.680@0.0.1280.680" timestamp="1605081584305" />
+    <state x="422" y="242" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1605256036359">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="422" y="242" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1280.680@0.0.1280.680" timestamp="1605256036359" />
   </component>
 </project>

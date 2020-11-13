@@ -38,6 +38,13 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/add-users', [UserController::class, 'add_users'])->name('add-users');
     Route::get('/view-users', [UserController::class, 'view_users'])->name('view-users');
     Route::post('/save-new-user', [UserController::class, 'save_user'])->name('save-new-user');
+    Route::put('/user/update-details/{user_id}', [UserController::class, 'update_user_details'])->name('update_user_details');
+    Route::put('/user/password/reset/{user_id}', [UserController::class, 'user_password_reset'])->name('user_password_reset');
+    Route::delete('/user/remove/{user_id}', [UserController::class, 'remove_user'])->name('remove_user');
+
+    Route::delete('/users/remove/{user_id}',[
+        'uses' => 'AdminController@delete_user' , 'as' => 'delete_user'
+    ]);
 });
 
 Route::group(['middleware' => ['auth']], function () {
