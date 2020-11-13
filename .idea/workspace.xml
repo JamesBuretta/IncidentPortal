@@ -24,6 +24,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/resources/views/auth/login.blade.php" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -186,7 +187,7 @@
       <workItem from="1605159865979" duration="3710000" />
       <workItem from="1605164836842" duration="631000" />
       <workItem from="1605247209430" duration="7606000" />
-      <workItem from="1605256284641" duration="1492000" />
+      <workItem from="1605256284641" duration="1838000" />
     </task>
     <servers />
   </component>
@@ -244,6 +245,10 @@
     </state>
     <state x="477" y="264" key="NewPhpFileDialog/0.0.1280.680/1920.0.1280.984@0.0.1280.680" timestamp="1605019995543" />
     <state x="477" y="264" key="NewPhpFileDialog/0.0.1280.680@0.0.1280.680" timestamp="1605081584305" />
+    <state x="458" y="255" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605258024976">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="458" y="255" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1605258024976" />
     <state x="422" y="242" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1605257228877">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
