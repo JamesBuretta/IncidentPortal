@@ -1,0 +1,47 @@
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+        <li class="nav-item has-treeview menu-open">
+            <a href="/" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                    Dashboard
+                </p>
+            </a>
+        </li>
+        <li class="nav-header">MENUS</li>
+        <li class="nav-item">
+            <a href="{{route('my-profile')}}" class="nav-link">
+                <i class="nav-icon far fa-calendar-alt"></i>
+                <p>
+                    My Profile
+                    <span class="badge badge-info right">2</span>
+                </p>
+            </a>
+        </li>
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-users"></i>
+                <p>
+                    Users
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{route('add-users')}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Add New</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('view-users')}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View All</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
