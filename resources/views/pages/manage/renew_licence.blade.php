@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Add User's</h1>
+                    <h1 class="m-0 text-dark">Business Licence Renewal</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -53,7 +53,7 @@
                     <!-- general form elements -->
                     <div class="card card-info card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">Add New User</h3>
+                            <h3 class="card-title">Request Renewal</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -61,62 +61,26 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-7">
+                                    <div class="col-md-9">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Email address</label>
-                                            <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                                            <input type="text" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter TPIN" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Full Name</label>
-                                            <input type="text" name="fullname" class="form-control" id="exampleInputEmail1" placeholder="Enter fullname" required>
-                                        </div>
+                                    <div class="col-md-3">
+                                        <button type="submit" class="btn btn-primary btn-block">Request</button>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">Profile <small>(Optional)</small></label>
-                                            <div class="input-group">
-                                                <div class="custom-file">
-                                                    <input type="file" name="profile" class="custom-file-input" id="exampleInputFile">
-                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                                </div>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="">Upload</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Role</label>
-                                            <select name="role_id" class="form-control" required>
-                                                <option value=""> -- Default -- </option>
-                                                @foreach($roles as $rl)
-                                                <option value="{{$rl->id}}">{{ucfirst($rl->role_name)}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Municipal</label>
-                                            <select name="municipal_id" class="form-control" required>
-                                                <option value=""> -- Default -- </option>
-                                                @foreach($municipals as $municipal)
-                                                    <option value="{{$municipal->id}}">{{ucfirst($municipal->municipal_description_name)}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                    <div class="col-md-12">
+                                        <hr/>
                                     </div>
                                 </div>
+
                             </div>
                             <!-- /.card-body -->
 
                             <div class="card-footer text-right">
-                                <button type="submit" class="btn btn-primary">Add New</button>
+
                             </div>
                         </form>
                     </div>

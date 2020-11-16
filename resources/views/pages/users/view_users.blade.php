@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">View User's</h1>
+                    <h1 class="m-0 text-dark">View All User's</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -51,7 +51,7 @@
                         </div>
                 @endif
                     <!-- general form elements -->
-                    <div class="card card-primary">
+                    <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title">View User's</h3>
                         </div>
@@ -64,8 +64,10 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Municipal</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        <th width="15%">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -75,6 +77,8 @@
                                             <td>{{$counter}}</td>
                                             <td>{{ucwords($user->name)}}</td>
                                             <td>{{$user->email}}</td>
+                                            <td>{{ucfirst($user->role['role_name'])}}</td>
+                                            <td>{{($user->role['role_name'] == 'admin') ? "-" : $user->municipal['municipal_description_name']}}</td>
                                             <td>{!! ($user->status == 1) ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Disabled</span>'  !!}</td>
                                             <td>
                                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#change_pass_{{$user->id}}">
@@ -147,7 +151,7 @@
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
                                                                                 <label>Role</label>
-                                                                                <select name="role" class="form-control">
+                                                                                <select name="role_id" class="form-control">
                                                                                     <option> -- Default -- </option>
                                                                                     @foreach($user_roles as $role)
                                                                                         <option value="{{$role->id}}" {{($user->role_id == $role->id)? "selected":""}}> {{$role->role_name}} </option>
@@ -157,11 +161,12 @@
                                                                         </div>
                                                                         <div class="col-md-7">
                                                                             <div class="form-group">
-                                                                                <label>Account Status</label>
-                                                                                <select name="status" class="form-control" required>
+                                                                                <label>Municipal</label>
+                                                                                <select name="municipal_id" class="form-control" required>
                                                                                     <option> -- Default -- </option>
-                                                                                    <option value="1" {{($user->status == 1)? "selected":""}}> Activate </option>
-                                                                                    <option value="0" {{($user->status == 2)? "selected":""}}> De-Activate </option>
+                                                                                    @foreach($municipals as $municipal)
+                                                                                        <option value="{{$municipal->id}}" {{($user->municipal_id == $municipal->id)? "selected":""}}> {{$municipal->municipal_description_name}} </option>
+                                                                                    @endforeach
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -175,10 +180,20 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <div class="col-md-12">
+                                                                        <div class="col-md-7">
                                                                             <div class="form-group">
                                                                                 <label>Fullname</label>
                                                                                 {{Form::text('name', null, ['placeholder' => 'Full name','class' => 'form-control','required' => ''])}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-5">
+                                                                            <div class="form-group">
+                                                                                <label>Account Status</label>
+                                                                                <select name="account_status" class="form-control" required>
+                                                                                    <option> -- Default -- </option>
+                                                                                    <option value="1" {{($user->status == 1)? "selected":""}}> Activate </option>
+                                                                                    <option value="0" {{($user->status == 2)? "selected":""}}> De-Activate </option>
+                                                                                </select>
                                                                             </div>
                                                                         </div>
                                                                     </div>

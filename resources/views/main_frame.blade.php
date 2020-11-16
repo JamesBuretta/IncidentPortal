@@ -37,6 +37,8 @@
             max-width: 250px !important;
         }
     </style>
+
+    @yield('custom-page-style')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0686b181-5d7a-4e39-abc9-8b1b461eb690" name="Default Changelist" comment="wende" />
+    <list default="true" id="0686b181-5d7a-4e39-abc9-8b1b461eb690" name="Default Changelist" comment="wende">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Licence/BusinessLicenceController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Municipal/MunicipalController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/SharedFolder/defaultController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Middleware/DatabaseConnections.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Municipal.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_13_105802_create_municipals_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/manage/renew_licence.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/municipals/add_municipals.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/pages/municipals/view_municipals.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Users/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/mails/recover_password.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/mails/recover_password.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/main_frame.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/main_frame.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/profile.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/users/add_users.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/users/add_users.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/users/view_users.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/users/view_users.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/_side_navigation.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/_side_navigation.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -139,27 +156,31 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1k5cnLZFxa5t6WYemYnQu2hOkHf" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/pages/manage" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages\manage" />
+      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages" />
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views" />
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages\users" />
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\public\images" />
-      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\auth" />
-      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\bcx\citizen_portal\app\Http\Controllers\Users" />
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\auth" />
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages" />
     </key>
@@ -186,6 +207,8 @@
       <workItem from="1605164836842" duration="631000" />
       <workItem from="1605247209430" duration="7606000" />
       <workItem from="1605256284641" duration="2153000" />
+      <workItem from="1605376210856" duration="3079000" />
+      <workItem from="1605505454993" duration="11393000" />
     </task>
     <task id="LOCAL-00001" summary="wende">
       <created>1605258356616</created>
@@ -213,6 +236,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="wende" />
     <option name="LAST_COMMIT_MESSAGE" value="wende" />
   </component>
@@ -221,15 +245,15 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="451" y="220" key="#Composer/0.0.1280.680@0.0.1280.680" timestamp="1604994067801" />
-    <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605251946328">
+    <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605515904649">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.680@0.0.1280.680" timestamp="1605251946328" />
-    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1605164441545">
+    <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.680@0.0.1280.680" timestamp="1605515904649" />
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1605515747533">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680/1920.0.1280.984@0.0.1280.680" timestamp="1605017268169" />
-    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1605164441545" />
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1605515747533" />
     <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1605026730948">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

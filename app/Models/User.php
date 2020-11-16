@@ -14,7 +14,10 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App\Models\Role');
     }
-
+    public function municipal()
+    {
+        return $this->belongsTo('App\Models\Municipal','municipal_id');
+    }
     /**
      * The attributes that are mass assignable.
      *
