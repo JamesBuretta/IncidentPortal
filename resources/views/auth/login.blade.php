@@ -144,7 +144,7 @@
 
             <!-- /.social-auth-links -->
             <p class="mb-0 text-center">
-                <a href="#" class="text-center">Register new Account</a>
+                <a href="{{route('auth_register')}}" class="text-center">Register new Account</a>
             </p>
         </div>
         <!-- /.login-card-body -->

@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Session;
 class defaultController extends Controller
 {
     public function dashboard(){
-        return view('pages.index');
+        $total_users = User::all()->count();
+        $total_municipals = Municipal::all()->count();
+        return view('pages.index',compact('total_users','total_municipals'));
     }
     public function profile(){
         $user_roles = Role::all();
@@ -43,7 +45,9 @@ class defaultController extends Controller
         $update_user = User::where('id',$user_id)->first();
         $update_user->name = $request->name;
         $update_user->email = $request->email;
-        $update_user->municipal_id = ($request->role_id == 1) ? '-' : $request->municipal_id;
+        if ($request->has('municipal_id')){
+            $update_user->municipal_id = $request->municipal_id;
+        }
         $update_user->password = bcrypt(123456);
         $update_user->status = $request->account_status;
 

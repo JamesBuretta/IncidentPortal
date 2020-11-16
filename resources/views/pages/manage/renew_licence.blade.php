@@ -57,7 +57,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('save-new-user') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('request_business_licence') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="row">

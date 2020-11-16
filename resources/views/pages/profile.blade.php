@@ -129,7 +129,7 @@
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Municipal</label>
-                                                    <select name="municipal_id" class="form-control" {{(Auth::user()->role['role_name'] == 'admin') ? 'disabled' : ''}} required>
+                                                    <select name="municipal_id" class="form-control">
                                                         <option> -- Default -- </option>
                                                         @foreach($municipals as $municipal)
                                                             <option value="{{$municipal->id}}" {{(Auth::user()->municipal_id == $municipal->id)? "selected":""}}> {{$municipal->municipal_description_name}} </option>

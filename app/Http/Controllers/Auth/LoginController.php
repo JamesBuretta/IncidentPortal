@@ -64,9 +64,5 @@ class LoginController extends Controller
         if($this->guard()->user()->role['role_name'] == 'admin'){
             return redirect()->route("admin_dashboard");
         }
-        if($this->guard()->user()->role['role_name'] == 'user'){
-            return redirect()->route("client_dashboard");
-        }
-
     }
 }

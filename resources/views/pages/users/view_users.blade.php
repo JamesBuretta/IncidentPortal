@@ -78,7 +78,7 @@
                                             <td>{{ucwords($user->name)}}</td>
                                             <td>{{$user->email}}</td>
                                             <td>{{ucfirst($user->role['role_name'])}}</td>
-                                            <td>{{($user->role['role_name'] == 'admin') ? "-" : $user->municipal['municipal_description_name']}}</td>
+                                            <td>{{($user->municipal_id == '-') ? "-" : $user->municipal['municipal_description_name']}}</td>
                                             <td>{!! ($user->status == 1) ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Disabled</span>'  !!}</td>
                                             <td>
                                                 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#change_pass_{{$user->id}}">
