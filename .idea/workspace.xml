@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BranchesTreeState">
-    <expand />
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
     <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0686b181-5d7a-4e39-abc9-8b1b461eb690" name="Default Changelist" comment="wende">
-      <change afterPath="$PROJECT_DIR$/app/Models/PortalAccess.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_16_123009_create_portal_accesses_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/GetPaymentRefController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GuestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GuestController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SharedFolder/defaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SharedFolder/defaultController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/manage/renew_licence.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/manage/renew_licence.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/profile.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/users/view_users.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/users/view_users.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/_side_navigation.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/_side_navigation.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/_top_nav_bar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/_top_nav_bar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +32,12 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution />
+    <execution>
+      <interpreter composer="composer" />
+    </execution>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -161,29 +169,37 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../vue/emergency_service_system_new" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages\manage" />
-      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages" />
-      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views" />
-      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages\users" />
-      <recent name="C:\xampp\htdocs\bcx\citizen_portal\public\images" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\app\Http\Controllers\Users" />
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\auth" />
       <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages\manage" />
+      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages" />
+      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views" />
+      <recent name="C:\xampp\htdocs\bcx\citizen_portal\resources\views\pages\users" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JavaScript Debug.127.0.0.1:8000">
+    <configuration name="127.0.0.1:8000" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://127.0.0.1:8000">
+      <method v="2" />
+    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.127.0.0.1:8000" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -203,6 +219,7 @@
       <workItem from="1605256284641" duration="2153000" />
       <workItem from="1605376210856" duration="3079000" />
       <workItem from="1605505454993" duration="19193000" />
+      <workItem from="1605607009880" duration="4798000" />
     </task>
     <task id="LOCAL-00001" summary="wende">
       <created>1605258356616</created>
@@ -239,35 +256,84 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="451" y="220" key="#Composer/0.0.1280.680@0.0.1280.680" timestamp="1604994067801" />
-    <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605527976354">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="320" y="115" key="#Deployment" timestamp="1605607841336">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="115" key="#Deployment/0.0.1440.900@0.0.1440.900" timestamp="1605607841336" />
+    <state x="304" y="102" key="#SSH_Configurations" timestamp="1605607708759">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="304" y="102" key="#SSH_Configurations/0.0.1440.900@0.0.1440.900" timestamp="1605607708759" />
+    <state x="417" y="127" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605630242994">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.680@0.0.1280.680" timestamp="1605527976354" />
+    <state x="417" y="127" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1440.900@0.0.1440.900" timestamp="1605630242994" />
+    <state x="476" y="369" key="ComposerInitDialogKey" timestamp="1605610442334">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="476" y="369" key="ComposerInitDialogKey/0.0.1440.900@0.0.1440.900" timestamp="1605610442334" />
     <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1605527853324">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680/1920.0.1280.984@0.0.1280.680" timestamp="1605017268169" />
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1605527853324" />
-    <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1605026730948">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1398" height="294" key="GridCell.Tab.0.bottom" timestamp="1605628670554">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1280.984@0.0.1280.680" timestamp="1605026730948" />
     <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1604996039672" />
-    <state width="1237" height="163" key="GridCell.Tab.0.center" timestamp="1605026730947">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1398" height="294" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1605628670554" />
+    <state width="1398" height="294" key="GridCell.Tab.0.center" timestamp="1605628670551">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1280.984@0.0.1280.680" timestamp="1605026730947" />
     <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1604996039672" />
-    <state width="1237" height="163" key="GridCell.Tab.0.left" timestamp="1605026730947">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1398" height="294" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1605628670551" />
+    <state width="1398" height="294" key="GridCell.Tab.0.left" timestamp="1605628670549">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1280.984@0.0.1280.680" timestamp="1605026730947" />
     <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1604996039672" />
-    <state width="1237" height="163" key="GridCell.Tab.0.right" timestamp="1605026730948">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1398" height="294" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1605628670549" />
+    <state width="1398" height="294" key="GridCell.Tab.0.right" timestamp="1605628670553">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1280.984@0.0.1280.680" timestamp="1605026730948" />
     <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1604996039672" />
+    <state width="1398" height="294" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1605628670553" />
+    <state width="1398" height="294" key="GridCell.Tab.1.bottom" timestamp="1605628670557">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="294" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1605628670557" />
+    <state width="1398" height="294" key="GridCell.Tab.1.center" timestamp="1605628670556">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="294" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1605628670556" />
+    <state width="1398" height="294" key="GridCell.Tab.1.left" timestamp="1605628670555">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="294" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1605628670555" />
+    <state width="1398" height="294" key="GridCell.Tab.1.right" timestamp="1605628670557">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="294" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1605628670557" />
+    <state width="1398" height="294" key="GridCell.Tab.2.bottom" timestamp="1605628670561">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="294" key="GridCell.Tab.2.bottom/0.0.1440.900@0.0.1440.900" timestamp="1605628670561" />
+    <state width="1398" height="294" key="GridCell.Tab.2.center" timestamp="1605628670559">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="294" key="GridCell.Tab.2.center/0.0.1440.900@0.0.1440.900" timestamp="1605628670559" />
+    <state width="1398" height="294" key="GridCell.Tab.2.left" timestamp="1605628670558">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="294" key="GridCell.Tab.2.left/0.0.1440.900@0.0.1440.900" timestamp="1605628670558" />
+    <state width="1398" height="294" key="GridCell.Tab.2.right" timestamp="1605628670560">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="294" key="GridCell.Tab.2.right/0.0.1440.900@0.0.1440.900" timestamp="1605628670560" />
     <state x="477" y="264" key="NewPhpFileDialog" timestamp="1605081584305">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -281,9 +347,17 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="458" y="255" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1605258389208" />
+    <state x="611" y="187" key="ftp.server.browser" timestamp="1605607767495">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="611" y="187" key="ftp.server.browser/0.0.1440.900@0.0.1440.900" timestamp="1605607767495" />
     <state x="422" y="242" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1605257228877">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="422" y="242" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1280.680@0.0.1280.680" timestamp="1605257228877" />
+    <state x="385" y="210" key="run.anything.popup" timestamp="1605607787461">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="210" key="run.anything.popup/0.0.1440.900@0.0.1440.900" timestamp="1605607787461" />
   </component>
 </project>

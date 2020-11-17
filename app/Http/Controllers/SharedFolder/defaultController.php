@@ -18,6 +18,7 @@ class defaultController extends Controller
         $total_municipals = Municipal::all()->count();
         return view('pages.index',compact('total_users','total_municipals'));
     }
+
     public function profile(){
         $user_roles = Role::all();
         $municipals = Municipal::all();
