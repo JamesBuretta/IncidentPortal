@@ -140,7 +140,18 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mb-3">
+                            <input type="text" class="form-control" placeholder="TPIN" name="tpin" value="{{ old('tpin') }}" required>
+                            @error('tpin')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" placeholder="Password" name="password" required>
                     <div class="input-group-append">

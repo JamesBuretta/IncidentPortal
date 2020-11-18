@@ -6,20 +6,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0686b181-5d7a-4e39-abc9-8b1b461eb690" name="Default Changelist" comment="wende">
-      <change afterPath="$PROJECT_DIR$/app/Models/PortalAccess.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_16_123009_create_portal_accesses_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GuestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GuestController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SharedFolder/defaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SharedFolder/defaultController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/manage/renew_licence.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/manage/renew_licence.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/profile.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/users/view_users.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/users/view_users.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/_side_navigation.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/_side_navigation.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/_top_nav_bar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/_top_nav_bar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -161,8 +153,9 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../vue/emergency_service_system_new" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Mal-Centralized-Web-Portal" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -202,7 +195,11 @@
       <workItem from="1605247209430" duration="7606000" />
       <workItem from="1605256284641" duration="2153000" />
       <workItem from="1605376210856" duration="3079000" />
-      <workItem from="1605505454993" duration="19193000" />
+      <workItem from="1605505454993" duration="22257000" />
+      <workItem from="1605602965205" duration="228000" />
+      <workItem from="1605606165203" duration="94000" />
+      <workItem from="1605607761559" duration="10370000" />
+      <workItem from="1605679367256" duration="333000" />
     </task>
     <task id="LOCAL-00001" summary="wende">
       <created>1605258356616</created>
@@ -239,15 +236,25 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="451" y="220" key="#Composer/0.0.1280.680@0.0.1280.680" timestamp="1604994067801" />
-    <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605527976354">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="361" y="71" key="#Deployment" timestamp="1605610026030">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="71" key="#Deployment/0.0.1536.824@0.0.1536.824" timestamp="1605610026030" />
+    <state x="345" y="58" key="#SSH_Configurations" timestamp="1605609867795">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="345" y="58" key="#SSH_Configurations/0.0.1536.824@0.0.1536.824" timestamp="1605609867795" />
+    <state x="445" y="116" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605610661894">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="371" y="96" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.680@0.0.1280.680" timestamp="1605527976354" />
-    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1605527853324">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="445" y="116" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1605610661894" />
+    <state x="505" y="116" key="FileChooserDialogImpl" timestamp="1605610579218">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680/1920.0.1280.984@0.0.1280.680" timestamp="1605017268169" />
-    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1605527853324" />
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1605603191323" />
+    <state x="505" y="116" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605610579218" />
     <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1605026730948">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -273,6 +280,10 @@
     </state>
     <state x="477" y="264" key="NewPhpFileDialog/0.0.1280.680/1920.0.1280.984@0.0.1280.680" timestamp="1605019995543" />
     <state x="477" y="264" key="NewPhpFileDialog/0.0.1280.680@0.0.1280.680" timestamp="1605081584305" />
+    <state x="277" y="57" key="SettingsEditor" timestamp="1605609580613">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605609580613" />
     <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1605517930097">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -281,6 +292,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="458" y="255" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1605258389208" />
+    <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1605617652866">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1605617652866" />
     <state x="422" y="242" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1605257228877">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

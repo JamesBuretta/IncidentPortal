@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -16,6 +17,7 @@ class defaultController extends Controller
     public function dashboard(){
         $total_users = User::all()->count();
         $total_municipals = Municipal::all()->count();
+
         return view('pages.index',compact('total_users','total_municipals'));
     }
     public function profile(){

@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth','db_cons','admin']], function () {
 
     //Manage Licence
     Route::get('/renew-licence', [BusinessLicenceController::class, 'renew_licence'])->name('renew-licence');
+    Route::post('/renew-licence/request', [BusinessLicenceController::class, 'request_business_licence'])->name('request_business_licence');
 
 });
 

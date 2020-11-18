@@ -24,9 +24,15 @@ class GuestController extends Controller
         $this->validate($request, [
             'email' => 'required|unique:users',
             'fullname' => 'required',
+            'tpin' => 'required',
             'municipal_id' => 'required',
             'password' => 'required',
         ]);
+
+        //Confirm TPIN
+        if ($request->tpin){
+            return response()->json(['errors' => ['error-details' => ['Failed to retrieve TPIN. Try Again! ']]],422);
+        }
 
         $save_new_user = new User();
         $save_new_user->name = $request->fullname;
@@ -43,8 +49,6 @@ class GuestController extends Controller
     public function refreshToken(Request $request)
     {
         session()->regenerate();
-        return response()->json([
-            "token"=>csrf_token()],
-            200);
+        return response()->json(["token"=>csrf_token()],200);
     }
 }
