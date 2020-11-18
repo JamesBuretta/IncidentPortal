@@ -20,6 +20,7 @@ class defaultController extends Controller
 
         return view('pages.index',compact('total_users','total_municipals'));
     }
+
     public function profile(){
         $user_roles = Role::all();
         $municipals = Municipal::all();
