@@ -134,7 +134,7 @@
                             <select name="municipal_id" class="form-control" required>
                                 <option value=""> -- Select Municipal -- </option>
                                 @foreach($municipals as $municipal)
-                                    <option value="{{$municipal->id}}">{{ucfirst($municipal->municipal_description_name)}}</option>
+                                    <option value="{{$municipal->municipal_db_name}}">{{ucfirst($municipal->municipal_description_name)}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -212,6 +212,7 @@
 <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <!-- Toastr -->
 <script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
+
 
 <script type="text/javascript">
     $.ajaxSetup({
@@ -299,6 +300,7 @@
             }
         });
     }
+
     $(document).ready(function(){
 
         $(".register").submit(function(e) {

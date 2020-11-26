@@ -83,7 +83,27 @@
                         <p>Renew Licence</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('request_prn')}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Request PRN</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('payments_info')}}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Payment's</p>
+                    </a>
+                </li>
             </ul>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('logs-list')}}" class="nav-link">
+                <i class="nav-icon fas fa-cog fa-spin"></i>
+                <p>
+                    Logs
+                </p>
+            </a>
         </li>
     </ul>
 </nav>

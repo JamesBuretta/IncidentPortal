@@ -77,7 +77,7 @@
                                     <b>Email</b> <a class="float-right">{{Auth::user()->email}}</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Name</b> <a class="float-right">{{Auth::user()->name}}</a>
+                                    <b>Name</b> <a class="float-right">{{Auth::user()->fullname}}</a>
                                 </li>
                                 <li class="list-group-item">
                                     <b>Municipal</b> <a class="float-right">{{ (Auth::user()->municipal_id == '-') ? '-' : ucfirst(Auth::user()->municipal['municipal_description_name'])}}</a>
@@ -95,7 +95,7 @@
                     <div class="card">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
-                                <li class="nav-item"><a class="nav-link active" href="#profile_dashboard" data-toggle="tab">Info</a></li>
+                                <li class="nav-item"><a class="nav-link active" href="#profile_dashboard" data-toggle="tab">Profile Info</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#update_profile" data-toggle="tab">Update Profile</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#update_credentials" data-toggle="tab">Update Credentials</a></li>
                             </ul>
@@ -107,9 +107,45 @@
                                     <div class="post">
                                         <!-- /.user-block -->
                                         <div class="row mb-3">
-                                            <div class="col-sm-12 text-center">
-                                                <img class="img-fluid custom-profile" src="{{asset('images/logo.png')}}" alt="Photo">
+                                            @if(Auth::user()->access == 1)
+                                            <div class="col-md-4 text-center">
+                                                <img class="img-fluid custom-profile" src="{{asset('images/logo.png')}}" alt="Photo" style="height: 200px;">
                                             </div>
+                                            <div class="col-md-8">
+                                                <div class="alert alert-info alert-dismissible" style="margin-top: 8%;">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                    <h5><i class="icon fas fa-info"></i> Note!</h5>
+                                                    Owner business will be listed here.. You have logged in as Admin in the System
+                                                </div>
+                                            </div>
+                                            @else
+                                              <div class="col-md-12">
+                                                  <h4 style="text-align: center;">Registered Business</h4>
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-valign-middle">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Business Number</th>
+                                                            <th>Business Name</th>
+                                                            <th>Area</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($business_details as $details)
+                                                        <tr>
+                                                            <td><a href="#">{{$details->business_number}}</a></td>
+                                                            <td>{{$details->descrption_name}}</td>
+                                                            <td>{{$details->main_category}}</td>
+                                                            <td><span class="badge {{($details->account_status == 1) ? 'badge-info' : 'badge-warning'}}">{{($details->account_status == 1) ? 'Active' : 'Pending'}}</span></td>
+                                                        </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        @endif
                                             <!-- /.col -->
                                         </div>
                                         <!-- /.row -->
@@ -142,7 +178,7 @@
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label>Fullname</label>
-                                                    {{Form::text('name', null, ['placeholder' => 'Full name','class' => 'form-control','required' => ''])}}
+                                                    {{Form::text('fullname', null, ['placeholder' => 'Full name','class' => 'form-control','required' => ''])}}
                                                 </div>
                                             </div>
                                             <div class="col-md-5">

@@ -64,7 +64,7 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Role</th>
+                                        <th>Access</th>
                                         <th>Municipal</th>
                                         <th>Status</th>
                                         <th width="15%">Action</th>
@@ -75,9 +75,9 @@
                                     @foreach($users as $user)
                                         <tr>
                                             <td>{{$counter}}</td>
-                                            <td>{{ucwords($user->name)}}</td>
+                                            <td>{{ucwords($user->fullname)}}</td>
                                             <td>{{$user->email}}</td>
-                                            <td>{{ucfirst($user->role['role_name'])}}</td>
+                                            <td>{{ucfirst($user->portalAccess['access_name'])}}</td>
                                             <td>{{($user->municipal_id == '-') ? "-" : $user->municipal['municipal_description_name']}}</td>
                                             <td>{!! ($user->status == 1) ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Disabled</span>'  !!}</td>
                                             <td>
@@ -150,11 +150,11 @@
                                                                     <div class="row">
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
-                                                                                <label>Role</label>
-                                                                                <select name="role_id" class="form-control">
-                                                                                    <option> -- Default -- </option>
-                                                                                    @foreach($user_roles as $role)
-                                                                                        <option value="{{$role->id}}" {{($user->role_id == $role->id)? "selected":""}}> {{$role->role_name}} </option>
+                                                                                <label>Access</label>
+                                                                                <select name="access" class="form-control">
+                                                                                    <option value=""> -- Default -- </option>
+                                                                                    @foreach($user_accesses as $access)
+                                                                                        <option value="{{$access->id}}" {{($user->access == $access->id)? "selected":""}}> {{$access->access_name}} </option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
@@ -163,7 +163,7 @@
                                                                             <div class="form-group">
                                                                                 <label>Municipal</label>
                                                                                 <select name="municipal_id" class="form-control" required>
-                                                                                    <option> -- Default -- </option>
+                                                                                    <option value=""> -- Default -- </option>
                                                                                     @foreach($municipals as $municipal)
                                                                                         <option value="{{$municipal->id}}" {{($user->municipal_id == $municipal->id)? "selected":""}}> {{$municipal->municipal_description_name}} </option>
                                                                                     @endforeach
@@ -183,7 +183,7 @@
                                                                         <div class="col-md-7">
                                                                             <div class="form-group">
                                                                                 <label>Fullname</label>
-                                                                                {{Form::text('name', null, ['placeholder' => 'Full name','class' => 'form-control','required' => ''])}}
+                                                                                {{Form::text('fullname', null, ['placeholder' => 'Full name','class' => 'form-control','required' => ''])}}
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-5">

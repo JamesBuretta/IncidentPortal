@@ -14,6 +14,9 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App\Models\Role');
     }
+    public function portalAccess(){
+        return $this->belongsTo('App\Models\PortalAccess','access');
+    }
     public function municipal()
     {
         return $this->belongsTo('App\Models\Municipal','municipal_id');

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Users;
 use App\Http\Controllers\Controller;
 use App\Models\Municipal;
+use App\Models\PortalAccess;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Mail;
@@ -17,11 +20,22 @@ class UserController extends Controller
         $municipals = Municipal::all();
         return view('pages.users.add_users',compact('roles','municipals'));
     }
+    public function logs_list(){
+        try {
+
+        }catch (\Exception $e)
+        {
+            Log::info('Error message', ['context' => $e]);
+        }
+
+
+        return view('pages.logs.log_file');
+    }
     public function view_users(){
         $users = User::all();
-        $user_roles = Role::all();
+        $user_accesses = PortalAccess::all();
         $municipals = Municipal::all();
-        return view('pages.users.view_users',compact('users','user_roles','municipals'));
+        return view('pages.users.view_users',compact('users','user_accesses','municipals'));
     }
     public function user_password_reset($user_id){
         $get_user_details = User::where("id",$user_id)->first();
@@ -30,7 +44,7 @@ class UserController extends Controller
         $email = $get_user_details->email;
         $data = [
             'email'=>$get_user_details->email,
-            'name'=>$get_user_details->name,
+            'name'=>$get_user_details->fullname,
             'password'=>$generated_password,
         ];
         Mail::send('mails.recover_password', $data, function($message) use ($email) {
@@ -71,7 +85,7 @@ class UserController extends Controller
 
 
        $add_user = new User();
-       $add_user->name = $request->fullname;
+       $add_user->fullname = $request->fullname;
        $add_user->email = $request->email;
        $add_user->role_id = $request->role_id;
        $add_user->municipal_id = ($request->role_id == 1) ? '-' : $request->municipal_id;
@@ -98,8 +112,8 @@ class UserController extends Controller
         {
             $this->validate($request, [
                 'email' => 'required',
-                'name' => 'required',
-                'role_id' => 'required',
+                'fullname' => 'required',
+                'access' => 'required',
                 'account_status' => 'required',
                 'municipal_id' => 'required',
                 'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -108,18 +122,18 @@ class UserController extends Controller
         else{
             $this->validate($request, [
                 'email' => 'required',
-                'name' => 'required',
+                'fullname' => 'required',
                 'account_status' => 'required',
                 'municipal_id' => 'required',
-                'role_id' => 'required',
+                'access' => 'required',
             ]);
         }
 
 
         $add_user = User::where('id',$user_id)->first();
-        $add_user->name = $request->name;
+        $add_user->fullname = $request->fullname;
         $add_user->email = $request->email;
-        $add_user->role_id = $request->role_id;
+        $add_user->access = $request->access;
         $add_user->municipal_id = ($request->role_id == 1) ? '-' : $request->municipal_id;
         $add_user->password = bcrypt(123456);
         $add_user->status = $request->account_status;

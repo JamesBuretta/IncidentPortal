@@ -31,31 +31,20 @@ class GetPaymentRefController extends Controller
         $sql = "INSERT INTO tbl_distr_munic_portal_permanent_entity
 		(owner_id, descr_id, date_register, hamlet_id,area_id, registration_name,manager_name, image, latitude,longitude,business_number,block,house_no)
 		VALUES
-		(:owner, :description, NOW(), :villa,:area, :rname,:managername ,'masasi.png', :latitude, :longitude, :businessid, :block, :house_no)";
+		($request->owner, $request->description, NOW(), $request->villa,$request->area, $request->rname,$request->managername ,'masasi.png', $request->latitude, $request->longitude, $request->businessid, $request->block, $request->house_no)";
 
         try{
 
-            $result = $this->db->insert($sql);
-            $result->bindParam(":area",$request->area); //
-            $result->bindParam(":villa",$request->location);
-            $result->bindParam(":longitude",$request->longi);
-            $result->bindParam(":latitude",$request->lati);
-            $result->bindParam(":rname",$request->rname);
-            $result->bindParam(":managername",$request->managername);
-            $result->bindParam(":description",$request->description);
-            $result->bindParam(":owner",$request->owner);
-            $result->bindParam(":block",$request->block);
-            $result->bindParam(":house_no",$request->house_no);
-            $result->bindParam(":businessid",$request->businessid);
-            if($result==true)
+            $result = $this->db->getPdo($sql);
+
+            if($result->execute())
             {
-                $id= $this->db->lastInsertId();
+                $id= $result->lastInsertedId();
                 $this->PaymentRecords($id);
             }
 
         }catch (\Exception $e)
         {
-
         }
     }
 
@@ -121,11 +110,11 @@ class GetPaymentRefController extends Controller
     public function formatedReceipt()
     {
         $x = date("md");
-        $sql="INSERT INTO tbl_distr_munis_portal_receipt_generation (day_time) VALUES (:datetme)";
+        $sql="INSERT INTO tbl_distr_munis_portal_receipt_generation (day_time) VALUES (:datetime)";
         try
         {
             $result=$this->db->insert($sql);
-            $result->bindParam(":datetme", $x);
+            $result->bindParam(":datetime", $x);
             if($result->execute())
             {
                 $id= $this->db->lastInsertId();
@@ -147,5 +136,17 @@ class GetPaymentRefController extends Controller
             $number = "0".$number;
         }
         return $number;
+    }
+
+    public function verifyTpinNumber()
+    {
+        $sql = "SELECT tin_number FROM tbl_distr_munic_portal_owner WHERE tin_number=?";
+
+        try{
+
+        }catch (\Exception $e)
+        {
+
+        }
     }
 }

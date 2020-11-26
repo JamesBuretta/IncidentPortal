@@ -1,0 +1,6 @@
+<?php
+
+return [
+    'LIVE-SERVER'=>env('LIVE_SERVER_CONNECTION'),
+    'TEST-SERVER'=>env('TEST_SERVER_CONNECTION')
+];
