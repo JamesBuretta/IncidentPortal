@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Business Licence Renewal</h1>
+                    <h1 class="m-0 text-dark">Business Licence</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -53,10 +53,11 @@
                 <!-- general form elements -->
                     <div class="card card-info card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">Request Licence</h3>
+                            <h3 class="card-title">Request Licence (For New Business)</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
+                        @if($available_details > 0)
                         <form action="{{ route('request_business_licence') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
@@ -167,6 +168,15 @@
                                 <button type="submit" class="btn btn-primary">Add New</button>
                             </div>
                         </form>
+                        @else
+                            <div class="col-md-12">
+                                <div class="alert alert-info alert-dismissible" style="margin-top: 10px;">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    <h5><i class="icon fas fa-info"></i> Note!</h5>
+                                    Your Account its Either an Admin or Your didnt provide PRIN & Municipal
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <!-- /.card -->
                 </div>

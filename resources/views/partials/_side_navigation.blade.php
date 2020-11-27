@@ -92,7 +92,7 @@
                 <li class="nav-item">
                     <a href="{{route('payments_info')}}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Payment's</p>
+                        <p>Payment's History</p>
                     </a>
                 </li>
             </ul>

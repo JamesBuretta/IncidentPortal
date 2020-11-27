@@ -57,30 +57,37 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('save-new-municipal') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">DB Path</label>
-                                            <input type="text" name="municipal_db_name" class="form-control" id="exampleInputEmail1" placeholder="DB Config Path" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Municipal Title</label>
-                                            <input type="text" name="municipal_description_name" class="form-control" id="exampleInputEmail1" placeholder="Municipal Title Description" required>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
+                        <div class="row">
 
-                            <div class="card-footer text-right">
-                                <button type="submit" class="btn btn-primary">Add New</button>
-                            </div>
-                        </form>
+                              <div class="col-md-12">
+                                  <form action="{{ route('save-new-municipal') }}" method="POST" enctype="multipart/form-data">
+                                      @csrf
+                                      <div class="card-body">
+                                          <div class="row">
+                                              <div class="col-md-6">
+                                                  <div class="form-group">
+                                                      <label for="exampleInputEmail1">DB Path</label>
+                                                      <input type="text" name="municipal_db_name" class="form-control" id="exampleInputEmail1" placeholder="DB Config Path" required>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-6">
+                                                  <div class="form-group">
+                                                      <label for="exampleInputEmail1">Municipal Title</label>
+                                                      <input type="text" name="municipal_description_name" class="form-control" id="exampleInputEmail1" placeholder="Municipal Title Description" required>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!-- /.card-body -->
+
+                                      <div class="card-footer text-right">
+                                          <button type="submit" class="btn btn-primary">Add New</button>
+                                      </div>
+                                  </form>
+                              </div>
+
+                        </div>
+
                     </div>
                     <!-- /.card -->
                 </div>

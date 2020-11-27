@@ -38,7 +38,9 @@ class PRNRequestController extends Controller
    public function request_prn(){
        //Check Business Details
        $business_details = array();
+       $available_details = 0;
        if (Auth::user()->access == 2 && Auth::user()->tpin != '-' && Auth::user()->municipal_id != '-') {
+           $available_details = 1;
            $get_owner_details = 'SELECT * FROM tbl_distr_munic_portal_owner WHERE tin_number = ?';
            $data = $this->globalConnection()->select($get_owner_details, [Auth::user()->tpin]);
 
@@ -96,7 +98,9 @@ class PRNRequestController extends Controller
 
            $business_details = $temp_container;
 
-           return view('pages.manage.request_prn',compact('business_details'));
+           return view('pages.manage.request_prn',compact('business_details','available_details'));
+       }else{
+           return view('pages.manage.request_prn',compact('available_details'));
        }
    }
 

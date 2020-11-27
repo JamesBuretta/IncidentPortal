@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">View Payment's</h1>
+                    <h1 class="m-0 text-dark">View Payment's History</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -53,12 +53,13 @@
                     <!-- general form elements -->
                     <div class="card card-info card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">Payment's</h3>
+                            <h3 class="card-title">{{($available_details > 0) ? "Payment's History" : "All Payment's History"}}</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="row" style="margin: 10px;">
                             <div class="col-md-12">
-                                <table id="example1" class="table table-bordered table-striped">
+                                @if($available_details > 0)
+                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>#</th>
@@ -67,7 +68,9 @@
                                         <th>Business Number</th>
                                         <th>Amount (MK)</th>
                                         <th>Business Type</th>
-                                        <th width="10%">Action</th>
+                                        <th>Year</th>
+                                        <th>Paid On</th>
+                                        <th width="10%">Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -80,6 +83,8 @@
                                             <td>{{$payments[$i]->business_number}}</td>
                                             <td>{{$payments[$i]->amount_pay}}</td>
                                             <td>{{$payments[$i]->descrption_name}}</td>
+                                            <td>{{\Carbon\Carbon::parse($payments[$i]->payment_date)->format('Y')}}</td>
+                                            <td>{{($payments[$i]->pay_status == '1') ? \Carbon\Carbon::parse($payments[$i]->paid_date)->format('d M, Y') : '-'}}</td>
                                             <td>
                                                 <span class="badge {{($payments[$i]->pay_status == '1') ? 'bg-success' : 'bg-danger'}}">{{($payments[$i]->pay_status == '1') ? 'Paid' : 'Un-Paid'}}</span>
                                             </td>
@@ -97,6 +102,51 @@
                                     @endfor
                                     </tbody>
                                 </table>
+                                @else
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>PRN</th>
+                                            <th>Owner Name</th>
+                                            <th>Business Number</th>
+                                            <th>Amount (MK)</th>
+                                            <th>Business Type</th>
+                                            <th>Year</th>
+                                            <th>Paid On</th>
+                                            <th width="10%">Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php $counter = 1; ?>
+                                        @for($i = 0; $i < sizeof($payments); $i++)
+                                            <tr>
+                                                <td>{{$counter}}</td>
+                                                <td><a href="#">{{$payments[$i]->PRN}}</a></td>
+                                                <td>{{$payments[$i]->owner_fullname}}</td>
+                                                <td>{{$payments[$i]->business_number}}</td>
+                                                <td>{{$payments[$i]->amount_pay}}</td>
+                                                <td>{{$payments[$i]->descrption_name}}</td>
+                                                <td>{{\Carbon\Carbon::parse($payments[$i]->payment_date)->format('Y')}}</td>
+                                                <td>{{($payments[$i]->pay_status == '1') ? \Carbon\Carbon::parse($payments[$i]->paid_date)->format('d M, Y') : '-'}}</td>
+                                                <td>
+                                                    <span class="badge {{($payments[$i]->pay_status == '1') ? 'bg-success' : 'bg-danger'}}">{{($payments[$i]->pay_status == '1') ? 'Paid' : 'Un-Paid'}}</span>
+                                                </td>
+                                                {{--                                            <td>--}}
+                                                {{--                                                <button type="submit"--}}
+                                                {{--                                                        id="request_{{$payments[$i]['entity']}}"--}}
+                                                {{--                                                        {{($payments[$i]['PRN'] != '-' || $payments[$i]['account_status'] != 1) ? 'disabled' : '' }}--}}
+                                                {{--                                                        {{($payments[$i]['PRN'] == '-' && $payments[$i]['account_status'] == 1) ? 'onclick=triggerConfirm('.'"'.$payments[$i]['entity'].'"'.','.$payments[$i]['business_number'].')' : '' }}--}}
+                                                {{--                                                        class="btn btn-primary btn-block">--}}
+                                                {{--                                                    Request--}}
+                                                {{--                                                </button>--}}
+                                                {{--                                            </td>--}}
+                                            </tr>
+                                            <?php $counter++; ?>
+                                        @endfor
+                                        </tbody>
+                                    </table>
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -37,16 +37,25 @@ class BusinessLicenceController extends Controller
     }
 
    public function renew_licence(){
-       $sql = "SELECT * FROM tbl_distr_munis_portal_hamlet";
-       $hamlets = $this->globalConnection()->select($sql);
+       $available_details = 0;
 
-       $sql1 = "SELECT * FROM tbl_distr_munic_portal_permanent_levy";
-       $permanent_levy = $this->globalConnection()->select($sql1);
+       if (Auth::user()->access == 2 && Auth::user()->tpin != '-' && Auth::user()->municipal_id != '-') {
+           $available_details = 1;
 
-       $sql_data ="SELECT * FROM tbl_distr_munic_portal_area_fee";
-       $registered_area = $this->globalConnection()->select($sql_data);
+           $sql = "SELECT * FROM tbl_distr_munis_portal_hamlet";
+           $hamlets = $this->globalConnection()->select($sql);
 
-       return view('pages.manage.renew_licence',compact('hamlets','permanent_levy','registered_area'));
+           $sql1 = "SELECT * FROM tbl_distr_munic_portal_permanent_levy";
+           $permanent_levy = $this->globalConnection()->select($sql1);
+
+           $sql_data = "SELECT * FROM tbl_distr_munic_portal_area_fee";
+           $registered_area = $this->globalConnection()->select($sql_data);
+
+           return view('pages.manage.renew_licence',compact('hamlets','permanent_levy','registered_area','available_details'));
+       }else{
+           return view('pages.manage.renew_licence',compact('available_details'));
+       }
+
    }
 
    public function request_business_licence(Request $request){

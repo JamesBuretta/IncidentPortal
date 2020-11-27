@@ -63,6 +63,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="row" style="margin: 10px;">
+                            @if($available_details > 0)
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-valign-middle">
@@ -113,6 +114,15 @@
                                     </table>
                                 </div>
                             </div>
+                            @else
+                                <div class="col-md-12">
+                                    <div class="alert alert-info alert-dismissible" style="margin-top: 10px;">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <h5><i class="icon fas fa-info"></i> Note!</h5>
+                                        Your Account its Either an Admin or Your didnt provide PRIN & Municipal
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
                     </div>
@@ -131,11 +141,6 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        });
-
-        $(document).ready(function(){
-            //Refresh Csrf Token
-            refreshCsrf();
         });
 
         function refreshCsrf(){
@@ -180,7 +185,7 @@
 
            //Request PRIN Number
             $.ajax({
-                url: "{{route('request_business_licence')}}",
+                url: "{{route('business_request_prn')}}",
                 type: 'POST',
                 data: {"entity":entity,"business_number":num},
                 success: function (result) {

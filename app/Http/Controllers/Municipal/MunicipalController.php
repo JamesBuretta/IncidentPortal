@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Municipal;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class MunicipalController extends Controller
 {
     public function add_municipals(){
-        return view('pages.municipals.add_municipals');
+        $available_details = 0;
+
+        if (Auth::user()->access == 2 && Auth::user()->tpin != '-' && Auth::user()->municipal_id != '-') {
+            $available_details = 1;
+        }
+
+      return view('pages.municipals.add_municipals',compact('available_details'));
     }
 
     public function view_municipals(){
