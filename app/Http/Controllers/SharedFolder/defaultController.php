@@ -99,29 +99,21 @@ class defaultController extends Controller
         {
             $this->validate($request, [
                 'email' => 'required',
-                'name' => 'required',
-                'account_status' => 'required',
+                'fullname' => 'required',
                 'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
             ]);
         }
         else{
             $this->validate($request, [
                 'email' => 'required',
-                'name' => 'required',
-                'account_status' => 'required',
+                'fullname' => 'required',
             ]);
         }
 
 
         $update_user = User::where('id',$user_id)->first();
-        $update_user->name = $request->name;
+        $update_user->fullname = $request->fullname;
         $update_user->email = $request->email;
-        if ($request->has('municipal_id')){
-            $update_user->municipal_id = $request->municipal_id;
-        }
-        $update_user->password = bcrypt(123456);
-        $update_user->status = $request->account_status;
-
         if($request->hasfile('profile'))
         {
             $file = $request->file('profile');
@@ -163,7 +155,6 @@ class defaultController extends Controller
         else{
             Session::flash('fail','New and Confirm Password do not match!');
         }
-
 
         return redirect()->back();
     }

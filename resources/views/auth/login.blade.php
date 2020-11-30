@@ -216,9 +216,10 @@
                     //Add Loader Here
                 },
                 success: function () {
-                    let success_message = 'Successfully Logged In </br> Redirecting... <i class="fa fa-spin fa-spinner"></i>';
-                    toastr.success(success_message);
-                    setTimeout(() => { location.reload() },500);
+                   // let success_message = 'Successfully Logged In </br> Redirecting... <i class="fa fa-spin fa-spinner"></i>';
+                    //toastr.success(success_message);
+                    location.reload()
+                    //setTimeout(() => {  },500);
                 },
                 error: function (jqXHR) {
                     $(".login_btn").html('<i class="fa fa-envelope mr-2"></i> Sign In');

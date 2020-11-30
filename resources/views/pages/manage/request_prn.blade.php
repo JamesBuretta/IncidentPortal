@@ -90,7 +90,7 @@
                                                 <td>{{$business_details[$i]['description_name']}}</td>
                                                 <td>{{$business_details[$i]['PRN']}}</td>
                                                 <td>
-                                                    <span class="badge {{($business_details[$i]['payment_status'] == 'paid') ? 'bg-success' : 'bg-danger'}}">{{$business_details[$i]['payment_status']}}</span>
+                                                    <span class="badge {{($business_details[$i]['payment_status'] == 'paid') ? 'bg-success' : 'bg-danger'}}">{{($business_details[$i]['payment_status'] == 'paid') ? 'Paid' : 'Un-Paid'}}</span>
                                                 </td>
                                                 <td>{{$business_details[$i]['location']}}</td>
                                                 <td>

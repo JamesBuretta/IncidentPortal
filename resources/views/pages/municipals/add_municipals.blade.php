@@ -66,8 +66,8 @@
                                           <div class="row">
                                               <div class="col-md-6">
                                                   <div class="form-group">
-                                                      <label for="exampleInputEmail1">DB Path</label>
-                                                      <input type="text" name="municipal_db_name" class="form-control" id="exampleInputEmail1" placeholder="DB Config Path" required>
+                                                      <label for="exampleInputEmail1">DB Name</label>
+                                                      <input type="text" name="municipal_db_name" class="form-control" id="exampleInputEmail1" placeholder="DB Name" required>
                                                   </div>
                                               </div>
                                               <div class="col-md-6">

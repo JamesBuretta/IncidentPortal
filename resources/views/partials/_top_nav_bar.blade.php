@@ -7,22 +7,14 @@
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{route('admin_dashboard')}}" class="nav-link">Home</a>
         </li>
+        @if(Auth::user()->access == 1)
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{route('view-users')}}" class="nav-link">Users</a>
         </li>
+        @endif
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </form>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -32,7 +24,7 @@
                 <i class="far fa-user"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">Account {{Auth::user()->name}}</span>
+                <span class="dropdown-item dropdown-header">{{Auth::user()->fullname}}</span>
                 <div class="dropdown-divider"></div>
                 <a href="{{route('my-profile')}}" class="dropdown-item">
                     <i class="fas fa-user mr-2"></i> My Profile

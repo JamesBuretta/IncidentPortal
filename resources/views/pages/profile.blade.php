@@ -83,8 +83,6 @@
                                     <b>Municipal</b> <a class="float-right">{{ (Auth::user()->municipal_id == '-') ? '-' : ucfirst(Auth::user()->municipal['municipal_description_name'])}}</a>
                                 </li>
                             </ul>
-
-                            <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -175,20 +173,10 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-7">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Fullname</label>
                                                     {{Form::text('fullname', null, ['placeholder' => 'Full name','class' => 'form-control','required' => ''])}}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <div class="form-group">
-                                                    <label>Account Status</label>
-                                                    <select name="account_status" class="form-control" required>
-                                                        <option> -- Default -- </option>
-                                                        <option value="1" {{(Auth::user()->status == 1)? "selected":""}}> Activate </option>
-                                                        <option value="0" {{(Auth::user()->status == 2)? "selected":""}}> De-Activate </option>
-                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

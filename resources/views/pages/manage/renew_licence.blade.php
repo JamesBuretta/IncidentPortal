@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Business Licence</h1>
+                    <h1 class="m-0 text-dark">New Business Licence</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -53,7 +53,7 @@
                 <!-- general form elements -->
                     <div class="card card-info card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">Request Licence (For New Business)</h3>
+                            <h3 class="card-title">Request New Licence (For Business)</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -62,34 +62,35 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Owner Name</label>
                                             <input type="text" name="owner_name" class="form-control" value="{{ old('owner_name') }}" id="exampleInputEmail1" placeholder="Owner Name" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Manager Name</label>
                                             <input type="text" name="manager_name" class="form-control" value="{{ old('manager_name') }}" id="exampleInputEmail1" placeholder="Manager Name" required>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Business Name</label>
                                             <input type="text" name="business_name" class="form-control" value="{{ old('business_name') }}"  id="exampleInputEmail1" placeholder="Business Name" required>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Business Number</label>
                                             <input type="text" name="business_number" class="form-control"  value="{{ old('business_number') }}"  id="exampleInputEmail1" placeholder="Business Number" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Hamlet</label>
                                             <select name="hamlet" class="form-control" required>
@@ -100,28 +101,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Permanent Levy</label>
-                                            <select id="permanent_levy" name="permanent_levy" class="form-control" onchange="getLevyChannel()" required>
-                                                <option value=""> -- Default -- </option>
-                                                @for($i = 0; $i < sizeof($permanent_levy); $i++)
-                                                    <option value="{{$permanent_levy[$i]->type_id}}">{{ucfirst($permanent_levy[$i]->type_name)}}</option>
-                                                @endfor
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Permanent Levy Channels</label>
-                                            <select id="permanent_levy_channel" name="permanent_levy_channel" class="form-control" required>
-                                                <option value=""> -- Default -- </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Registered Area</label>
                                             <select name="registered_area" class="form-control" required>
@@ -132,13 +112,35 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Permanent Levy</label>
+                                            <select id="permanent_levy" name="permanent_levy" class="form-control" onchange="getLevyChannel()" required>
+                                                <option value=""> -- Default -- </option>
+                                                @for($i = 0; $i < sizeof($permanent_levy); $i++)
+                                                    <option value="{{$permanent_levy[$i]->type_id}}">{{ucfirst($permanent_levy[$i]->type_name)}}</option>
+                                                @endfor
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Permanent Levy Channels</label>
+                                            <select id="permanent_levy_channel" name="permanent_levy_channel" class="form-control" required>
+                                                <option value=""> -- Default -- </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Block</label>
                                             <input type="text" name="block" class="form-control" value="{{ old('block') }}" id="exampleInputEmail1" placeholder="Block" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">House No</label>
                                             <input type="text" name="house_number" class="form-control" value="{{ old('house_number') }}" id="exampleInputEmail1" placeholder="House No" required>

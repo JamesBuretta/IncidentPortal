@@ -16,7 +16,6 @@
                 <i class="nav-icon far fa-calendar-alt"></i>
                 <p>
                     My Profile
-                    <span class="badge badge-info right">2</span>
                 </p>
             </a>
         </li>
@@ -80,7 +79,7 @@
                 <li class="nav-item">
                     <a href="{{route('renew-licence')}}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Renew Licence</p>
+                        <p>Register New Licence</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -97,6 +96,7 @@
                 </li>
             </ul>
         </li>
+        @if(Auth::user()->access == 1)
         <li class="nav-item">
             <a href="{{route('logs-list')}}" class="nav-link">
                 <i class="nav-icon fas fa-cog fa-spin"></i>
@@ -105,5 +105,6 @@
                 </p>
             </a>
         </li>
+        @endif
     </ul>
 </nav>

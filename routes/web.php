@@ -63,7 +63,7 @@ Route::group(['middleware' => ['web','auth','admin']], function () {
     Route::delete('/remove-municipal/{municipal_id}', [MunicipalController::class, 'remove_municipal'])->name('remove_municipal');
 
     //Manage Licence
-    Route::get('/renew-licence', [BusinessLicenceController::class, 'renew_licence'])->name('renew-licence');
+    Route::get('/register-licence', [BusinessLicenceController::class, 'renew_licence'])->name('renew-licence');
     Route::get('/request/levy-channel/{levy_id}', [BusinessLicenceController::class, 'get_levy_channel'])->name('get_levy_channel');
     Route::post('/renew-licence/request', [BusinessLicenceController::class, 'request_business_licence'])->name('request_business_licence');
 
