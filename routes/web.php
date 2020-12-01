@@ -9,6 +9,7 @@ use \App\Http\Controllers\Auth\LoginController;
 use \App\Http\Controllers\Licence\BusinessLicenceController;
 use \App\Http\Controllers\Licence\PRNRequestController;
 use \App\Http\Controllers\Payments\PaymentController;
+use \App\Http\Controllers\LogsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +46,7 @@ Route::group(['middleware' => ['web','auth','admin']], function () {
     Route::put('/user/credentials-update/{user_id}', [defaultController::class, 'update_credentials'])->name('update_credentials');
 
     //Logs
-    Route::get('/system-logs', [UserController::class, 'logs_list'])->name('logs-list');
+    Route::get('/system-logs', [LogsController::class, 'logs_list'])->name('logs-list');
 
     //Users Manage Routes
     Route::get('/add-users', [UserController::class, 'add_users'])->name('add-users');
@@ -54,6 +55,10 @@ Route::group(['middleware' => ['web','auth','admin']], function () {
     Route::put('/user/update-details/{user_id}', [UserController::class, 'update_user_details'])->name('update_user_details');
     Route::put('/user/password/reset/{user_id}', [UserController::class, 'user_password_reset'])->name('user_password_reset');
     Route::delete('/user/remove/{user_id}', [UserController::class, 'remove_user'])->name('remove_user');
+
+    //Manage User Access
+    Route::get('/user/access/{user_id}/control', [UserController::class, 'user_access'])->name('user_access');
+    Route::put('/update/user/access/{user_id}', [UserController::class, 'update_access'])->name('update-user-access');
 
     //Manage Municipals
     Route::get('/add-municipal', [MunicipalController::class, 'add_municipals'])->name('add-municipals');

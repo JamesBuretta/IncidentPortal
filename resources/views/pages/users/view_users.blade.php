@@ -90,7 +90,11 @@
                                                 <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#update_user_{{$user->id}}">
                                                     <i class="fa fa-edit" style="margin: 0;"></i>
                                                 </button>
-
+                                                @if($user->portalAccess['access_name'] != 'superadmin')
+                                                    <a href="{{route('user_access',$user->id)}}" class="btn btn-primary btn-sm">
+                                                        <i class="fa fa-eye" style="margin: 0;"></i>
+                                                    </a>
+                                                @endif
                                                 <!-- Modal -->
                                                 {!! Form::model($user, ['route' => ['user_password_reset',$user->id],'method' => 'PUT']) !!}
                                                 <div class="modal fade" id="change_pass_{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="modalFormStyle1Label" aria-hidden="true">

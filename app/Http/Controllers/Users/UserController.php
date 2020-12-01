@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Users;
 use App\Http\Controllers\Controller;
+use App\Models\MenuAccess;
 use App\Models\Municipal;
 use App\Models\PortalAccess;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Mail;
@@ -20,22 +19,60 @@ class UserController extends Controller
         $municipals = Municipal::all();
         return view('pages.users.add_users',compact('roles','municipals'));
     }
-    public function logs_list(){
-        try {
 
-        }catch (\Exception $e)
-        {
-            Log::info('Error message', ['context' => $e]);
-        }
-
-
-        return view('pages.logs.log_file');
-    }
     public function view_users(){
         $users = User::all();
         $user_accesses = PortalAccess::all();
         $municipals = Municipal::all();
         return view('pages.users.view_users',compact('users','user_accesses','municipals'));
+    }
+
+    public function update_access(Request $request,$user_id){
+
+        $access_string = '';
+        //My Profile Access
+        ($request->profile == 'on') ? ($access_string .= '#profile') : '';
+        //Payment History
+        ($request->payment_history == 'on') ? ($access_string .= '#payment_history') : '';
+        //Manage Municipals
+        ($request->manage_municipals == 'on') ? ($access_string .= '#manage_municipals') : '';
+        //Manage Users
+        ($request->manage_users == 'on') ? ($access_string .= '#manage_users') : '';
+        //Manage Profile Access
+        ($request->manage_prn == 'on') ? ($access_string .= '#manage_prn') : '';
+        //Manage Licence
+        ($request->manage_licence == 'on') ? ($access_string .= '#manage_licence') : '';
+        //Manage Logs Access
+        ($request->logs == 'on') ? ($access_string .= '#logs') : '';
+
+
+
+        //Update Access Values
+        $update_access = MenuAccess::where('user_id',$user_id)->first();
+        $update_access->access_menu = $access_string;
+        $update_access->save();
+
+        Session::flash("success","User Access Updated Successfully");
+        return redirect()->back();
+    }
+    public function user_access($user_id){
+        //User Access Details
+        $access_check = MenuAccess::where('user_id',$user_id)->count();
+        if($access_check == 0){
+            //Register Default Access
+            $new_access = new MenuAccess();
+            $new_access->user_id = $user_id;
+            $new_access->access_menu = 'profile#payment_history#manage_prn#manage_licence';
+            $new_access->save();
+        }
+
+        //Check Access
+        $user_access = MenuAccess::where('user_id',$user_id)->first();
+        $access_array = explode("#",$user_access->access_menu);
+
+        $user_details = User::where('id',$user_id)->first();
+
+        return view('pages.access.user_access',compact('user_details','access_array'));
     }
     public function user_password_reset($user_id){
         $get_user_details = User::where("id",$user_id)->first();

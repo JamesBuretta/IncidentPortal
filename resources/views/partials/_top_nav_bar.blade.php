@@ -7,11 +7,11 @@
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{route('admin_dashboard')}}" class="nav-link">Home</a>
         </li>
-        @if(Auth::user()->access == 1)
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{route('view-users')}}" class="nav-link">Users</a>
-        </li>
-        @endif
+        @can('menu-access-control', 'users')
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{route('view-users')}}" class="nav-link">Users</a>
+            </li>
+        @endcan
     </ul>
 
     <!-- SEARCH FORM -->
