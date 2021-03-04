@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use \App\Helper\Helper;
 
 class GuestController extends Controller
 {
@@ -30,33 +31,65 @@ class GuestController extends Controller
             'email' => 'required|unique:users',
             'fullname' => 'required',
             'tpin' => 'required',
+            'phone' => 'required',
             'municipal_id' => 'required',
             'password' => 'required',
         ]);
 
         try {
             //Verify TPIN
-            $response_tpin = checkTpin($request->municipal_id,$request->tpin);
+            $response_tpin = Helper::checkTpin($request->municipal_id,$request->tpin);
 
             //Confirm TPIN
             if ($response_tpin != 'success'){
                 return response()->json(['errors' => ['error-details' => ['Incorrect TPIN. Confirm TPIN & Municipal and Try Again!']]],422);
             }
+
             elseif($response_tpin === 'success'){
-                //Encrypted Password
-                $password = Hash::make($request->password);
+                $check_for_multiple_tpin = Helper::counterTpin($request->municipal_id,$request->tpin);
 
-                //Load Municipal Details
-                $get_municipal = "SELECT * FROM municipals WHERE municipal_db_name = ? LIMIT 1";
-                $data = DB::connection('mysql')->select($get_municipal,[$request->municipal_id]);
+                if ($check_for_multiple_tpin > 1){
+                    return response()->json(['errors' => ['error-details' => ['TPIN Used on multiple users registration. Contact Admin for support!']]],422);
+                }else{
+                    //Confirm if User With TPIN number already registered in the System
+                    $check_users = User::where('tpin',$request->tpin)->count();
+                    if ($check_users > 0){
+                        return response()->json(['errors' => ['error-details' => ['TPIN Already used on registration. Login or use forgot password to recover Account!']]],422);
+                    }else{
+                        //Encrypted Password
+                        $password = Hash::make($request->password);
 
-                //dd($data);
-                $query_save = "INSERT INTO users (fullname, email, municipal_id, tpin, password, role_id, access, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                        //Load Municipal Details
+                        $get_municipal = Municipal::where('municipal_db_name',$request->municipal_id)->first();
 
-                $user_save = DB::connection('mysql')->insert($query_save,[$request->fullname, $request->email, $data[0]->id , $request->tpin, $password, 1, 2, 1]);
+                        //dd($data);
+                        //$query_save = "INSERT INTO users (fullname, email, municipal_id, tpin, phone_number, password, role_id, access, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        // $user_save = Helper::globalMunicipalDbConnection($request->municipal_id)->insert($, 1, 2, 1]);
 
-                if($user_save){
-                    return response()->json(['email' => $request->email,'password' => $request->password]);
+                        try{
+                            //Save New User Details
+                            $save_details = new User();
+                            $save_details->fullname = $request->fullname;
+                            $save_details->email = $request->email;
+                            $save_details->municipal_id = $get_municipal->id;
+                            $save_details->tpin = $request->tpin;
+                            $save_details->phone_number = $request->phone;
+                            $save_details->password = $password;
+                            $save_details->role_id =1;
+                            $save_details->access = 2;
+                            $save_details->status = 3;
+                            $save_details->save();
+
+                           return response()->json(['email' => $request->email,'password' => $request->password]);
+
+                        }catch (\Exception $e){
+                            Log::critical($e);
+                            return response()->json(['errors' => ['error-details' => ['Something Went Wrong. Please Try Again!']]],422);
+                        }
+                    }
+
+
+
                 }
             }
         }

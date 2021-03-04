@@ -112,26 +112,8 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Permanent Levy</label>
-                                            <select id="permanent_levy" name="permanent_levy" class="form-control" onchange="getLevyChannel()" required>
-                                                <option value=""> -- Default -- </option>
-                                                @for($i = 0; $i < sizeof($permanent_levy); $i++)
-                                                    <option value="{{$permanent_levy[$i]->type_id}}">{{ucfirst($permanent_levy[$i]->type_name)}}</option>
-                                                @endfor
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Permanent Levy Channels</label>
-                                            <select id="permanent_levy_channel" name="permanent_levy_channel" class="form-control" required>
-                                                <option value=""> -- Default -- </option>
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
+
                                 <div class="row">
 
                                     <div class="col-md-6">
@@ -144,6 +126,19 @@
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">House No</label>
                                             <input type="text" name="house_number" class="form-control" value="{{ old('house_number') }}" id="exampleInputEmail1" placeholder="House No" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Choose Business</label>
+                                            <select id="permanent_levy_channel" name="business_type" class="form-control" required>
+                                                <option value=""> -- Default -- </option>
+                                                @for($i = 0; $i < sizeof($permanent_levy_source); $i++)
+                                                    <option value="{{$permanent_levy_source[$i]->descr_id}}">{{ucfirst($permanent_levy_source[$i]->descrption_name)}}</option>
+                                                @endfor
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

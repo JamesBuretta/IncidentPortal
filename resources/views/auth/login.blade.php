@@ -91,7 +91,7 @@
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">
-                <img src="{{asset('images/logo.png')}}" class="image-login">
+                <img src="{{asset('images/lilongwe.jpg')}}" class="image-login">
             </p>
 
             <form id="loginform" class="login login_form"  method="POST">
@@ -136,7 +136,7 @@
 
                 <div class="social-auth-links text-center mb-3">
                     <button type="submit" class="btn btn-block btn-primary login_btn">
-                        <i class="fa fa-envelope mr-2"></i> Sign In
+                        <i class="fa fa-envelope mr-2"></i> Log In
                     </button>
                 </div>
             </form>

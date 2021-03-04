@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Licence;
 
+use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Municipal;
 use Carbon\Carbon;
@@ -20,17 +21,7 @@ class PRNRequestController extends Controller
         $municipal_details = Municipal::where('id', Auth::user()->municipal_id)->first();
 
         //Database Connection
-        Config::set("database.connections." . $municipal_details->municipal_db_name, [
-            "driver" => "mysql",
-            "port" => "3306",
-            "strict" => false,
-            "host" => "127.0.0.1",
-            "database" => $municipal_details->municipal_db_name,
-            "username" => "root",
-            "password" => ""
-        ]);
-
-        $this->db_con = DB::connection($municipal_details->municipal_db_name);
+        $this->db_con = Helper::globalMunicipalDbConnection($municipal_details->municipal_db_name);
 
         return $this->db_con;
     }

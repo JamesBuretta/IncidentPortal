@@ -3,6 +3,6 @@
         <img src="{{Auth::user()->profile == '-' ? 'images/user.png' : 'images/profiles/'.Auth::user()->profile}}" class="img-circle elevation-2" alt="User Image">
     </div>
     <div class="info">
-        <a href="#" class="d-block">{{Auth::user()->name }}</a>
+        <a href="#" class="d-block">{{Auth::user()->name ?? Auth::user()->fullname  }}</a>
     </div>
 </div>

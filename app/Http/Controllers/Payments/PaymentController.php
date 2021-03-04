@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Payments;
 
+use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Municipal;
 use Illuminate\Http\Request;
@@ -19,31 +20,11 @@ class PaymentController extends Controller
 
         if (Auth::user()->access == 2 && Auth::user()->tpin != '-' && Auth::user()->municipal_id != '-') {
             //Database Connection
-            Config::set("database.connections." . $municipal_details->municipal_db_name, [
-                "driver" => "mysql",
-                "port" => "3306",
-                "strict" => false,
-                "host" => "127.0.0.1",
-                "database" => $municipal_details->municipal_db_name,
-                "username" => "root",
-                "password" => ""
-            ]);
-
-            $this->db_con = DB::connection($municipal_details->municipal_db_name);
+            $this->db_con = Helper::globalMunicipalDbConnection($municipal_details->municipal_db_name);
         }
         else{
             //Database Connection
-            Config::set("database.connections." . $value, [
-                "driver" => "mysql",
-                "port" => "3306",
-                "strict" => false,
-                "host" => "127.0.0.1",
-                "database" => $value,
-                "username" => "root",
-                "password" => ""
-            ]);
-
-            $this->db_con = DB::connection($value);
+            $this->db_con = Helper::globalMunicipalDbConnection($value);
         }
         return $this->db_con;
     }

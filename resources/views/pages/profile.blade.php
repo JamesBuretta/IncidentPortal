@@ -77,6 +77,9 @@
                                     <b>Email</b> <a class="float-right">{{Auth::user()->email}}</a>
                                 </li>
                                 <li class="list-group-item">
+                                    <b>Phone Number</b> <a class="float-right">{{Auth::user()->phone_number}}</a>
+                                </li>
+                                <li class="list-group-item">
                                     <b>Name</b> <a class="float-right">{{Auth::user()->fullname}}</a>
                                 </li>
                                 <li class="list-group-item">
@@ -107,7 +110,7 @@
                                         <div class="row mb-3">
                                             @if(Auth::user()->access == 1)
                                             <div class="col-md-4 text-center">
-                                                <img class="img-fluid custom-profile" src="{{asset('images/logo.png')}}" alt="Photo" style="height: 200px;">
+                                                <img class="img-fluid custom-profile" src="{{asset('images/lilongwe.jpg')}}" alt="Photo" style="height: 200px;">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="alert alert-info alert-dismissible" style="margin-top: 8%;">
@@ -152,7 +155,7 @@
                                 </div>
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane" id="update_profile">
-                                    {!! Form::model(Auth::user(), ['route' => ['update_profile',Auth::user()->id],'method' => 'PUT']) !!}
+                                    {!! Form::model(Auth::user(), ['route' => ['update_profile',Auth::user()->id],'method' => 'PUT', 'files' => true]) !!}
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <div class="form-group">
@@ -162,15 +165,11 @@
                                             </div>
                                             <div class="col-md-5">
                                                 <div class="form-group">
-                                                    <label>Municipal</label>
-                                                    <select name="municipal_id" class="form-control">
-                                                        <option> -- Default -- </option>
-                                                        @foreach($municipals as $municipal)
-                                                            <option value="{{$municipal->id}}" {{(Auth::user()->municipal_id == $municipal->id)? "selected":""}}> {{$municipal->municipal_description_name}} </option>
-                                                        @endforeach
-                                                    </select>
+                                                    <label>Phone Number</label>
+                                                    {{Form::text('phone_number', null, ['placeholder' => 'Phone Number','class' => 'form-control','required' => ''])}}
                                                 </div>
                                             </div>
+
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">

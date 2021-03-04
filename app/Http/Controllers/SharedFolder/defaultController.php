@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SharedFolder;
 
+use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Municipal;
 use App\Models\Role;
@@ -22,17 +23,7 @@ class defaultController extends Controller
         $municipal_details = Municipal::where('id', Auth::user()->municipal_id)->first();
 
         //Database Connection
-        Config::set("database.connections." . $municipal_details->municipal_db_name, [
-            "driver" => "mysql",
-            "port" => "3306",
-            "strict" => false,
-            "host" => "127.0.0.1",
-            "database" => $municipal_details->municipal_db_name,
-            "username" => "root",
-            "password" => ""
-        ]);
-
-        $this->db_con = DB::connection($municipal_details->municipal_db_name);
+        $this->db_con = Helper::globalMunicipalDbConnection($municipal_details->municipal_db_name);
 
         return $this->db_con;
     }
@@ -40,9 +31,6 @@ class defaultController extends Controller
     public function dashboard(){
         $total_users = User::all()->count();
         $total_municipals = Municipal::all()->count();
-
-
-
 
         //Get Total Business & Payment's Details
         $my_business = 0;
@@ -82,11 +70,14 @@ class defaultController extends Controller
             $get_owner_details = 'SELECT * FROM tbl_distr_munic_portal_owner WHERE tin_number = ?';
             $data = $this->globalConnection()->select($get_owner_details,[Auth::user()->tpin]);
 
+           // dd($data);
             //Retrieve Business Details
-            $get_owner_business_details = 'SELECT a.business_number,a.account_status,b.descrption_name,c.main_category FROM tbl_distr_munic_portal_permanent_entity AS a
+            $get_owner_business_details = 'SELECT a.business_number,a.account_status,b.descrption_name,c.main_category
+                                           FROM tbl_distr_munic_portal_permanent_entity AS a
                                            INNER JOIN tbl_distr_munic_portal_permanent_levy_descrption AS b ON a.descr_id = b.descr_id
                                            INNER JOIN tbl_distr_munic_portal_area_fee AS c ON c.area_id = a.area_id
-                                           WHERE owner_id = ?';
+                                           WHERE a.owner_id = ?';
+
             $businesses = $this->globalConnection()->select($get_owner_business_details,[$data[0]->owner_id]);
 
             $business_details = $businesses;
@@ -94,12 +85,14 @@ class defaultController extends Controller
 
         return view('pages.profile',compact('user_roles','municipals','business_details'));
     }
+
     public function update_profile(Request $request,$user_id){
         if($request->hasfile('profile'))
         {
             $this->validate($request, [
                 'email' => 'required',
                 'fullname' => 'required',
+                'phone_number' => 'required',
                 'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
             ]);
         }
@@ -107,19 +100,21 @@ class defaultController extends Controller
             $this->validate($request, [
                 'email' => 'required',
                 'fullname' => 'required',
+                'phone_number' => 'required',
             ]);
         }
 
 
         $update_user = User::where('id',$user_id)->first();
         $update_user->fullname = $request->fullname;
+        $update_user->phone_number = $request->phone_number;
         $update_user->email = $request->email;
         if($request->hasfile('profile'))
         {
             $file = $request->file('profile');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =time().'.'.$extension;
-            $file->move(public_path('images/profiles'), $filename);
+            $file->move(public_path('images/profiles/'), $filename);
 
             $update_user->profile = $filename;
         }
@@ -137,7 +132,7 @@ class defaultController extends Controller
             'confirm_new_password' => 'required',
         ]);
 
-        if ($request->confirm_password === $request->new_password) {
+        if ($request->confirm_new_password === $request->new_password) {
             if (Hash::check($request->old_password,Auth::user()->password)) {
                 $db = User::where('id', Auth::user()->id)->update([
                     'password' => bcrypt($request->new_password)

@@ -97,7 +97,7 @@
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">
-                <img src="{{asset('images/logo.png')}}" class="image-register">
+                <img src="{{asset('images/lilongwe.jpg')}}" class="image-register">
             </p>
             <form id="registerform" class="register register_form create-account-section"  method="POST">
                 <div class="row">
@@ -145,6 +145,18 @@
                         <div class="form-group mb-3">
                             <input type="text" class="form-control" placeholder="TPIN" name="tpin" value="{{ old('tpin') }}" required>
                             @error('tpin')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mb-3">
+                            <input type="text" class="form-control" placeholder="Phone Number" name="phone" value="{{ old('phone') }}" required>
+                            @error('phone')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -333,8 +345,7 @@
                     refreshCsrf();
 
                     conPass = response;
-
-                    console.log(conPass);
+                    console.log(JSON.stringify(response));
                 },
                 error: function (jqXHR) {
                     $(".register_btn").html('<i class="fa fa-envelope mr-2"></i> Sign In');

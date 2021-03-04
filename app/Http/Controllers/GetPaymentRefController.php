@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use \App\Helper\Helper;
 
 class GetPaymentRefController extends Controller
 {
@@ -12,17 +13,7 @@ class GetPaymentRefController extends Controller
 
     public function __construct()
     {
-        Config::set("database.connections.zomba_db", [
-            "driver" => "mysql",
-            "port" => "3306",
-            "strict" => false,
-            "host" => "127.0.0.1",
-            "database" => "zomba_db",
-            "username" => "root",
-            "password" => "BCXTanzania1234567890"
-        ]);
-
-        $this->db = DB::connection('zomba_db');
+        $this->db =  Helper::globalMunicipalDbConnection('zomba_db');
     }
 
     //Get Payment reference number

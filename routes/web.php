@@ -9,6 +9,7 @@ use \App\Http\Controllers\Auth\LoginController;
 use \App\Http\Controllers\Licence\BusinessLicenceController;
 use \App\Http\Controllers\Licence\PRNRequestController;
 use \App\Http\Controllers\Payments\PaymentController;
+use \App\Http\Controllers\Business\BusinessController;
 use \App\Http\Controllers\LogsController;
 
 /*
@@ -75,6 +76,9 @@ Route::group(['middleware' => ['web','auth','admin']], function () {
     //Manage PRN
     Route::get('/request-prn', [PRNRequestController::class, 'request_prn'])->name('request_prn');
     Route::post('/request-prn/server', [PRNRequestController::class, 'business_request_prn'])->name('business_request_prn');
+
+    //View Business
+    Route::get('/business-list', [BusinessController::class, 'view_business'])->name('view-business');
 
     //Payment's
     Route::get('/payments', [PaymentController::class, 'payments_information'])->name('payments_info');

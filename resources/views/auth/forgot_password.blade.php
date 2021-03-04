@@ -37,7 +37,7 @@
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">
-                <img src="{{asset('images/logo.png')}}" class="image-login">
+                <img src="{{asset('images/lilongwe.jpg')}}" class="image-login">
             </p>
 
             <form method="POST" action="{{ route('login') }}">

@@ -141,6 +141,15 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                <input type="checkbox" name="logs" class="custom-control-input" id="customSwitch8" {{(in_array('view_business',$access_array)
+                                                ? 'checked' : '')}}>
+                                                <label class="custom-control-label" for="customSwitch8">Business List</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                                 <input type="checkbox" name="logs" class="custom-control-input" id="customSwitch8" {{(in_array('logs',$access_array)
                                                 ? 'checked' : '')}}>
                                                 <label class="custom-control-label" for="customSwitch8">Log's</label>

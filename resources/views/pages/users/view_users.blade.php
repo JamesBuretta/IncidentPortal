@@ -64,6 +64,7 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>Phone Number</th>
                                         <th>Access</th>
                                         <th>Municipal</th>
                                         <th>Status</th>
@@ -77,6 +78,7 @@
                                             <td>{{$counter}}</td>
                                             <td>{{ucwords($user->fullname)}}</td>
                                             <td>{{$user->email}}</td>
+                                            <td>{{$user->phone_number}}</td>
                                             <td>{{ucfirst($user->portalAccess['access_name'])}}</td>
                                             <td>{{($user->municipal_id == '-') ? "-" : $user->municipal['municipal_description_name']}}</td>
                                             <td>{!! ($user->status == 1) ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Disabled</span>'  !!}</td>
@@ -166,7 +168,7 @@
                                                                         <div class="col-md-7">
                                                                             <div class="form-group">
                                                                                 <label>Municipal</label>
-                                                                                <select name="municipal_id" class="form-control" required>
+                                                                                <select name="municipal_id" class="form-control">
                                                                                     <option value=""> -- Default -- </option>
                                                                                     @foreach($municipals as $municipal)
                                                                                         <option value="{{$municipal->id}}" {{($user->municipal_id == $municipal->id)? "selected":""}}> {{$municipal->municipal_description_name}} </option>

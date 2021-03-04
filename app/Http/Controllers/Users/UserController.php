@@ -42,6 +42,8 @@ class UserController extends Controller
         ($request->manage_prn == 'on') ? ($access_string .= '#manage_prn') : '';
         //Manage Licence
         ($request->manage_licence == 'on') ? ($access_string .= '#manage_licence') : '';
+
+        ($request->view_business == 'on') ? ($access_string .= '#view_business') : '';
         //Manage Logs Access
         ($request->logs == 'on') ? ($access_string .= '#logs') : '';
 
@@ -62,7 +64,7 @@ class UserController extends Controller
             //Register Default Access
             $new_access = new MenuAccess();
             $new_access->user_id = $user_id;
-            $new_access->access_menu = 'profile#payment_history#manage_prn#manage_licence';
+            $new_access->access_menu = 'profile#payment_history#manage_prn#manage_licence#view_business';
             $new_access->save();
         }
 
@@ -86,7 +88,7 @@ class UserController extends Controller
         ];
         Mail::send('mails.recover_password', $data, function($message) use ($email) {
             $message->to($email, 'Support')->subject("Citizen Portal - Password Recover");
-            $message->from('mailsendernotification@gmail.com',"Citizen Portal - Password Recover");
+            $message->from('municipalnotification@gmail.com',"Citizen Portal - Password Recover");
         });
 
         if (Mail::failures()) {
@@ -128,6 +130,7 @@ class UserController extends Controller
        $add_user->municipal_id = ($request->role_id == 1) ? '-' : $request->municipal_id;
        $add_user->password = bcrypt(123456);
        $add_user->status = 1;
+       $add_user->access = ($request->role_id == 1) ? 1 : 2;
 
         if($request->hasfile('profile'))
         {
@@ -152,7 +155,6 @@ class UserController extends Controller
                 'fullname' => 'required',
                 'access' => 'required',
                 'account_status' => 'required',
-                'municipal_id' => 'required',
                 'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
             ]);
         }
@@ -161,7 +163,6 @@ class UserController extends Controller
                 'email' => 'required',
                 'fullname' => 'required',
                 'account_status' => 'required',
-                'municipal_id' => 'required',
                 'access' => 'required',
             ]);
         }
@@ -171,7 +172,7 @@ class UserController extends Controller
         $add_user->fullname = $request->fullname;
         $add_user->email = $request->email;
         $add_user->access = $request->access;
-        $add_user->municipal_id = ($request->role_id == 1) ? '-' : $request->municipal_id;
+        $add_user->municipal_id = ($add_user->role_id == 1) ? '-' : $request->municipal_id;
         $add_user->password = bcrypt(123456);
         $add_user->status = $request->account_status;
 
@@ -187,7 +188,7 @@ class UserController extends Controller
 
         $add_user->save();
 
-        Session::flash('success','User Added Successfully');
+        Session::flash('success','User Information Updated Successfully');
         return redirect()->back();
     }
 

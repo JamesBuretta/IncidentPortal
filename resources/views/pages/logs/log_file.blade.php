@@ -92,7 +92,7 @@
       function getLogs(){
           //Refresh Csrf Token
           $.ajax({
-              url: "http://127.0.0.1:8000/admin/api/log-reader",
+              url: "{{env('LOG_URL').'/admin/api/log-reader'}}",
               type: 'get',
               dataType: 'json',
               beforeSend: function () {
@@ -134,7 +134,7 @@
       function removeLogs(){
           //Refresh Csrf Token
           $.ajax({
-              url: "http://127.0.0.1:8000/admin/log-reader",
+              url: "{{env('LOG_URL').'/admin/log-reader'}}",
               type: 'POST',
               data: {"clear":true},
               success: function (result) {
@@ -147,7 +147,7 @@
                   })
 
                   //Reload Logs
-                  getLogs();
+                  location.reload();
               },
               error: function (xhr, status, error) {
                   console.log(xhr);

@@ -41,7 +41,7 @@ class AuthServiceProvider extends ServiceProvider
                     //Register Default Access
                     $new_access = new MenuAccess();
                     $new_access->user_id = $user->id;
-                    $new_access->access_menu = 'profile#payment_history#manage_prn#manage_licence';
+                    $new_access->access_menu = 'profile#payment_history#manage_prn#manage_licence#view_business';
                     $new_access->save();
                 }
 
@@ -55,6 +55,17 @@ class AuthServiceProvider extends ServiceProvider
                 }else{
                     return false;
                 }
+            }
+        });
+
+        Gate::define('admin-access', function ($user) {
+            //Admin Menu Access
+            if ($user->portalAccess['access_name'] == 'user'){
+                //Dennie All Access
+                return  false;
+            }
+            else{
+               return true;
             }
         });
     }
