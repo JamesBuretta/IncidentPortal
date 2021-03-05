@@ -10,6 +10,7 @@ use \App\Http\Controllers\Licence\BusinessLicenceController;
 use \App\Http\Controllers\Licence\PRNRequestController;
 use \App\Http\Controllers\Payments\PaymentController;
 use \App\Http\Controllers\Business\BusinessController;
+use \App\Http\Controllers\FAQ\FAQController;
 use \App\Http\Controllers\LogsController;
 
 /*
@@ -79,9 +80,18 @@ Route::group(['middleware' => ['web','auth','admin']], function () {
 
     //View Business
     Route::get('/business-list', [BusinessController::class, 'view_business'])->name('view-business');
+    Route::get('/business/details/{id}', [BusinessController::class, 'view_single_business'])->name('view_single_business');
 
     //Payment's
     Route::get('/payments', [PaymentController::class, 'payments_information'])->name('payments_info');
+    Route::get('/payments/history/graph', [PaymentController::class, 'load_payment_graph_data'])->name('load_payment_graph_data');
+
+    //FAQ Routes
+    Route::get('/add/faq', [FAQController::class, 'add_new_faq'])->name('add_new_faq');
+    Route::get('/view/added/faq', [FAQController::class, 'view_added_faq'])->name('view_added_faq');
+    Route::get('/view/faq', [FAQController::class, 'view_user_faq'])->name('view_user_faq');
+    Route::get('/load/faq/{filter}', [FAQController::class, 'load_faq_data'])->name('load_faq_data');
+    Route::post('/save/new/faq', [FAQController::class, 'save_new_faq'])->name('save-new-faq');
 });
 
 Route::group(['middleware' => ['auth']], function () {

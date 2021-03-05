@@ -29,19 +29,14 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('menu-access-control', function ($user,$menu_name) {
-            //User Access
-            if ($user->portalAccess['access_name'] == 'superadmin'){
-                //Allow All Access
-                return  true;
-            }
-            else{
+
                 //Check User Access
                 $access_check = MenuAccess::where('user_id',$user->id)->count();
                 if($access_check == 0){
                     //Register Default Access
                     $new_access = new MenuAccess();
                     $new_access->user_id = $user->id;
-                    $new_access->access_menu = 'profile#payment_history#manage_prn#manage_licence#view_business';
+                    $new_access->access_menu = ($user->role_id == 1) ?  'profile#manage_settings#manage_users#manage_municipals#logs#manage_settings#manage_faq' : 'profile#payment_history#manage_prn#manage_licence#view_business#faq';
                     $new_access->save();
                 }
 
@@ -55,7 +50,6 @@ class AuthServiceProvider extends ServiceProvider
                 }else{
                     return false;
                 }
-            }
         });
 
         Gate::define('admin-access', function ($user) {

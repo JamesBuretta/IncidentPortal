@@ -92,11 +92,11 @@
                                                 <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#update_user_{{$user->id}}">
                                                     <i class="fa fa-edit" style="margin: 0;"></i>
                                                 </button>
-                                                @if($user->portalAccess['access_name'] != 'superadmin')
-                                                    <a href="{{route('user_access',$user->id)}}" class="btn btn-primary btn-sm">
-                                                        <i class="fa fa-eye" style="margin: 0;"></i>
-                                                    </a>
-                                                @endif
+
+                                                <a href="{{route('user_access',$user->id)}}" class="btn btn-primary btn-sm">
+                                                    <i class="fa fa-eye" style="margin: 0;"></i>
+                                                </a>
+
                                                 <!-- Modal -->
                                                 {!! Form::model($user, ['route' => ['user_password_reset',$user->id],'method' => 'PUT']) !!}
                                                 <div class="modal fade" id="change_pass_{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="modalFormStyle1Label" aria-hidden="true">
@@ -174,6 +174,20 @@
                                                                                         <option value="{{$municipal->id}}" {{($user->municipal_id == $municipal->id)? "selected":""}}> {{$municipal->municipal_description_name}} </option>
                                                                                     @endforeach
                                                                                 </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label>TPIN</label>
+                                                                                {{Form::text('tpin', null, ['placeholder' => 'TPIN','class' => 'form-control','required' => ''])}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-8">
+                                                                            <div class="form-group">
+                                                                                <label>Phone Number</label>
+                                                                                {{Form::text('phone_number', null, ['placeholder' => 'Phone Number','class' => 'form-control','required' => ''])}}
                                                                             </div>
                                                                         </div>
                                                                     </div>

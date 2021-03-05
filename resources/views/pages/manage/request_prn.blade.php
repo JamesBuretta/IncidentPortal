@@ -66,7 +66,7 @@
                             @if($available_details > 0)
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-valign-middle">
+                                    <table  id="example1" class="table table-striped table-valign-middle">
                                         <thead>
                                         <tr>
                                             <th>#</th>

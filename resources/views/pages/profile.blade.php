@@ -121,9 +121,10 @@
                                             </div>
                                             @else
                                               <div class="col-md-12">
-                                                  <h4 style="text-align: center;">Registered Business</h4>
+                                                  <h4 style="text-align: center;">Active Registered Business</h4>
+                                                  <hr/>
                                                 <div class="table-responsive">
-                                                    <table class="table table-striped table-valign-middle">
+                                                    <table id="example1" class="table table-striped table-valign-middle">
                                                         <thead>
                                                         <tr>
                                                             <th>Business Number</th>
@@ -134,12 +135,14 @@
                                                         </thead>
                                                         <tbody>
                                                         @foreach($business_details as $details)
-                                                        <tr>
-                                                            <td><a href="#">{{$details->business_number}}</a></td>
-                                                            <td>{{$details->descrption_name}}</td>
-                                                            <td>{{$details->main_category}}</td>
-                                                            <td><span class="badge {{($details->account_status == 1) ? 'badge-info' : 'badge-warning'}}">{{($details->account_status == 1) ? 'Active' : 'Pending'}}</span></td>
-                                                        </tr>
+                                                            @if($details->account_status == 1)
+                                                            <tr>
+                                                                <td><a href="#">{{$details->business_number}}</a></td>
+                                                                <td>{{$details->descrption_name}}</td>
+                                                                <td>{{$details->main_category}}</td>
+                                                                <td><span class="badge {{($details->account_status == 1) ? 'badge-info' : 'badge-warning'}}">{{($details->account_status == 1) ? 'Active' : 'Pending'}}</span></td>
+                                                            </tr>
+                                                           @endif
                                                         @endforeach
                                                         </tbody>
                                                     </table>

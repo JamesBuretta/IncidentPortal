@@ -53,7 +53,17 @@
                     <!-- general form elements -->
                     <div class="card card-info card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">View Municipal's</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="card-title"  style="padding-top: 5px;">View Municipal's</h3>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a href="{{route('add-municipals')}}" class="btn btn-info">
+                                        Add New
+                                    </a>
+                                </div>
+                            </div>
+
                         </div>
                         <!-- /.card-header -->
                         <div class="row" style="margin: 10px;">

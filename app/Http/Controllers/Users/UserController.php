@@ -42,12 +42,16 @@ class UserController extends Controller
         ($request->manage_prn == 'on') ? ($access_string .= '#manage_prn') : '';
         //Manage Licence
         ($request->manage_licence == 'on') ? ($access_string .= '#manage_licence') : '';
-
+        //View My Business
         ($request->view_business == 'on') ? ($access_string .= '#view_business') : '';
         //Manage Logs Access
         ($request->logs == 'on') ? ($access_string .= '#logs') : '';
-
-
+        //View FAQ Access
+        ($request->faq == 'on') ? ($access_string .= '#faq') : '';
+        //Manage FAQ Access
+        ($request->manage_faq == 'on') ? ($access_string .= '#manage_faq') : '';
+        //System Setting's
+        ($request->manage_settings == 'on') ? ($access_string .= '#manage_settings') : '';
 
         //Update Access Values
         $update_access = MenuAccess::where('user_id',$user_id)->first();
@@ -60,11 +64,12 @@ class UserController extends Controller
     public function user_access($user_id){
         //User Access Details
         $access_check = MenuAccess::where('user_id',$user_id)->count();
+        $user_details = User::where(['id' => $user_id])->first();
         if($access_check == 0){
             //Register Default Access
             $new_access = new MenuAccess();
             $new_access->user_id = $user_id;
-            $new_access->access_menu = 'profile#payment_history#manage_prn#manage_licence#view_business';
+            $new_access->access_menu =  ($user_details->role_id == 1) ?  'profile#manage_settings#manage_users#manage_municipals#logs#manage_settings#manage_faq' : 'profile#payment_history#manage_prn#manage_licence#view_business#faq';
             $new_access->save();
         }
 
@@ -144,6 +149,20 @@ class UserController extends Controller
 
         $add_user->save();
 
+        //Save Access For New User
+        $last_added_user = User::where(['email' => $request->email,'fullname' => $request->fullname])->first();
+
+        //User Access Details
+        $access_check = MenuAccess::where('user_id',$last_added_user->id)->count();
+        if($access_check == 0){
+            //Register Default Access
+            $new_access = new MenuAccess();
+            $new_access->user_id = $last_added_user->id;
+            $new_access->access_menu = ($request->role_id == 1) ?  'profile#manage_settings#manage_users#manage_municipals#logs#manage_settings#manage_faq' : 'profile#payment_history#manage_prn#manage_licence#view_business#faq';
+            $new_access->save();
+        }
+
+
         Session::flash('success','User Added Successfully');
         return redirect()->back();
     }
@@ -153,6 +172,8 @@ class UserController extends Controller
             $this->validate($request, [
                 'email' => 'required',
                 'fullname' => 'required',
+                'tpin' => 'required',
+                'phone_number' => 'required',
                 'access' => 'required',
                 'account_status' => 'required',
                 'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -162,6 +183,8 @@ class UserController extends Controller
             $this->validate($request, [
                 'email' => 'required',
                 'fullname' => 'required',
+                'tpin' => 'required',
+                'phone_number' => 'required',
                 'account_status' => 'required',
                 'access' => 'required',
             ]);
@@ -171,6 +194,8 @@ class UserController extends Controller
         $add_user = User::where('id',$user_id)->first();
         $add_user->fullname = $request->fullname;
         $add_user->email = $request->email;
+        $add_user->tpin = $request->tpin;
+        $add_user->phone_number = $request->phone_number;
         $add_user->access = $request->access;
         $add_user->municipal_id = ($add_user->role_id == 1) ? '-' : $request->municipal_id;
         $add_user->password = bcrypt(123456);

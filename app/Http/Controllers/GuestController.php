@@ -77,7 +77,7 @@ class GuestController extends Controller
                             $save_details->password = $password;
                             $save_details->role_id =1;
                             $save_details->access = 2;
-                            $save_details->status = 3;
+                            $save_details->status = 1;
                             $save_details->save();
 
                            return response()->json(['email' => $request->email,'password' => $request->password]);

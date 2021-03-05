@@ -31,6 +31,16 @@
                 </a>
             </li>
         @endcan
+        @can('menu-access-control', 'faq')
+            <li class="nav-item">
+                <a href="{{route('view_user_faq')}}" class="nav-link">
+                    <i class="nav-icon fas fa-briefcase"></i>
+                    <p>
+                        FAQ
+                    </p>
+                </a>
+            </li>
+        @endcan
         @can('menu-access-control', 'manage_users')
             <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
@@ -56,31 +66,36 @@
                 </ul>
             </li>
            @endcan
-           @can('menu-access-control', 'manage_municipals')
+        @can('menu-access-control', 'manage_settings')
             <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="nav-icon fa fa-cogs"></i>
                     <p>
-                        Municipals
+                        Setting's
                         <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
+                    @can('menu-access-control', 'manage_faq')
                     <li class="nav-item">
-                        <a href="{{route('add-municipals')}}" class="nav-link">
+                        <a href="{{route('add_new_faq')}}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Add New</p>
+                            <p>Manage FAQ</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{route('view-municipals')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>View All</p>
-                        </a>
-                    </li>
+                    @endcan
+                    @can('menu-access-control', 'manage_municipals')
+                        <li class="nav-item">
+                            <a href="{{route('view-municipals')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Manage Municipal's</p>
+                            </a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
         @endcan
+
 
         <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
