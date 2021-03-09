@@ -76,7 +76,7 @@
                                             <th>PRN</th>
                                             <th>Payment</th>
                                             <th>Area</th>
-                                            <th>Status</th>
+                                            <th>Business Status</th>
                                             <th></th>
                                         </tr>
                                         </thead>
@@ -85,7 +85,7 @@
                                         @for($i = 0; $i < sizeof($business_details); $i++)
                                             <tr>
                                                 <td>{{$counter}}</td>
-                                                <td><a href="#">{{$business_details[$i]['business_number']}}</a></td>
+                                                <td><a href="{{route('view_single_business',[$business_details[$i]['entity_id']])}}">{{$business_details[$i]['business_number']}}</a></td>
                                                 <td>{{$business_details[$i]['registration_name']}}</td>
                                                 <td>{{$business_details[$i]['description_name']}}</td>
                                                 <td>{{$business_details[$i]['PRN']}}</td>
@@ -94,8 +94,8 @@
                                                 </td>
                                                 <td>{{$business_details[$i]['location']}}</td>
                                                 <td>
-                                                    <span class="badge {{($business_details[$i]['account_status'] == 1) ? 'bg-success' : 'bg-warning'}}">
-                                                        {{($business_details[$i]['account_status'] == 1) ? 'Active' : 'Pending'}}
+                                                    <span class="badge {{($business_details[$i]['account_status'] == 1) ? 'bg-success' : 'bg-danger'}}">
+                                                        {{($business_details[$i]['account_status'] == 1) ? 'Active' : 'In-Active'}}
                                                     </span>
                                                 </td>
                                                 <td>

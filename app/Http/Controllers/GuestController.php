@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use \App\Helper\Helper;
+use \App\Helper\helper;
 
 class GuestController extends Controller
 {
@@ -38,7 +38,7 @@ class GuestController extends Controller
 
         try {
             //Verify TPIN
-            $response_tpin = Helper::checkTpin($request->municipal_id,$request->tpin);
+            $response_tpin = helper::checkTpin($request->municipal_id,$request->tpin);
 
             //Confirm TPIN
             if ($response_tpin != 'success'){
@@ -46,7 +46,7 @@ class GuestController extends Controller
             }
 
             elseif($response_tpin === 'success'){
-                $check_for_multiple_tpin = Helper::counterTpin($request->municipal_id,$request->tpin);
+                $check_for_multiple_tpin = helper::counterTpin($request->municipal_id,$request->tpin);
 
                 if ($check_for_multiple_tpin > 1){
                     return response()->json(['errors' => ['error-details' => ['TPIN Used on multiple users registration. Contact Admin for support!']]],422);
@@ -64,7 +64,7 @@ class GuestController extends Controller
 
                         //dd($data);
                         //$query_save = "INSERT INTO users (fullname, email, municipal_id, tpin, phone_number, password, role_id, access, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                        // $user_save = Helper::globalMunicipalDbConnection($request->municipal_id)->insert($, 1, 2, 1]);
+                        // $user_save = helper::globalMunicipalDbConnection($request->municipal_id)->insert($, 1, 2, 1]);
 
                         try{
                             //Save New User Details
@@ -75,7 +75,7 @@ class GuestController extends Controller
                             $save_details->tpin = $request->tpin;
                             $save_details->phone_number = $request->phone;
                             $save_details->password = $password;
-                            $save_details->role_id =1;
+                            $save_details->role_id =2;
                             $save_details->access = 2;
                             $save_details->status = 1;
                             $save_details->save();

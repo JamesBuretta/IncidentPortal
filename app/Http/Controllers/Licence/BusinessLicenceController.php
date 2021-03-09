@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use \App\Helper\Helper;
+use \App\Helper\helper;
 
 class BusinessLicenceController extends Controller
 {
@@ -22,7 +22,7 @@ class BusinessLicenceController extends Controller
         $municipal_details = Municipal::where('id', Auth::user()->municipal_id)->first();
 
         //Database Connection
-        $this->db_con = Helper::globalMunicipalDbConnection($municipal_details->municipal_db_name);
+        $this->db_con = helper::globalMunicipalDbConnection($municipal_details->municipal_db_name);
 
         return $this->db_con;
     }

@@ -94,6 +94,21 @@
                 <img src="{{asset('images/lilongwe.jpg')}}" class="image-login">
             </p>
 
+            @if(session('fail'))
+                <script>
+                    setTimeout(() => {
+                        toastr.error('This credentials do not match our records');
+                    },500);
+                </script>
+            @endif
+            @if ($errors->any())
+                <script>
+                    setTimeout(() => {
+                        toastr.error('This credentials do not match our records');
+                    },500);
+                </script>
+            @endif
+
             <form id="loginform" class="login login_form"  method="POST">
                 <div class="input-group mb-3">
                     <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}" required>

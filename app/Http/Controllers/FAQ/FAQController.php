@@ -10,8 +10,9 @@ use Illuminate\Support\Facades\Session;
 
 class FAQController extends Controller
 {
-    public function add_new_faq(){
-        return view('pages.faq.add_faq');
+    public function manage_faq(){
+        $faqs = FAQ::all();
+        return view('pages.faq.manage_faq',compact('faqs'));
     }
 
     public function view_added_faq(){
@@ -20,6 +21,28 @@ class FAQController extends Controller
 
     public function view_user_faq(){
         return view('pages.faq.view_user_faq');
+    }
+
+    public function update_faq_details(Request $request, $faq_id){
+        $this->validate($request, [
+            'title' => 'required',
+            'answer' => 'required',
+        ]);
+
+        $update_faq = FAQ::where(['id' => $faq_id])->first();
+        $update_faq->title = $request->title;
+        $update_faq->answer = $request->answer;
+        $update_faq->save();
+
+        Session::flash('success','FAQ Information Updated Successfully');
+        return redirect()->back();
+    }
+
+    public function remove_faq($faq_id){
+        FAQ::where('id',$faq_id)->delete();
+
+        Session::flash('success','FAQ Information Removed Successfully');
+        return redirect()->back();
     }
 
     public function save_new_faq(Request $request){

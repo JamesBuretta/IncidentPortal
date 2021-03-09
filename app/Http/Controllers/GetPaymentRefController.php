@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use \App\Helper\Helper;
+use \App\Helper\helper;
 
 class GetPaymentRefController extends Controller
 {
@@ -13,7 +13,7 @@ class GetPaymentRefController extends Controller
 
     public function __construct()
     {
-        $this->db =  Helper::globalMunicipalDbConnection('zomba_db');
+        $this->db =  helper::globalMunicipalDbConnection('zomba_db');
     }
 
     //Get Payment reference number

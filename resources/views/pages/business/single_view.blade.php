@@ -70,7 +70,7 @@
                                         <b>Business Category</b> <a class="float-right">{{$business_details[0]->descrption_name}}</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>Business Account Status</b> <a class="float-right"><span class="badge {{($business_details[0]->account_status == 1) ? 'badge-info' : 'badge-warning'}}">{{($business_details[0]->account_status == 1) ? 'Active' : 'Pending'}}</span>   </a>
+                                        <b>Business Account Status</b> <a class="float-right"><span class="badge {{($business_details[0]->account_status == 1) ? 'badge-info' : 'badge-danger'}}">{{($business_details[0]->account_status == 1) ? 'Active' : 'In-Active'}}</span>   </a>
                                     </li>
                                     <li class="list-group-item">
                                         <b>Business TPIN</b> <a class="float-right">{{$business_details[0]->tin_number}}</a>

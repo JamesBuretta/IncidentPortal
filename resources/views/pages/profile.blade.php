@@ -137,7 +137,7 @@
                                                         @foreach($business_details as $details)
                                                             @if($details->account_status == 1)
                                                             <tr>
-                                                                <td><a href="#">{{$details->business_number}}</a></td>
+                                                                <td><a href="{{route('view_single_business',[$details->entity_id])}}">{{$details->business_number}}</a></td>
                                                                 <td>{{$details->descrption_name}}</td>
                                                                 <td>{{$details->main_category}}</td>
                                                                 <td><span class="badge {{($details->account_status == 1) ? 'badge-info' : 'badge-warning'}}">{{($details->account_status == 1) ? 'Active' : 'Pending'}}</span></td>
