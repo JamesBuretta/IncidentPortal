@@ -42,6 +42,16 @@
             </li>
         @endcan
 
+            <li class="nav-item">
+                <a href="{{route('sitemap')}}" class="nav-link @if(Route::is('sitemap')) active @endif">
+                    <i class="nav-icon fas fa-map"></i>
+                    <p>
+                        Sitemap
+                    </p>
+                </a>
+            </li>
+
+
         @canany('menu-access-control', ['manage_licence','manage_prn','payment_history'])
         <li class="nav-item has-treeview">
             <a href="#" class="nav-link">

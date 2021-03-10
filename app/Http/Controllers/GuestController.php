@@ -104,4 +104,9 @@ class GuestController extends Controller
         session()->regenerate();
         return response()->json(["token"=>csrf_token()],200);
     }
+
+    public function siteMap()
+    {
+        return view('pages.sitemap.view_sitemap');
+    }
 }

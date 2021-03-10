@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">View FAQ</h1>
+                    <h1 class="m-0 text-dark">View Sitemap</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -41,11 +41,14 @@
                         <!-- /.card-header -->
                         <!-- form start -->
                         <div class="card-body">
-                           <div class="container">
-                               <img src="{{ asset('images/sitemap.png') }}" alt="SITEMAP">
-                           </div>
+                            <div class="container">
+                                <div class="img-fluid">
+                                    <img src="{{ asset('images/sitemap.png') }}" style='height: 100%; width: 100%; object-fit: contain'/>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <!-- /.card -->
                 </div>
             </div>
