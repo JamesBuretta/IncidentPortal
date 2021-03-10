@@ -237,7 +237,7 @@
                     //setTimeout(() => {  },500);
                 },
                 error: function (jqXHR) {
-                    $(".login_btn").html('<i class="fa fa-envelope mr-2"></i> Sign In');
+                    $(".login_btn").html('<i class="fa fa-envelope mr-2"></i> Log In');
                     if (jqXHR.responseJSON) {
                         var errorsHtml1 = '';
 
