@@ -41,33 +41,11 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 // Authenticated User Routes...
-Route::group(['middleware' => ['web','auth','admin']], function () {
+Route::group(['middleware' => ['web','auth','user']], function () {
     Route::get('/dashboard', [defaultController::class, 'dashboard'])->name('admin_dashboard');
     Route::get('/profile', [defaultController::class, 'profile'])->name('my-profile');
     Route::put('/profile-update/{user_id}', [defaultController::class, 'update_profile'])->name('update_profile');
     Route::put('/user/credentials-update/{user_id}', [defaultController::class, 'update_credentials'])->name('update_credentials');
-
-    //Logs
-    Route::get('/system-logs', [LogsController::class, 'logs_list'])->name('logs-list');
-
-    //Users Manage Routes
-    Route::get('/add-users', [UserController::class, 'add_users'])->name('add-users');
-    Route::get('/view-users', [UserController::class, 'view_users'])->name('view-users');
-    Route::post('/save-new-user', [UserController::class, 'save_user'])->name('save-new-user');
-    Route::put('/user/update-details/{user_id}', [UserController::class, 'update_user_details'])->name('update_user_details');
-    Route::put('/user/password/reset/{user_id}', [UserController::class, 'user_password_reset'])->name('user_password_reset');
-    Route::delete('/user/remove/{user_id}', [UserController::class, 'remove_user'])->name('remove_user');
-
-    //Manage User Access
-    Route::get('/user/access/{user_id}/control', [UserController::class, 'user_access'])->name('user_access');
-    Route::put('/update/user/access/{user_id}', [UserController::class, 'update_access'])->name('update-user-access');
-
-    //Manage Municipals
-    Route::get('/add-municipal', [MunicipalController::class, 'add_municipals'])->name('add-municipals');
-    Route::get('/view-municipals', [MunicipalController::class, 'view_municipals'])->name('view-municipals');
-    Route::post('/save-municipal', [MunicipalController::class, 'save_municipal'])->name('save-new-municipal');
-    Route::put('/update-municipal/{municipal_id}', [MunicipalController::class, 'update_municipal_details'])->name('update_municipal_details');
-    Route::delete('/remove-municipal/{municipal_id}', [MunicipalController::class, 'remove_municipal'])->name('remove_municipal');
 
     //Manage Licence
     Route::get('/register-licence', [BusinessLicenceController::class, 'renew_licence'])->name('renew-licence');
@@ -87,11 +65,9 @@ Route::group(['middleware' => ['web','auth','admin']], function () {
     Route::get('/payments/history/graph', [PaymentController::class, 'load_payment_graph_data'])->name('load_payment_graph_data');
 
     //FAQ Routes
-    Route::get('/add/faq', [FAQController::class, 'add_new_faq'])->name('add_new_faq');
     Route::get('/view/added/faq', [FAQController::class, 'view_added_faq'])->name('view_added_faq');
     Route::get('/view/faq', [FAQController::class, 'view_user_faq'])->name('view_user_faq');
     Route::get('/load/faq/{filter}', [FAQController::class, 'load_faq_data'])->name('load_faq_data');
-    Route::post('/save/new/faq', [FAQController::class, 'save_new_faq'])->name('save-new-faq');
 });
 
 Route::group(['middleware' => ['auth']], function () {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Business;
 
-use App\Helper\Helper;
+use App\Helper\helper;
 use App\Http\Controllers\Controller;
 use App\Models\Municipal;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class BusinessController extends Controller
         $municipal_details = Municipal::where('id', Auth::user()->municipal_id)->first();
 
         //Database Connection
-        $this->db_con = Helper::globalMunicipalDbConnection($municipal_details->municipal_db_name);
+        $this->db_con = helper::globalMunicipalDbConnection($municipal_details->municipal_db_name);
 
         return $this->db_con;
     }

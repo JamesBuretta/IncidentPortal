@@ -78,7 +78,7 @@
                                     @for($i = 0; $i < sizeof($payments); $i++)
                                         <tr>
                                             <td>{{$counter}}</td>
-                                            <td><a href="#">{{$payments[$i]->PRN}}</a></td>
+                                            <td>{{$payments[$i]->PRN}}</td>
                                             <td>{{$payments[$i]->owner_fullname}}</td>
                                             <td>{{$payments[$i]->business_number}}</td>
                                             <td>{{$payments[$i]->amount_pay}}</td>

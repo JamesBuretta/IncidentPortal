@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\SharedFolder;
 
-use App\Helper\Helper;
+use App\Helper\helper;
 use App\Http\Controllers\Controller;
 use App\Models\Municipal;
 use App\Models\Role;
@@ -23,7 +23,7 @@ class defaultController extends Controller
         $municipal_details = Municipal::where('id', Auth::user()->municipal_id)->first();
 
         //Database Connection
-        $this->db_con = Helper::globalMunicipalDbConnection($municipal_details->municipal_db_name);
+        $this->db_con = helper::globalMunicipalDbConnection($municipal_details->municipal_db_name);
 
         return $this->db_con;
     }
@@ -72,7 +72,7 @@ class defaultController extends Controller
 
            // dd($data);
             //Retrieve Business Details
-            $get_owner_business_details = 'SELECT a.business_number,a.account_status,b.descrption_name,c.main_category
+            $get_owner_business_details = 'SELECT a.entity_id,a.business_number,a.account_status,b.descrption_name,c.main_category
                                            FROM tbl_distr_munic_portal_permanent_entity AS a
                                            INNER JOIN tbl_distr_munic_portal_permanent_levy_descrption AS b ON a.descr_id = b.descr_id
                                            INNER JOIN tbl_distr_munic_portal_area_fee AS c ON c.area_id = a.area_id

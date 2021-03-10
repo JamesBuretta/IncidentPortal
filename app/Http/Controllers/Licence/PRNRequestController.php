@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Licence;
 
-use App\Helper\Helper;
+use App\Helper\helper;
 use App\Http\Controllers\Controller;
 use App\Models\Municipal;
 use Carbon\Carbon;
@@ -21,7 +21,7 @@ class PRNRequestController extends Controller
         $municipal_details = Municipal::where('id', Auth::user()->municipal_id)->first();
 
         //Database Connection
-        $this->db_con = Helper::globalMunicipalDbConnection($municipal_details->municipal_db_name);
+        $this->db_con = helper::globalMunicipalDbConnection($municipal_details->municipal_db_name);
 
         return $this->db_con;
     }
@@ -75,6 +75,7 @@ class PRNRequestController extends Controller
 
                $temp_container[] = [
                    'entity' => Crypt::encrypt($bs->entity_id),
+                   'entity_id' => $bs->entity_id,
                    'account_status' => $bs->account_status,
                    'payment_status' => $payment_status,
                    'PRN' => ($prn == '') ? '-' : $prn,

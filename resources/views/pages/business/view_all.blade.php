@@ -77,17 +77,17 @@
                                             <th>Business Number</th>
                                             <th>Business Name</th>
                                             <th>Area</th>
-                                            <th>Status</th>
+                                            <th>Business Status</th>
                                             <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($business_details as $details)
                                             <tr>
-                                                <td><a href="#">{{$details->business_number}}</a></td>
+                                                <td>{{$details->business_number}}</td>
                                                 <td>{{$details->descrption_name}}</td>
                                                 <td>{{$details->main_category}}</td>
-                                                <td><span class="badge {{($details->account_status == 1) ? 'badge-info' : 'badge-warning'}}">{{($details->account_status == 1) ? 'Active' : 'Pending'}}</span></td>
+                                                <td><span class="badge {{($details->account_status == 1) ? 'badge-info' : 'badge-danger'}}">{{($details->account_status == 1) ? 'Active' : 'In-Active'}}</span></td>
                                                 <td>
                                                     <a href="{{route('view_single_business',[$details->entity_id])}}">
                                                         <i class="fa fa-eye"></i>
