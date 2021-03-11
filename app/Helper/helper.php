@@ -19,7 +19,7 @@ class helper {
             "host" => "127.0.0.1",
             "database" => $municipal,
             "username" => "root",
-            "password" => 'N4xiVrMqnf)A'
+            "password" => ''
         ]);
 
         return DB::connection($municipal);
