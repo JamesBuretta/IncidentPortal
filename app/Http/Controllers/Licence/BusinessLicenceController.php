@@ -28,11 +28,8 @@ class BusinessLicenceController extends Controller
     }
 
    public function renew_licence(){
-       $available_details = 0;
 
        if (Auth::user()->access == 2 && Auth::user()->tpin != '-' && Auth::user()->municipal_id != '-') {
-           $available_details = 1;
-
            $sql = "SELECT * FROM tbl_distr_munis_portal_hamlet";
            $hamlets = $this->globalConnection()->select($sql);
 
@@ -42,9 +39,7 @@ class BusinessLicenceController extends Controller
            $sql_data = "SELECT * FROM tbl_distr_munic_portal_area_fee";
            $registered_area = $this->globalConnection()->select($sql_data);
 
-           return view('pages.manage.renew_licence',compact('hamlets','permanent_levy_source','registered_area','available_details'));
-       }else{
-           return view('pages.manage.renew_licence',compact('available_details'));
+           return view('pages.manage.renew_licence',compact('hamlets','permanent_levy_source','registered_area'));
        }
    }
 

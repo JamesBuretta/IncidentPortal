@@ -63,6 +63,8 @@ Route::group(['middleware' => ['web','auth','user']], function () {
     //Payment's
     Route::get('/payments', [PaymentController::class, 'payments_information'])->name('payments_info');
     Route::get('/payments/history/graph', [PaymentController::class, 'load_payment_graph_data'])->name('load_payment_graph_data');
+    Route::get('/download/invoice/{invoiceID}', [PaymentController::class, 'download_invoice'])->name('download_invoice');
+
 
     //FAQ Routes
     Route::get('/view/added/faq', [FAQController::class, 'view_added_faq'])->name('view_added_faq');

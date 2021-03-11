@@ -53,12 +53,12 @@
                     <!-- general form elements -->
                     <div class="card card-info card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">{{($available_details > 0) ? "Payment's History" : "All Payment's History"}}</h3>
+                            <h3 class="card-title">Payment's History</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="row" style="margin: 10px;">
                             <div class="col-md-12">
-                                @if($available_details > 0)
+
                                  <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
@@ -70,7 +70,8 @@
                                         <th>Business Type</th>
                                         <th>Year</th>
                                         <th>Paid On</th>
-                                        <th width="10%">Status</th>
+                                        <th width="7%">Status</th>
+                                        <th width="7%"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -88,65 +89,19 @@
                                             <td>
                                                 <span class="badge {{($payments[$i]->pay_status == '1') ? 'bg-success' : 'bg-danger'}}">{{($payments[$i]->pay_status == '1') ? 'Paid' : 'Un-Paid'}}</span>
                                             </td>
-{{--                                            <td>--}}
-{{--                                                <button type="submit"--}}
-{{--                                                        id="request_{{$payments[$i]['entity']}}"--}}
-{{--                                                        {{($payments[$i]['PRN'] != '-' || $payments[$i]['account_status'] != 1) ? 'disabled' : '' }}--}}
-{{--                                                        {{($payments[$i]['PRN'] == '-' && $payments[$i]['account_status'] == 1) ? 'onclick=triggerConfirm('.'"'.$payments[$i]['entity'].'"'.','.$payments[$i]['business_number'].')' : '' }}--}}
-{{--                                                        class="btn btn-primary btn-block">--}}
-{{--                                                    Request--}}
-{{--                                                </button>--}}
-{{--                                            </td>--}}
+                                            <td>
+                                                @if($payments[$i]->pay_status == '1')
+                                                   <span class="badge bg-info">
+                                                      <i class="fa fa-print" onclick="downloadReport({{$payments[$i]->entity_id}})" style="padding: 2px;"></i>
+                                                   </span>
+                                                @endif
+                                            </td>
+
                                         </tr>
                                         <?php $counter++; ?>
                                     @endfor
                                     </tbody>
                                 </table>
-                                @else
-                                    <table id="example1" class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>PRN</th>
-                                            <th>Owner Name</th>
-                                            <th>Business Number</th>
-                                            <th>Amount (MK)</th>
-                                            <th>Business Type</th>
-                                            <th>Year</th>
-                                            <th>Paid On</th>
-                                            <th width="10%">Status</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php $counter = 1; ?>
-                                        @for($i = 0; $i < sizeof($payments); $i++)
-                                            <tr>
-                                                <td>{{$counter}}</td>
-                                                <td><a href="#">{{$payments[$i]->PRN}}</a></td>
-                                                <td>{{$payments[$i]->owner_fullname}}</td>
-                                                <td>{{$payments[$i]->business_number}}</td>
-                                                <td>{{$payments[$i]->amount_pay}}</td>
-                                                <td>{{$payments[$i]->descrption_name}}</td>
-                                                <td>{{\Carbon\Carbon::parse($payments[$i]->payment_date)->format('Y')}}</td>
-                                                <td>{{($payments[$i]->pay_status == '1') ? \Carbon\Carbon::parse($payments[$i]->paid_date)->format('d M, Y') : '-'}}</td>
-                                                <td>
-                                                    <span class="badge {{($payments[$i]->pay_status == '1') ? 'bg-success' : 'bg-danger'}}">{{($payments[$i]->pay_status == '1') ? 'Paid' : 'Un-Paid'}}</span>
-                                                </td>
-                                                {{--                                            <td>--}}
-                                                {{--                                                <button type="submit"--}}
-                                                {{--                                                        id="request_{{$payments[$i]['entity']}}"--}}
-                                                {{--                                                        {{($payments[$i]['PRN'] != '-' || $payments[$i]['account_status'] != 1) ? 'disabled' : '' }}--}}
-                                                {{--                                                        {{($payments[$i]['PRN'] == '-' && $payments[$i]['account_status'] == 1) ? 'onclick=triggerConfirm('.'"'.$payments[$i]['entity'].'"'.','.$payments[$i]['business_number'].')' : '' }}--}}
-                                                {{--                                                        class="btn btn-primary btn-block">--}}
-                                                {{--                                                    Request--}}
-                                                {{--                                                </button>--}}
-                                                {{--                                            </td>--}}
-                                            </tr>
-                                            <?php $counter++; ?>
-                                        @endfor
-                                        </tbody>
-                                    </table>
-                                @endif
                             </div>
                         </div>
                     </div>
@@ -156,4 +111,59 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
     </section>
+@endsection
+
+
+@section('page-script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        function refreshCsrf(){
+            //Refresh Csrf Token
+            $.ajax({
+                url: "{{route('refresh_token')}}",
+                type: 'get',
+                dataType: 'json',
+                success: function (result) {
+                    $('meta[name="csrf-token"]').attr('content', result.token);
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': result.token
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                }
+            });
+        }
+
+        function downloadReport(paymentID){
+            var url_data = '{{ route("download_invoice", ":id") }}';
+            url_data = url_data.replace(':id', paymentID);
+
+            $.ajax({
+                url: url_data,
+                type: 'GET',
+                success: function () {
+                    //Success Download Invoice
+                    setTimeout(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Download Complete'
+                        })
+                    },1000);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                }
+            });
+        }
+    </script>
 @endsection
