@@ -121,20 +121,30 @@
 
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Business Registration
+                            <a href="{{ url('register-licence') }}">
+                            Licence Registration
+                            </a>
+                            <a href="{{ url('register-licence') }}">
                             <span class="badge badge-primary badge-pill"><i class="fas fa-fax"></i></span>
+                            </a>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li  class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{{ url('request-prn') }}">
                             PRN Request
+                            </a>
+                            <a href="{{ url('request-prn') }}">
                             <span class="badge badge-primary badge-pill"><i class="fas fa-file-contract"></i></span>
+                            </a>
+
+
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li href="{{ url('request-prn') }}"class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{{ url('request-prn') }}">
                             Licence Payment
+                            </a>
+                            <a href="{{ url('request-prn') }}">
                             <span class="badge badge-primary badge-pill"><i class="fas fa-mobile"></i></span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Licence Renewal
-                            <span class="badge badge-primary badge-pill"><i class="fas fa-stamp"></i></span>
+                            </a>
                         </li>
                     </ul>
 

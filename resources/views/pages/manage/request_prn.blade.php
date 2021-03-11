@@ -99,6 +99,7 @@
                                                     </span>
                                                 </td>
                                                 <td>
+                                                    <div class="row">
                                                     <button type="submit"
                                                             id="request_{{$business_details[$i]['entity']}}"
                                                             {{($business_details[$i]['PRN'] != '-' || $business_details[$i]['account_status'] != 1) ? 'disabled' : '' }}
@@ -106,6 +107,12 @@
                                                             class="btn btn-primary btn-block">
                                                             Request
                                                     </button>
+                                                    @if($business_details[$i]['payment_status'] == 'un-paid')
+                                                            <button class="btn btn-success btn-block"  onclick="handleApprove('{{ url('request-prn',[$business_details[$i]['PRN']]) }}','{{ $business_details[$i]['PRN'] }}')" data-toggle="modal"   data-target="#approve">
+                                                                Pay
+                                                            </button>
+                                                    @endif
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <?php $counter++; ?>
@@ -132,6 +139,8 @@
             <!-- /.row -->
         </div><!-- /.container-fluid -->
     </section>
+
+    @include('dialog.approve_dialog')
 @endsection
 
 @section('page-script')
@@ -206,4 +215,17 @@
             });
         }
     </script>
+    <script>
+        function handleApprove(url,prn_number)
+        {
+            var form = document.getElementById('approveOrder');
+            var text = document.getElementById('myText1').innerHTML = "Are you sure want to make payment for Business Licence with PRN : "+prn_number+"?";
+
+            form.action = url;
+        }
+    </script>
 @endsection
+
+
+
+
