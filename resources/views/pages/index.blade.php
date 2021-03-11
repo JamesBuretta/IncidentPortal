@@ -1,5 +1,11 @@
 @extends('main_frame')
 
+@if(Route::is('dashboard'))
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+@endif
+
 @section('top-details')
     <div class="content-header">
         <div class="container-fluid">
@@ -103,7 +109,66 @@
 
                 </div>
             </div>
-           @endcan
+            @endcan
+
+            <div class="row">
+
+                <div class="col">
+
+                    <div class="header">
+                        Services
+                    </div>
+
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Business Registration
+                            <span class="badge badge-primary badge-pill"><i class="fas fa-fax"></i></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            PRN Request
+                            <span class="badge badge-primary badge-pill"><i class="fas fa-file-contract"></i></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Licence Payment
+                            <span class="badge badge-primary badge-pill"><i class="fas fa-mobile"></i></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Licence Renewal
+                            <span class="badge badge-primary badge-pill"><i class="fas fa-stamp"></i></span>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="col">
+                    <div class="header">
+                        Advertisements
+                    </div>
+                <div id="carouselExample1" class="carousel slide z-depth-1-half" data-ride="carousel" data-interval="true">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(45).jpg" alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(46).jpg" alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(47).jpg" alt="Third slide">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExample1" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExample1" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                </div>
+            </div>
+
+
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
     </section>
