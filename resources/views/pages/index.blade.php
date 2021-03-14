@@ -186,6 +186,12 @@
 
 @section('page-script')
   <script>
+      //Slideshow Setting's
+      $('.carousel').carousel({
+          interval: 3000
+      })
+
+
       //Global Variables
       var paymentBarChartGraph;
 
