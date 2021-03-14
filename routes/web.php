@@ -2,16 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SharedFolder\defaultController;
-use App\Http\Controllers\Municipal\MunicipalController;
-use App\Http\Controllers\Users\UserController;
 use \App\Http\Controllers\GuestController;
 use \App\Http\Controllers\Auth\LoginController;
 use \App\Http\Controllers\Licence\BusinessLicenceController;
 use \App\Http\Controllers\Licence\PRNRequestController;
 use \App\Http\Controllers\Payments\PaymentController;
 use \App\Http\Controllers\Business\BusinessController;
+use \App\Http\Controllers\Support\CustomerSupportController;
 use \App\Http\Controllers\FAQ\FAQController;
-use \App\Http\Controllers\LogsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +63,10 @@ Route::group(['middleware' => ['web','auth','user']], function () {
     Route::get('/payments/history/graph', [PaymentController::class, 'load_payment_graph_data'])->name('load_payment_graph_data');
     Route::get('/download/invoice/{invoiceID}', [PaymentController::class, 'download_invoice'])->name('download_invoice');
 
+    // Customer Support
+    Route::get('/contact/support', [CustomerSupportController::class, 'contact_support'])->name('contact_support');
+    Route::post('/send/message/support', [CustomerSupportController::class, 'send_message_support'])->name('send_message_support');
+    Route::get('/live/support', [CustomerSupportController::class, 'live_support'])->name('live_support');
 
     //FAQ Routes
     Route::get('/view/added/faq', [FAQController::class, 'view_added_faq'])->name('view_added_faq');

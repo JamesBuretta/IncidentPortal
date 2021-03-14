@@ -51,6 +51,31 @@
                 </a>
             </li>
 
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-headset"></i>
+                <p>
+                    Support
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{route('contact_support')}}" class="nav-link  @if(Route::is('contact_support')) active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Contact Support</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('live_support')}}" class="nav-link  @if(Route::is('live_support')) active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Live Support</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
 
         @canany('menu-access-control', ['manage_licence','manage_prn','payment_history'])
         <li class="nav-item has-treeview">
