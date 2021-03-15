@@ -91,8 +91,8 @@
                                             </td>
                                             <td>
                                                 @if($payments[$i]->pay_status == '1')
-                                                   <span class="badge bg-info">
-                                                      <i class="fa fa-print" onclick="downloadReport({{$payments[$i]->entity_id}})" style="padding: 2px;"></i>
+                                                   <span class="badge bg-info" id="print_btn_{{$payments[$i]->entity_id}}" onclick="downloadReport({{$payments[$i]->entity_id}})">
+                                                      <i class="fa fa-print" style="padding: 2px;"></i>
                                                    </span>
                                                 @endif
                                             </td>
@@ -147,20 +147,19 @@
             var url_data = '{{ route("download_invoice", ":id") }}';
             url_data = url_data.replace(':id', paymentID);
 
+            //Button Loader
+            $("#print_btn_"+paymentID).html('<i class="fa fa-spin fa-spinner" style="padding: 2px;"></i>');
+
             $.ajax({
                 url: url_data,
                 type: 'GET',
                 success: function () {
-                    //Success Download Invoice
-                    setTimeout(() => {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Download Complete'
-                        })
-                    },1000);
+                    //Restore Button Loader
+                    $("#print_btn_"+paymentID).html('<i class="fa fa-print" style="padding: 2px;"></i>');
                 },
                 error: function (xhr, status, error) {
+                    //Restore Button Loader
+                    $("#print_btn_"+paymentID).html('<i class="fa fa-print" style="padding: 2px;"></i>');
                     console.log(xhr);
                 }
             });

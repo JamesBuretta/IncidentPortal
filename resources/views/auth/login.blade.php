@@ -26,7 +26,6 @@
     <style type="text/css">
         .image-login{
             max-height: 100px;
-            border-radius: 50%;
         }
         @keyframes spinner {
             from {transform:rotate(0deg);}
