@@ -1,10 +1,11 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Client;
 use \App\Helper\helper;
 
 class GetPaymentRefController extends Controller
@@ -16,7 +17,7 @@ class GetPaymentRefController extends Controller
         $this->db =  helper::globalMunicipalDbConnection('zomba_db');
     }
 
-    //Get Payment reference number
+    //GetPayment reference number
     public function getPaymentReferenceNumber(Request $request)
     {
         $sql = "INSERT INTO tbl_distr_munic_portal_permanent_entity
@@ -39,7 +40,9 @@ class GetPaymentRefController extends Controller
         }
     }
 
-    //insert payment table
+
+
+    //insertpayment table
     public function PaymentRecords($ID)
     {
         $parenu=$this->prnGenereted();
@@ -129,6 +132,7 @@ class GetPaymentRefController extends Controller
         return $number;
     }
 
+    //verify tpin
     public function verifyTpinNumber()
     {
         $sql = "SELECT tin_number FROM tbl_distr_munic_portal_owner WHERE tin_number=?";

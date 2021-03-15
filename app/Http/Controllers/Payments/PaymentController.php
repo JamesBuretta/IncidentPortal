@@ -1,17 +1,21 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace App\Http\Controllers\Payments;
 
 use App\Helper\helper;
 use App\Http\Controllers\Controller;
+use App\Mail\PaymentMail;
 use App\Models\Municipal;
 use App\Municipals;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use PDF;
+use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
 {
@@ -75,5 +79,57 @@ class PaymentController extends Controller
         }
 
         return $payments;
+    }
+
+    //BusinessLicence
+    public function payBusinessLicence(Request $request)
+    {
+
+        try{
+
+            $prn = $request->PRN;
+
+            $phone_number = $request->phone_number;
+
+            $client = new Client();
+
+            $api_url = "https://ercis.co.tz/NitelApi/public/api/v1/mno/payment";
+
+            $response = $client->request('POST', $api_url, [
+                'body'=>$request
+            ]);
+
+            $r['data'] = json_decode($response->getBody());
+
+            return $r;
+
+        }catch (\Exception $e)
+        {
+            Session::flash('success',"Payment In Progress");
+            $this->sendPaymentMail();
+            return redirect()->back();
+
+            $response['message']=$e->getMessage();
+            $response['status']="fail";
+            return response()->json($response,401);
+        }
+    }
+
+    /*
+     * php artisan make:mail PaymentMail --markdown=emails.paymentSendMail
+
+     */
+    public function sendPaymentMail()
+    {
+        $email = 'jamesburetta39@gmail.com';
+
+        $offer = [
+            'title' => 'Payment made',
+            'url' => 'https://www.remotestack.io'
+        ];
+
+        Mail::to($email)->send(new PaymentMail($offer));
+
+
     }
 }

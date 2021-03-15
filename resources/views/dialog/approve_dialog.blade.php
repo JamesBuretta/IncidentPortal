@@ -13,9 +13,15 @@
                 <p id="myText1"></p>
             </div>
             <div class="modal-footer">
-                <form action="" method="get" id="approveOrder">
+                <form action="{{ url('pay/licence') }}" method="post" id="approveOrder">
                     @csrf
-                    @method('GET')
+                    @method('POST')
+                    <div class="form-group">
+                        <label for="name">Enter Phone Number*</label>
+                        <input type="phone" id="phone_number_id" name="phone_number"  class="form-control"/>
+                        <input type="hidden" name="PRN" id="prn_id">
+
+                    </div>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 
                     <button type="submit" id="delete_user"  class="btn btn-success">Submit</button>

@@ -38,6 +38,7 @@ Route::group(['middleware' => ['guest']], function () {
     Route::post('/auth/create/account', [GuestController::class, 'create_account'])->name('create_account');
     Route::get('/auth/password-reset', [GuestController::class, 'password_reset'])->name('auth_password_reset');
     Route::post('/auth/secure/login', [LoginController::class, 'login'])->name('login');
+
 });
 
 // Authenticated User Routes...
@@ -77,6 +78,10 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get('sitemap',[GuestController::class, 'sitemap'])->name('sitemap');
+
+Route::post('pay/licence',[PaymentController::class,'payBusinessLicence'])->name('pay/licence');
+
+
 
 
 

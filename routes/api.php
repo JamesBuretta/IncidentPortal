@@ -20,3 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/get/system-logs', [UserController::class, 'get_logs_list'])->name('get_logs_list');
+
+
