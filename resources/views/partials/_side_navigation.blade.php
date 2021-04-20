@@ -21,98 +21,136 @@
                 </a>
             </li>
         @endcan
-        @can('menu-access-control', 'view_business')
-            <li class="nav-item">
-                <a href="{{route('view-business')}}" class="nav-link @if(Route::is('view-business')) active @endif">
-                    <i class="nav-icon fas fa-briefcase"></i>
-                    <p>
-                        Business List
-                    </p>
-                </a>
-            </li>
-        @endcan
-        @can('menu-access-control', 'faq')
-            <li class="nav-item">
-                <a href="{{route('view_user_faq')}}" class="nav-link @if(Route::is('view_user_faq')) active @endif">
-                    <i class="nav-icon fas fa-question-circle"></i>
-                    <p>
-                        FAQ
-                    </p>
-                </a>
-            </li>
-        @endcan
 
-            <li class="nav-item">
-                <a href="{{route('sitemap')}}" class="nav-link @if(Route::is('sitemap')) active @endif">
-                    <i class="nav-icon fas fa-map"></i>
-                    <p>
-                        Sitemap
-                    </p>
-                </a>
-            </li>
-
-        <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fa fa-headset"></i>
-                <p>
-                    Support
-                    <i class="fas fa-angle-left right"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{route('contact_support')}}" class="nav-link  @if(Route::is('contact_support')) active @endif">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Contact Support</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{route('live_support')}}" class="nav-link  @if(Route::is('live_support')) active @endif">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Live Support</p>
-                    </a>
-                </li>
-            </ul>
-        </li>
-
-
-        @canany('menu-access-control', ['manage_licence','manage_prn','payment_history'])
         <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
                 <i class="nav-icon far fa-plus-square"></i>
                 <p>
-                    Manage
+                    Settings
                     <i class="fas fa-angle-left right"></i>
                 </p>
             </a>
             <ul class="nav nav-treeview">
-                @can('menu-access-control', 'manage_licence')
                 <li class="nav-item">
-                    <a href="{{route('renew-licence')}}" class="nav-link @if(Route::is('renew-licence')) active @endif">
+                    <a href="{{route('view_roles')}}" class="nav-link @if(Route::is('view_roles')) active @endif">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Register New Licence</p>
+                        <p>Roles</p>
                     </a>
                 </li>
-                @endcan
-                @can('menu-access-control', 'manage_prn')
+
                 <li class="nav-item">
-                    <a href="{{route('request_prn')}}" class="nav-link @if(Route::is('request_prn')) active @endif">
+                    <a href="{{route('view_stations')}}" class="nav-link @if(Route::is('view_stations')) active @endif">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Request PRN</p>
+                        <p>Stations</p>
                     </a>
                 </li>
-                @endcan
-                @can('menu-access-control', 'payment_history')
+
                 <li class="nav-item">
-                    <a href="{{route('payments_info')}}" class="nav-link @if(Route::is('payments_info')) active @endif">
+                    <a href="{{route('view-users')}}" class="nav-link @if(Route::is('view-users')) active @endif">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Payment's History</p>
+                        <p>Users</p>
                     </a>
                 </li>
-                @endcan
+
             </ul>
         </li>
-        @endcanany
+
+        @can('menu-access-control', 'profile')
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="nav-icon far fa-plus-square"></i>
+                <p>
+                    Incidents
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{route('create_incident')}}" class="nav-link @if(Route::is('create_incident')) active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Create Incident</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('view_incidents')}}" class="nav-link @if(Route::is('view_incidents')) active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View Incidents</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('view_incidents')}}" class="nav-link @if(Route::is('view_incidents')) active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Incidents Reports</p>
+                    </a>
+                </li>
+
+
+            </ul>
+        </li>
+        @endcan
+
+
+{{--        <li class="nav-item has-treeview">--}}
+{{--            <a href="#" class="nav-link">--}}
+{{--                <i class="nav-icon far fa-plus-square"></i>--}}
+{{--                <p>--}}
+{{--                    Assets--}}
+{{--                    <i class="fas fa-angle-left right"></i>--}}
+{{--                </p>--}}
+{{--            </a>--}}
+{{--            <ul class="nav nav-treeview">--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{route('create_incident')}}" class="nav-link @if(Route::is('create_incident')) active @endif">--}}
+{{--                        <i class="far fa-circle nav-icon"></i>--}}
+{{--                        <p>Create Asset</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                @can('menu-access-control', 'manage_licence')--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="{{route('view_incidents')}}" class="nav-link @if(Route::is('view_incidents')) active @endif">--}}
+{{--                            <i class="far fa-circle nav-icon"></i>--}}
+{{--                            <p>Assets</p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                @endcan--}}
+
+
+
+{{--            </ul>--}}
+{{--        </li>--}}
+
+
+{{--        <li class="nav-item has-treeview">--}}
+{{--            <a href="#" class="nav-link">--}}
+{{--                <i class="nav-icon far fa-plus-square"></i>--}}
+{{--                <p>--}}
+{{--                    Inventory--}}
+{{--                    <i class="fas fa-angle-left right"></i>--}}
+{{--                </p>--}}
+{{--            </a>--}}
+{{--            <ul class="nav nav-treeview">--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{route('create_incident')}}" class="nav-link @if(Route::is('create_incident')) active @endif">--}}
+{{--                        <i class="far fa-circle nav-icon"></i>--}}
+{{--                        <p>Create Inventory</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                @can('menu-access-control', 'manage_licence')--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="{{route('view_incidents')}}" class="nav-link @if(Route::is('view_incidents')) active @endif">--}}
+{{--                            <i class="far fa-circle nav-icon"></i>--}}
+{{--                            <p>Inventory</p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                @endcan--}}
+
+
+
+{{--            </ul>--}}
+{{--        </li>--}}
+
+
     </ul>
 </nav>

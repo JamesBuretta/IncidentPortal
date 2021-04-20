@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection ALL */
+
 namespace App\Helper;
 
 use Illuminate\Support\Facades\Config;

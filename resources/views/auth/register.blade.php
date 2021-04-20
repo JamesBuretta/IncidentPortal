@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Citizen Portal | Create Account</title>
+    <title>Incident Portal | Create Account</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
@@ -91,13 +91,13 @@
 <body class="hold-transition login-page">
 <div class="login-box register-box">
     <div class="login-logo">
-        <a href="#"><b>Citizen</b> PORTAL</a>
+        <a href="#"><b>Incidents</b> PORTAL</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">
-                <img src="{{asset('images/lilongwe.jpg')}}" class="image-register">
+                <img src="{{asset('images/simba_oil.png')}}" class="image-register">
             </p>
             <form id="registerform" class="register register_form create-account-section"  method="POST">
                 <div class="row">
@@ -119,7 +119,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-12">
                         <div class="form-group mb-3">
                             <input type="text" class="form-control" placeholder="Fullname" name="fullname" value="{{ old('fullname') }}" required>
                             @error('fullname')
@@ -129,12 +129,15 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <select name="municipal_id" class="form-control" required>
-                                <option value=""> -- Select Municipal -- </option>
-                                @foreach($municipals as $municipal)
-                                    <option value="{{$municipal->municipal_db_name}}">{{ucfirst($municipal->municipal_description_name)}}</option>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mb-3">
+                            <select name="role_id" class="form-control" required>
+                                <option value=""> -- Select Role -- </option>
+                                @foreach($roles as $role)
+                                    <option value="{{$role->id}}">{{ucfirst($role->role_name)}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -143,12 +146,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group mb-3">
-                            <input type="text" class="form-control" placeholder="TPIN" name="tpin" value="{{ old('tpin') }}" required>
-                            @error('tpin')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+                            <select name="station_id" class="form-control" required>
+                                <option value=""> -- Select Station -- </option>
+                                @foreach($stations as $station)
+                                    <option value="{{$station->id}}">{{ucfirst($station->name)}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -166,6 +169,15 @@
                 </div>
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" placeholder="Password" name="password" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="Confirm Password" name="confirm" required>
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>

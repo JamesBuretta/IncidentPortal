@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\GuestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\UserController;
@@ -15,10 +18,17 @@ use App\Http\Controllers\Users\UserController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v1'], function () {
+    Route::post('login', [ApiController::class, 'login'])->name('login');
+    Route::post('register', [ApiController::class, 'register'])->name('register');
+    Route::get('incidents',[ApiController::class,'incidents'])->name('incidents');
+    Route::get('priorities',[ApiController::class,'priorities'])->name('priorities');
+    Route::get('users',[ApiController::class,'users'])->name('users');
+    Route::post('add/incident',[ApiController::class,'storeIncident'])->name('add/incident');
+    Route::get('system_data',[ApiController::class,'systemData'])->name('system_data');
 });
 
-Route::get('/get/system-logs', [UserController::class, 'get_logs_list'])->name('get_logs_list');
+
+
 
 

@@ -346,7 +346,7 @@
         <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top: 20px;">
             <tr>
                 <td style="text-align: left; padding-right: 10px;">
-                    <p style="text-align:center;margin: 50px 10px 0 0;">&copy; <?php echo date("Y"); ?> Citizen Portal. All Rights Reserved</p>
+                    <p style="text-align:center;margin: 50px 10px 0 0;">&copy; <?php echo date("Y"); ?> Incident Portal. All Rights Reserved</p>
                 </td>
             </tr>
         </table>

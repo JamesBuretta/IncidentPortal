@@ -17,6 +17,7 @@
         "hisorange/browser-detect": "^4.3",
         "laravel/framework": "^8.12",
         "laravel/helpers": "^1.4",
+        "laravel/passport": "^10.1",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.1",
         "laravelcollective/html": "^6.2",

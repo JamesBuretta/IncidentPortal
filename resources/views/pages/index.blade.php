@@ -29,68 +29,68 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                @can('admin-access')
-                <div class="col-lg-3 col-6 connectedSortable">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>{{$total_users}}</h3>
 
-                            <p>System Users</p>
+                <div class="col-lg-3 col-3 connectedSortable">
+                    <!-- small box -->
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3>{{$inprogress}}</h3>
+
+                            <p>In Progress</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{route('view-users')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{route('view_incidents')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+
+                    <div class="col-lg-3 col-3 connectedSortable">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{$closed}}</h3>
+
+                                <p>Closed</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="{{route('view_incidents')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
                 <!-- ./col -->
+                    <div class="col-lg-3 col-3 connectedSortable">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{$cancelled}}</h3>
+
+                                <p>Cancelled</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="{{route('view_incidents')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+
                 <div class="col-md-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-success">
+                    <div class="small-box bg-primary">
                         <div class="inner">
-                            <h3>{{$total_municipals}}</h3>
+                            <h3>{{$assigned}}</h3>
 
-                            <p>Total Municipals</p>
+                            <p>Assigned</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ url('profile') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-               @endcan
-                <!-- ./col -->
-                <div class="{{ \Illuminate\Support\Facades\Gate::check('admin-access') ? 'col-md-3' : 'col-md-6' }} col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>{{$my_business}}</h3>
 
-                            <p>My Business</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="{{route('my-profile')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="{{ \Illuminate\Support\Facades\Gate::check('admin-access') ? 'col-md-3' : 'col-md-6' }}  col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>{{$my_payments}}</h3>
 
-                            <p>Payment's</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="{{route('payments_info')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
             </div>
             <!-- /.row -->
             @can('admin-access')
@@ -111,72 +111,6 @@
             </div>
             @endcan
 
-            <div class="row">
-
-                <div class="col">
-
-                    <div class="header">
-                        Services
-                    </div>
-
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <a href="{{ url('register-licence') }}">
-                            Licence Registration
-                            </a>
-                            <a href="{{ url('register-licence') }}">
-                            <span class="badge badge-primary badge-pill"><i class="fas fa-fax"></i></span>
-                            </a>
-                        </li>
-                        <li  class="list-group-item d-flex justify-content-between align-items-center">
-                            <a href="{{ url('request-prn') }}">
-                            PRN Request
-                            </a>
-                            <a href="{{ url('request-prn') }}">
-                            <span class="badge badge-primary badge-pill"><i class="fas fa-file-contract"></i></span>
-                            </a>
-
-
-                        </li>
-                        <li href="{{ url('request-prn') }}"class="list-group-item d-flex justify-content-between align-items-center">
-                            <a href="{{ url('request-prn') }}">
-                            Licence Payment
-                            </a>
-                            <a href="{{ url('request-prn') }}">
-                            <span class="badge badge-primary badge-pill"><i class="fas fa-mobile"></i></span>
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div class="col">
-                    <div class="header">
-                        Advertisements
-                    </div>
-                <div id="carouselExample1" class="carousel slide z-depth-1-half" data-ride="carousel" data-interval="true">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(45).jpg" alt="First slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(46).jpg" alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(47).jpg" alt="Third slide">
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExample1" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExample1" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                </div>
-            </div>
 
 
             <!-- /.row (main row) -->

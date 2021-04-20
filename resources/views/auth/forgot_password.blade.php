@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Citizen Portal | Password Reset</title>
+    <title>Incident Portal | Password Reset</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -31,13 +31,13 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Citizen</b> PORTAL</a>
+        <a href="#"><b>Incidents</b> PORTAL</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">
-                <img src="{{asset('images/lilongwe.jpg')}}" class="image-login">
+                <img src="{{asset('images/simba_oil.png')}}" class="image-login">
             </p>
 
             <form method="POST" action="{{ route('login') }}">

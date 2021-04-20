@@ -82,9 +82,6 @@
                                 <li class="list-group-item">
                                     <b>Name</b> <a class="float-right">{{Auth::user()->fullname}}</a>
                                 </li>
-                                <li class="list-group-item">
-                                    <b>Municipal</b> <a class="float-right">{{ (Auth::user()->municipal_id == '-') ? '-' : ucfirst(Auth::user()->municipal['municipal_description_name'])}}</a>
-                                </li>
                             </ul>
                         </div>
                         <!-- /.card-body -->
@@ -110,7 +107,7 @@
                                         <div class="row mb-3">
                                             @if(Auth::user()->access == 1)
                                             <div class="col-md-4 text-center">
-                                                <img class="img-fluid custom-profile" src="{{asset('images/lilongwe.jpg')}}" alt="Photo" style="height: 200px;">
+                                                <img class="img-fluid custom-profile" src="{{asset('images/simba_oil.png')}}" alt="Photo" style="height: 200px;">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="alert alert-info alert-dismissible" style="margin-top: 8%;">
@@ -121,28 +118,54 @@
                                             </div>
                                             @else
                                               <div class="col-md-12">
-                                                  <h4 style="text-align: center;">Active Registered Business</h4>
+                                                  <h4 style="text-align: center;">Incidents In-progress</h4>
                                                   <hr/>
                                                 <div class="table-responsive">
                                                     <table id="example1" class="table table-striped table-valign-middle">
                                                         <thead>
                                                         <tr>
-                                                            <th>Business Number</th>
-                                                            <th>Business Name</th>
-                                                            <th>Area</th>
+                                                            <th>Assigned To</th>
+                                                            <th>Caller Name</th>
+                                                            <th>Priority</th>
+                                                            <th>Impact</th>
                                                             <th>Status</th>
+                                                            <th>Opened Date</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        @foreach($business_details as $details)
-                                                            @if($details->account_status == 1)
+                                                        @foreach($incidents as $details)
                                                             <tr>
-                                                                <td><a href="{{route('view_single_business',[$details->entity_id])}}">{{$details->business_number}}</a></td>
-                                                                <td>{{$details->descrption_name}}</td>
-                                                                <td>{{$details->main_category}}</td>
-                                                                <td><span class="badge {{($details->account_status == 1) ? 'badge-info' : 'badge-warning'}}">{{($details->account_status == 1) ? 'Active' : 'Pending'}}</span></td>
-                                                            </tr>
-                                                           @endif
+                                                                <td>{{$details->assigned->fullname ?? '--'}}</td>
+                                                                <td>{{$details->callers->fullname ?? '--'}}</td>
+                                                                <td>{{$details->priorities->name ?? '--'}}</td>
+                                                                <td>{{$details->impacts->name ?? '--'}}</td>
+                                                                <td>
+                                                                    @if($details->status->id == 1)
+                                                                        <span class="badge badge-secondary text-white text-capitalize">
+                                    {{$details->status->name ?? '--'}}
+                                    </span>
+                                                                    @endif
+
+                                                                    @if($details->status->id == 2)
+                                                                        <span class="badge badge-success text-white text-capitalize">
+                                    {{$details->status->name ?? '--'}}
+                                    </span>
+                                                                    @endif
+
+                                                                    @if($details->status->id == 3)
+                                                                        <span class="badge badge-danger text-white text-capitalize">
+                                    {{$details->status->name ?? '--'}}
+                                    </span>
+                                                                    @endif
+                                                                </td>
+                                                                <td>{{$details->created_datetime ?? '--'}}</td>
+                                                                <td>
+                                                                    <div class="form-horizontal">
+                                                                        <a href="{{ url('view_incidents/'.$details->id) }}"   class="btn btn-primary">Update</a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr
                                                         @endforeach
                                                         </tbody>
                                                     </table>

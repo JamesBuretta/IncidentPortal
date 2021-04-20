@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Municipal;
+use App\Models\Role;
+use App\Models\Station;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -19,7 +21,9 @@ class GuestController extends Controller
 
     public function register_page(){
         $municipals = Municipal::all();
-        return view('auth.register',compact('municipals'));
+        $roles = Role::all();
+        $stations = Station::all();
+        return view('auth.register',compact('municipals','roles','stations'));
     }
 
     public function password_reset(){
@@ -28,53 +32,25 @@ class GuestController extends Controller
 
     public function create_account(Request $request){
         $this->validate($request, [
-            'email' => 'required|unique:users',
-            'fullname' => 'required',
-            'tpin' => 'required',
-            'phone' => 'required',
-            'municipal_id' => 'required',
-            'password' => 'required',
+            'fullname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+            'station_id' => ['required'],
+            'role_id' => ['required']
         ]);
 
         try {
-            //Verify TPIN
-            $response_tpin = helper::checkTpin($request->municipal_id,$request->tpin);
-
-            //Confirm TPIN
-            if ($response_tpin != 'success'){
-                return response()->json(['errors' => ['error-details' => ['Incorrect TPIN. Confirm TPIN & Municipal and Try Again!']]],422);
-            }
-
-            elseif($response_tpin === 'success'){
-                $check_for_multiple_tpin = helper::counterTpin($request->municipal_id,$request->tpin);
-
-                if ($check_for_multiple_tpin > 1){
-                    return response()->json(['errors' => ['error-details' => ['TPIN Used on multiple users registration. Contact Admin for support!']]],422);
-                }else{
-                    //Confirm if User With TPIN number already registered in the System
-                    $check_users = User::where('tpin',$request->tpin)->count();
-                    if ($check_users > 0){
-                        return response()->json(['errors' => ['error-details' => ['TPIN Already used on registration. Login or use forgot password to recover Account!']]],422);
-                    }else{
                         //Encrypted Password
                         $password = Hash::make($request->password);
-
-                        //Load Municipal Details
-                        $get_municipal = Municipal::where('municipal_db_name',$request->municipal_id)->first();
-
-                        //dd($data);
-                        //$query_save = "INSERT INTO users (fullname, email, municipal_id, tpin, phone_number, password, role_id, access, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                        // $user_save = helper::globalMunicipalDbConnection($request->municipal_id)->insert($, 1, 2, 1]);
 
                         try{
                             //Save New User Details
                             $save_details = new User();
                             $save_details->fullname = $request->fullname;
                             $save_details->email = $request->email;
-                            $save_details->municipal_id = $get_municipal->id;
-                            $save_details->tpin = $request->tpin;
                             $save_details->phone_number = $request->phone;
                             $save_details->password = $password;
+                            $save_details->station_id = $request->station_id;
                             $save_details->role_id =2;
                             $save_details->access = 2;
                             $save_details->status = 1;
@@ -84,14 +60,10 @@ class GuestController extends Controller
 
                         }catch (\Exception $e){
                             Log::critical($e);
-                            return response()->json(['errors' => ['error-details' => ['Something Went Wrong. Please Try Again!']]],422);
+
+                            return response()->json(['errors' => ['error-details' => [$e->getMessage()]]],422);
                         }
-                    }
 
-
-
-                }
-            }
         }
         catch (\Exception $e)
         {

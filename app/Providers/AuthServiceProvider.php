@@ -7,6 +7,7 @@ use App\Models\PortalAccess;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Auth;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -36,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
                     //Register Default Access
                     $new_access = new MenuAccess();
                     $new_access->user_id = $user->id;
-                    $new_access->access_menu = ($user->role_id == 1) ?  'profile#manage_settings#manage_users#manage_municipals#logs#manage_settings#manage_faq' : 'profile#payment_history#manage_prn#manage_licence#view_business#faq';
+                    $new_access->access_menu = ($user->role_id == 1) ?  'profile#manage_settings#manage_users#manage_municipals#logs#manage_settings#manage_faq' : 'profile#payment_history#manage_prn#manage_licence#view_business#faq#view_roles#view_stations';
                     $new_access->save();
                 }
 
@@ -62,5 +63,12 @@ class AuthServiceProvider extends ServiceProvider
                return true;
             }
         });
+
+        Passport::routes();
+
+
+        Passport::tokensExpireIn(now()->addDays(15));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
+        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
     }
 }

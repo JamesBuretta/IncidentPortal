@@ -56,7 +56,7 @@ class SupportMessageSend extends Command
                             Mail::send('mails.reset_password', ['email' =>$infos->email_address,'user_name' => $user_details->firstname. " ".$user_details->lastname, 'password' => $new_password], function($message) use ($to_address)
                             {
                                 $message->to($to_address)->subject('Customer Support');
-                                $message->from('surveying@xfrey.co.tz',"Citizen Portal System");
+                                $message->from('surveying@xfrey.co.tz',"Incident Portal System");
                             });
 
                             Log::info('Cron Password Reset successfully send email to '.$recipient);

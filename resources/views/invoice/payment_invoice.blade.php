@@ -71,7 +71,7 @@
         <tr>
             <td style="width: 50%;text-align: left;">
                 <div style="width: 100%;">
-                    Citizen Portal
+                    Incident Portal
                 </div>
             </td>
             <td style="width: 50%;text-align: right;">

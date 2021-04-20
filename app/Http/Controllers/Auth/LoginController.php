@@ -65,4 +65,8 @@ class LoginController extends Controller
             return redirect()->route("admin_dashboard");
         }
     }
+
+    public function apiLogin(Request $request)
+    {
+    }
 }

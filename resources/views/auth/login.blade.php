@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Citizen Portal | Log in</title>
+    <title>Incident Portal | Log in</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
@@ -84,13 +84,13 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Citizen</b> PORTAL</a>
+        <a href="#"><b>Incidents</b> PORTAL</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">
-                <img src="{{asset('images/lilongwe.jpg')}}" class="image-login">
+                <img src="{{asset('images/simba_oil.png')}}" width="200px"  class="image-login">
             </p>
 
             @if(session('fail'))

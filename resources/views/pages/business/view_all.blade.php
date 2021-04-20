@@ -59,7 +59,7 @@
                         <div class="row" style="margin: 10px;">
                             @if(Auth::user()->access == 1)
                                 <div class="col-md-4 text-center">
-                                    <img class="img-fluid custom-profile" src="{{asset('images/lilongwe.jpg')}}" alt="Photo" style="height: 200px;">
+                                    <img class="img-fluid custom-profile" src="{{asset('images/simba_oil.png')}}" alt="Photo" style="height: 200px;">
                                 </div>
                                 <div class="col-md-8">
                                     <div class="alert alert-info alert-dismissible" style="margin-top: 8%;">

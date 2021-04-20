@@ -6,10 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens,HasFactory, Notifiable;
 
     public function role(){
         return $this->belongsTo('App\Models\Role');
@@ -17,9 +18,10 @@ class User extends Authenticatable
     public function portalAccess(){
         return $this->belongsTo('App\Models\PortalAccess','access');
     }
-    public function municipal()
+
+    public function stations()
     {
-        return $this->belongsTo('App\Models\Municipal','municipal_id');
+        return $this->belongsTo(Station::class);
     }
     /**
      * The attributes that are mass assignable.
@@ -40,6 +42,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'access',
+        'profile',
+        'tpin',
+        'created_at',
+        'updated_at',
+        'station_id'
     ];
 
     /**

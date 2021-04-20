@@ -92,8 +92,8 @@ class UserController extends Controller
             'password'=>$generated_password,
         ];
         Mail::send('mails.recover_password', $data, function($message) use ($email) {
-            $message->to($email, 'Support')->subject("Citizen Portal - Password Recover");
-            $message->from('municipalnotification@gmail.com',"Citizen Portal - Password Recover");
+            $message->to($email, 'Support')->subject("Incident Portal - Password Recover");
+            $message->from('municipalnotification@gmail.com',"Incident Portal - Password Recover");
         });
 
         if (Mail::failures()) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SharedFolder;
 
 use App\Helper\helper;
 use App\Http\Controllers\Controller;
+use App\Models\Incident;
 use App\Models\Municipal;
 use App\Models\Role;
 use App\Models\User;
@@ -29,61 +30,21 @@ class defaultController extends Controller
     }
 
     public function dashboard(){
-        $total_users = User::all()->count();
-        $total_municipals = Municipal::all()->count();
 
-        //Get Total Business & Payment's Details
-        $my_business = 0;
-        $my_payments = 0;
-        if (Auth::user()->access == 2 && Auth::user()->tpin != '-' && Auth::user()->municipal_id != '-'){
-            //My Payment's
-            $sql1="SELECT d.hamlet_id,p.terminal_date as payment_date, p.system_date as paid_date,e.hamlet_name,p.new_licence, p.PRN, p.pay_status,p.reg_status, p.payment_number,p.amount_pay,p.extra_amount, b.descrption_name, b.amount_required_HQ, d.registration_name, d.business_number, a.owner_fullname, CASE WHEN t.area_id = 1 THEN b.amount_required_HQ WHEN t.area_id = 2 THEN b.amount_required_MINOR ELSE NULL END AS charges from tbl_distr_munic_portal_permanent_entity as d INNER JOIN tbl_distr_munic_portal_payment_records as p on p.entity_id=d.entity_id INNER JOIN tbl_distr_munic_portal_owner as a on a.owner_id=d.owner_id INNER JOIN tbl_distr_munic_portal_permanent_levy_descrption as b on b.descr_id=d.descr_id inner join tbl_distr_munic_portal_area_fee as t on t.area_id = d.area_id INNER JOIN tbl_distr_munis_portal_hamlet as e on e.hamlet_id=d.hamlet_id WHERE a.tin_number = ? ORDER BY p.payment_number DESC";
-            $payments = $this->globalConnection()->select($sql1,[Auth::user()->tpin]);
-            $my_payments = sizeof($payments);
+        $inprogress = count(Incident::where('status_id','1')->get());
+        $closed = count(Incident::where('status_id','2')->get());
+        $cancelled = count(Incident::where('status_id','3')->get());
+        $assigned = count(Incident::where('status_id','1')->where('assigned_id',Auth::user()->id)->get());
 
-            //My Business
-            $get_owner_details = 'SELECT * FROM tbl_distr_munic_portal_owner WHERE tin_number = ?';
-            $data = $this->globalConnection()->select($get_owner_details,[Auth::user()->tpin]);
-
-            //Retrieve Business Details
-            $get_owner_business_details = 'SELECT COUNT(a.business_number) as my_business FROM tbl_distr_munic_portal_permanent_entity AS a
-                                           INNER JOIN tbl_distr_munic_portal_permanent_levy_descrption AS b ON a.descr_id = b.descr_id
-                                           INNER JOIN tbl_distr_munic_portal_area_fee AS c ON c.area_id = a.area_id
-                                           WHERE owner_id = ?';
-
-            $businesses = $this->globalConnection()->select($get_owner_business_details,[$data[0]->owner_id]);
-
-            $my_business = $businesses[0]->my_business;
-        }
-
-        return view('pages.index',compact('total_users','total_municipals','my_payments','my_business'));
+        return view('pages.index',compact('inprogress','closed','cancelled','assigned'));
     }
 
     public function profile(){
         $user_roles = Role::all();
         $municipals = Municipal::all();
+        $incidents = Incident::where('assigned_id',Auth::user()->getAuthIdentifier())->get();
 
-        //Check Business Details
-        $business_details = array();
-        if (Auth::user()->access == 2 && Auth::user()->tpin != '-' && Auth::user()->municipal_id != '-'){
-
-            $get_owner_details = 'SELECT * FROM tbl_distr_munic_portal_owner WHERE tin_number = ?';
-            $data = $this->globalConnection()->select($get_owner_details,[Auth::user()->tpin]);
-
-           // dd($data);
-            //Retrieve Business Details
-            $get_owner_business_details = 'SELECT a.entity_id,a.business_number,a.account_status,b.descrption_name,c.main_category
-                                           FROM tbl_distr_munic_portal_permanent_entity AS a
-                                           INNER JOIN tbl_distr_munic_portal_permanent_levy_descrption AS b ON a.descr_id = b.descr_id
-                                           INNER JOIN tbl_distr_munic_portal_area_fee AS c ON c.area_id = a.area_id
-                                           WHERE a.owner_id = ?';
-
-            $businesses = $this->globalConnection()->select($get_owner_business_details,[$data[0]->owner_id]);
-
-            $business_details = $businesses;
-        }
-
-        return view('pages.profile',compact('user_roles','municipals','business_details'));
+        return view('pages.profile',compact('user_roles','incidents'));
     }
 
     public function update_profile(Request $request,$user_id){
