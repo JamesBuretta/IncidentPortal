@@ -20,7 +20,7 @@ use App\Http\Controllers\Users\UserController;
 
 Route::group(['prefix' => 'v1'], function () {
     Route::post('login', [ApiController::class, 'login'])->name('login');
-    Route::post('register', [ApiController::class, 'register'])->name('register');
+    Route::post('register', [ApiController::class, 'registration'])->name('register');
     Route::get('incidents',[ApiController::class,'incidents'])->name('incidents');
     Route::get('priorities',[ApiController::class,'priorities'])->name('priorities');
     Route::get('users',[ApiController::class,'users'])->name('users');

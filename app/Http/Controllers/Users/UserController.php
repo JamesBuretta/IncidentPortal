@@ -61,6 +61,8 @@ class UserController extends Controller
         Session::flash("success","User Access Updated Successfully");
         return redirect()->back();
     }
+
+
     public function user_access($user_id){
         //User Access Details
         $access_check = MenuAccess::where('user_id',$user_id)->count();
@@ -81,6 +83,8 @@ class UserController extends Controller
 
         return view('pages.access.user_access',compact('user_details','access_array'));
     }
+
+
     public function user_password_reset($user_id){
         $get_user_details = User::where("id",$user_id)->first();
         $generated_password = Str::random(8);
@@ -107,6 +111,8 @@ class UserController extends Controller
         Session::flash("success","Password Successfully Resetted");
         return redirect()->back();
     }
+
+
     public function save_user(Request $request){
         if($request->hasfile('profile'))
         {
