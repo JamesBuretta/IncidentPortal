@@ -36,7 +36,25 @@ class defaultController extends Controller
         $cancelled = count(Incident::where('status_id','3')->get());
         $assigned = count(Incident::where('status_id','1')->where('assigned_id',Auth::user()->id)->get());
 
-        return view('pages.index',compact('inprogress','closed','cancelled','assigned'));
+        $data_sets= DB::select("
+        SELECT 
+        COUNT(*) as count,
+        DATE_FORMAT(created_datetime, '%Y-%m-%d') as date 
+        FROM 
+        incidents_tracker
+        GROUP BY DATE_FORMAT(created_datetime, '%Y-%m-%d');
+        ");
+        
+        
+
+        $result[] = ['Date','Incidents'];
+        foreach ($data_sets as $key => $value) {
+            $result[++$key] = [$value->date, (int)$value->count];
+        }
+        $incidents_total_daily = json_encode($result);
+        
+
+        return view('pages.index',compact('inprogress','closed','cancelled','assigned','incidents_total_daily'));
     }
 
     public function profile(){

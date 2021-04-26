@@ -80,7 +80,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{route('view_incidents')}}" class="nav-link @if(Route::is('view_incidents')) active @endif">
+                    <a href="{{route('reports')}}" class="nav-link @if(Route::is('reports')) active @endif">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Incidents Reports</p>
                     </a>
