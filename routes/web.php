@@ -115,19 +115,22 @@ Route::group(['middleware' => ['web','auth','user']], function () {
     //Incident Management
     Route::get('view_incidents/{id}',[\App\Http\Controllers\IncidentsController::class,'edit'])->name('view_incidents');
 
-    Route::get('view_incidents',[\App\Http\Controllers\IncidentsController::class,'index'])->name('view_incidents');
+    Route::get('view_incidents',[\App\Http\Controllers\IncidentsController::class,'index'])->name('view_incidents'); 
 
     Route::get('delete_incident/{id}',[\App\Http\Controllers\IncidentsController::class,'destroy'])->name('delete_incident');;
-
+    
     Route::put('update_incident/{id}',[\App\Http\Controllers\IncidentsController::class,'update'])->name('update_incident');
-
+    
     Route::get('create_incident',[\App\Http\Controllers\IncidentsController::class,'index'])->name('create_incident');
-
+    
     Route::post('create_incident',[\App\Http\Controllers\IncidentsController::class,'store'])->name('store_incident');
-
+    
     Route::post('close',[\App\Http\Controllers\IncidentsController::class,'close'])->name('close');
-
+    
     Route::post('cancel',[\App\Http\Controllers\IncidentsController::class,'cancel'])->name('cancel');
+
+    Route::get('reports',[\App\Http\Controllers\IncidentsController::class,'report'])->name('reports');
+    Route::post('reports_filtered',[\App\Http\Controllers\IncidentsController::class,'reportfiltered'])->name('reports_filtered');
 
 });
 

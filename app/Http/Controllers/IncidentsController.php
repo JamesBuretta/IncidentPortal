@@ -318,6 +318,74 @@ class IncidentsController extends Controller
         }
     }
 
+    public function report(){
+        $impacts = Impact::all();
+        $priorities = Priority::all();
+        $status = Status::all();
+        $callers = User::all();
+
+        $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+
+            FROM incidents_tracker
+                INNER JOIN users as A on incidents_tracker.caller_id=A.id
+                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
+                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
+                INNER JOIN status as D on incidents_tracker.status_id=D.id
+                INNER JOIN priorities as E on incidents_tracker.priority_id=D.id
+            ORDER BY incidents_tracker.id DESC
+            ";
+
+        $incidents = DB::select(DB::raw($sql));
+
+        return view('incidents.report',compact('impacts','priorities','status','callers','incidents'));
+    }
+    public function reportfiltered(Request $r){
+        $impacts = Impact::all();
+        $priorities = Priority::all();
+        $status = Status::all();
+        $callers = User::all();
+
+        //date filtering
+        if(isset($r->from_date)){
+            $from_date = $r->from_date;
+        }
+        if(isset($r->to_date)){
+            $to_date = $r->to_date;
+            $to_date = $r->to_date;
+        }
+        if(isset($from_date) && isset($to_date)){
+            $from = date('Y-m-d h:i:s A', strtotime($from_date));
+            $to = date('Y-m-d h:i:s', strtotime($to_date));
+            $date_filter = "incidents_tracker.created_datetime between '$from' and '$to' ";
+        }else{
+            $date_filter = "";
+        }
+
+        
+
+
+        $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+
+            FROM incidents_tracker
+                INNER JOIN users as A on incidents_tracker.caller_id=A.id
+                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
+                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
+                INNER JOIN status as D on incidents_tracker.status_id=D.id
+                INNER JOIN priorities as E on incidents_tracker.priority_id=D.id
+            WHERE
+                $date_filter
+            ORDER BY incidents_tracker.id DESC
+            ";
+
+        $incidents = DB::select(DB::raw($sql));
+
+        return view('incidents.report',compact('impacts','priorities','status','callers',
+        'incidents', 
+        'from_date',
+        'to_date'
+        ));
+    }
+
 
 
 }
