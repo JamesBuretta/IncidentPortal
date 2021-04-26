@@ -178,14 +178,7 @@ class ApiController extends Controller
         //Insertion goes here
         try{
 
-            $old_password = User::where('id',$request->id)->get();
 
-            if($request->old_password != $old_password->password)
-            {
-                $response['status']="fail";
-                $response['message']="Incorrect Old Password!";
-                return $response;
-            }
 
             $update = User::where('id',$request->id)->update([
                 'password'=>bcrypt($request->password)
@@ -207,7 +200,7 @@ class ApiController extends Controller
         }catch (\Exception $e)
         {
             $response['status']="fail";
-            $response['message']="Oops something went wrong";
+            $response['message']=$e->getMessage();
 
             return $response;
         }
