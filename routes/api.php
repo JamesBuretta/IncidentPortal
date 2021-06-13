@@ -27,6 +27,8 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('users',[ApiController::class,'users'])->name('users');
     Route::post('add/incident',[ApiController::class,'storeIncident'])->name('add/incident');
     Route::get('system_data',[ApiController::class,'systemData'])->name('system_data');
+    Route::post('report',[ApiController::class,'appReport'])->name('report');
+
 });
 
 

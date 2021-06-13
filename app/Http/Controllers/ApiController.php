@@ -405,4 +405,44 @@ class ApiController extends Controller
 
 
     }
+
+
+    public function appReport(Request  $request)
+    {
+
+//        $sql="SELECT created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+//
+//            FROM incidents_tracker
+//                INNER JOIN users as A on incidents_tracker.caller_id=A.id
+//                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
+//                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
+//                INNER JOIN status as D on incidents_tracker.status_id=D.id
+//                INNER JOIN priorities as E on incidents_tracker.priority_id=D.id
+//            ORDER BY incidents_tracker.id DESC
+//            ";
+
+        try {
+            $sql="SELECT COUNT(status_id) as count, status_id, D.name as status
+
+            FROM incidents_tracker
+
+            INNER JOIN status as D on incidents_tracker.status_id=D.id
+
+             WHERE assigned_id=".$request->assigned_id."
+
+            GROUP BY  status_id
+            ";
+
+            $incidents = DB::select(DB::raw($sql));
+
+            return $incidents;
+        }catch (\Exception $e)
+        {
+            $response['status']="fail";
+            $response['message']=$e->getMessage();
+
+            return $response;
+        }
+
+    }
 }

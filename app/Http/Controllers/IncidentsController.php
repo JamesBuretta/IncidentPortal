@@ -22,14 +22,13 @@ class IncidentsController extends Controller
         $callers = User::all();
 
         $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
-
             FROM incidents_tracker
                 INNER JOIN users as A on incidents_tracker.caller_id=A.id
                 INNER JOIN users as B on incidents_tracker.assigned_id=B.id
                 INNER JOIN impact as C on incidents_tracker.impact_id=C.id
                 INNER JOIN status as D on incidents_tracker.status_id=D.id
-                INNER JOIN priorities as E on incidents_tracker.priority_id=D.id
-            ORDER BY incidents_tracker.id DESC
+                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+            ORDER BY incidents_tracker.created_datetime DESC
             ";
 
         $incidents = DB::select(DB::raw($sql));
@@ -361,7 +360,7 @@ class IncidentsController extends Controller
             $date_filter = "";
         }
 
-        
+
 
 
         $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
@@ -380,7 +379,7 @@ class IncidentsController extends Controller
         $incidents = DB::select(DB::raw($sql));
 
         return view('incidents.report',compact('impacts','priorities','status','callers',
-        'incidents', 
+        'incidents',
         'from_date',
         'to_date'
         ));
