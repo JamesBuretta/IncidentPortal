@@ -49,7 +49,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                @endif
+                    @endif
                     <!-- general form elements -->
                     <div class="card card-info card-outline">
                         <div class="card-header">
