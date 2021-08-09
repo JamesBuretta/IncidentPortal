@@ -216,7 +216,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <hr/>
-                        <p class="text-center">Powered By Bcx</p>
+                        <p class="text-center">Powered By Simba Logistic</p>
                     </div>
                 </div>
             </div>

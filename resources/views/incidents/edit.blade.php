@@ -136,7 +136,7 @@
                     <label for="name">Cancelling Comments</label>
                     <textarea id="w3review" name="closing_comment" id="close_value" rows="4" cols="50" class="form-control">
 
-                            {{ $incident->closing_comments }}
+                            {{ $incident->cancel_comments }}
 
                         </textarea>
                 </div>
@@ -146,7 +146,7 @@
                     <label for="name">Closing Comments</label>
                     <textarea id="w3review" name="cancel_comment" rows="4" id="cancel_value" cols="50" class="form-control" >
 
-                            {{ $incident->cancel_comments }}
+                            {{ $incident->closing_comments }}
 
                         </textarea>
                 </div>

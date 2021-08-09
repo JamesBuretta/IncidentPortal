@@ -36,7 +36,7 @@
                     <div class="inner">
                         <h3>{{$inprogress}}</h3>
 
-                        <p>In Progress</p>
+                        <p>Un Attended</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
@@ -81,7 +81,7 @@
                     <div class="inner">
                         <h3>{{$assigned}}</h3>
 
-                        <p>Assigned</p>
+                        <p>Approved</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -160,13 +160,13 @@
                         var dataset = <?php echo $incidents_total_daily; ?>;
                         console.log(dataset);
                         var data = google.visualization.arrayToDataTable(dataset);
-                       
+
 
                         var options = {
                         chart: {
                             title: 'Incidents Perfomance',
                             subtitle: 'Incidents of the past seven days.',
-                            
+
                         },
                         'backgroundColor': 'transparent',
                         };

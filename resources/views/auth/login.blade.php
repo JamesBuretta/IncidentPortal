@@ -107,8 +107,13 @@
                     },500);
                 </script>
             @endif
+{{--            id="loginform" class="login login_form"--}}
+            <form  method="POST" action="{{ route("login") }}">
 
-            <form id="loginform" class="login login_form"  method="POST">
+                @csrf
+                @if(Session::has('message'))
+                    <div class="alert alert-success" role="alert">{{ Session::get('message') }}</div>
+                @endif
                 <div class="input-group mb-3">
                     <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}" required>
                     <div class="input-group-append">

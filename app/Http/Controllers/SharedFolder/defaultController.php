@@ -31,36 +31,43 @@ class defaultController extends Controller
 
     public function dashboard(){
 
+        try{
+
         $inprogress = count(Incident::where('status_id','1')->get());
         $closed = count(Incident::where('status_id','2')->get());
         $cancelled = count(Incident::where('status_id','3')->get());
-        $assigned = count(Incident::where('status_id','1')->where('assigned_id',Auth::user()->id)->get());
+        $assigned = count(Incident::where('status_id','4')->get());
 
         $data_sets= DB::select("
-        SELECT 
+        SELECT
         COUNT(*) as count,
-        DATE_FORMAT(created_datetime, '%Y-%m-%d') as date 
-        FROM 
+        DATE_FORMAT(created_datetime, '%Y-%m-%d') as date
+        FROM
         incidents_tracker
         GROUP BY DATE_FORMAT(created_datetime, '%Y-%m-%d');
         ");
-        
-        
+
+
 
         $result[] = ['Date','Incidents'];
         foreach ($data_sets as $key => $value) {
             $result[++$key] = [$value->date, (int)$value->count];
         }
         $incidents_total_daily = json_encode($result);
-        
+
 
         return view('pages.index',compact('inprogress','closed','cancelled','assigned','incidents_total_daily'));
+        }
+        catch (\Exception $e)
+        {
+            Log::info('message',['Dashboard'=>$e->getMessage()]);
+        }
     }
 
     public function profile(){
         $user_roles = Role::all();
         $municipals = Municipal::all();
-        $incidents = Incident::where('assigned_id',Auth::user()->getAuthIdentifier())->get();
+        $incidents = Incident::where('assigned_id',Auth::id())->get();
 
         return view('pages.profile',compact('user_roles','incidents'));
     }
@@ -112,7 +119,7 @@ class defaultController extends Controller
         ]);
 
         if ($request->confirm_new_password === $request->new_password) {
-            if (Hash::check($request->old_password,Auth::user()->password)) {
+            if (Hash::check($request->old_password,Auth::password)) {
                 $db = User::where('id', Auth::user()->id)->update([
                     'password' => bcrypt($request->new_password)
                 ]);

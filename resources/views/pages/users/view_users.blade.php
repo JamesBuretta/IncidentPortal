@@ -78,7 +78,7 @@
                                             <td>{{ucfirst($user->role['role_name'])}}</td>
                                             <td>{!! ($user->status == 1) ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Disabled</span>'  !!}</td>
                                             <td>
-                                                @if($user->id != \Illuminate\Support\Facades\Auth::user()->id)
+                                                @if($user->id != Auth::user()->id)
                                                 <button type="button" class="btn btn-info btn-sm" title="Reset Password" data-toggle="modal" data-target="#change_pass_{{$user->id}}">
                                                     <i class="fa fa-key" style="margin: 0;"></i>
                                                 </button>

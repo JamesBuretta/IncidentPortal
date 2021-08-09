@@ -7,14 +7,18 @@ use App\Models\Incident;
 use App\Models\IncidentTracker;
 use App\Models\MenuAccess;
 use App\Models\Priority;
+use App\Models\Role;
 use App\Models\Station;
 use App\Models\Status;
 use App\Models\User;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ApiController extends Controller
 {
@@ -43,22 +47,66 @@ class ApiController extends Controller
             }
         }catch (\Exception $e)
         {
-            return response()->json(['status' => 'fail', 'message' => $e->getMessage()], 401);
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()], 200);
         }
     }
 
-    public function incidents()
+    public function closeIncident(Request $request)
+    {
+        try{
+
+            $status=2;
+            $close = Incident::where('id',$request->id)->update(
+                [
+                    'status_id'=>$status,
+                    'closing_comments'=>$request->comment,
+                    'closed_datetime'=>NOW(),
+                    'cancelled_datetime'=>NULL
+                ]
+            );
+
+            if($close==true)
+            {
+                $data = array();
+                $data['message']="Incident Closed successfully!";
+                $data['status']="success";
+
+                return $data;
+            }
+            else{
+                $data = array();
+                $data['message']="Incident Not Updated!";
+                $data['status']="fail";
+
+                return $data;
+            }
+
+        }catch (\Exception $e)
+        {
+            $data = array();
+            $data['message']="Oops looks like something went wrong!";
+            $data['status']="fail";
+
+            Log::info("message",['ErrorLogs'=>$e->getMessage()]);
+
+            return $data;
+        }
+    }
+
+    public function incidents($id)
     {
 
         try {
-            $sql="SELECT created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
 
             FROM incidents_tracker
+
                 INNER JOIN users as A on incidents_tracker.caller_id=A.id
                 INNER JOIN users as B on incidents_tracker.assigned_id=B.id
                 INNER JOIN impact as C on incidents_tracker.impact_id=C.id
                 INNER JOIN status as D on incidents_tracker.status_id=D.id
-                INNER JOIN priorities as E on incidents_tracker.priority_id=D.id
+                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+            WHERE assigned_id=".$id." AND incidents_tracker.status_id=4
             ORDER BY incidents_tracker.id DESC
             ";
 
@@ -73,7 +121,7 @@ class ApiController extends Controller
             return $response;
         }
 
-    }
+    }//Password@2021
 
     public function systemData()
     {
@@ -82,7 +130,9 @@ class ApiController extends Controller
             $impacts = Impact::all();
             $priorities = Priority::all();
             $status = Status::all();
-            $assigned = User::all();
+            $assigned = User::where('role_id',"4")->get();
+            $stations = Station::all();
+            $roles = Role::where('id',"2")->orWhere('id',"4")->get();
 
             $data = array();
 
@@ -90,6 +140,8 @@ class ApiController extends Controller
             $data['priorities']=$priorities;
             $data['status']=$status;
             $data['assigned']=$assigned;
+            $data['stations']=$stations;
+            $data['roles']=$roles;
 
             return $data;
 
@@ -98,6 +150,20 @@ class ApiController extends Controller
             $data = array();
             $data['message']="Oops something went wrong!";
             $data['status']="fail";
+        }
+    }
+
+    public function stations()
+    {
+        try{
+
+            $stations = Station::all();
+
+            return $stations;
+
+        }catch (\Exception $e)
+        {
+            Log::info('Log message',['Station Error'=>$e->getMessage()]);
         }
     }
 
@@ -151,6 +217,8 @@ class ApiController extends Controller
             $incident->created_datetime = NOW();
             $incident->cancelled_datetime = NUll;
             $incident->closed_datetime = NULL;
+            $incident->image = $this->
+            processImage($request->image,$request);
             $incident->save();
 
             if ($incident == true) {
@@ -161,16 +229,40 @@ class ApiController extends Controller
                 $response['message']="Incident was not added!";
             }
 
+            Log::error("ApiLogs",['request'=>$request]);
+
            return $response;
 
 
         }catch (\Exception $e)
         {
             $response['status']="fail";
-            $response['message']="Oops something went wrong";
+            $response['message']="Oops something went wrong".$e->getMessage();
+
+            Log::error("ApiLogs",['request'=>$request]);
 
             return $response;
         }
+    }
+
+    public function processImage($image,$request)
+    {
+        $imageName="";
+        try {
+            $image = $request->image;  // your base64 encoded
+            $image = str_replace('data:image/png;base64,', '', $image);
+            $image = str_replace(' ', '+', $image);
+            $imageName = str_random(10) . '.png';
+
+            Storage::disk('local')->put($imageName, base64_decode($image));
+
+            return $imageName;
+        }catch (\Exception $e)
+        {
+            Log::error("ErrorResponse",['ErrorReturned'=>$e->getMessage(), 'ErrorRequest'=>$request]);
+        }
+
+        return $imageName;
     }
 
     public function changePassword(Request $request)
@@ -361,17 +453,32 @@ class ApiController extends Controller
 
     public function registration(Request $request){
 
-        $validate = $this->validate($request, [
-                'email' => 'required',
-                'fullname' => 'required',
-                'password'=>'required',
-                'phone_number'=>'required'
-            ]);
 
-        if($validate==false)
+        if(!isset($request->email) && !isset($request->fullname) && !isset($request->password) &&
+            !isset($request->phone_number) && !isset($request->role_id) && !isset($request->station_id))
         {
             $response['status'] = 'fail';
-            $response['message'] = 'Registration Failed';
+            $response['message'] = 'All fields should be field';
+
+            return $response;
+        }
+
+
+        if($request->password!=$request->confirm_password)
+        {
+            $response['status'] = 'fail';
+            $response['message'] = 'Password mismatch';
+
+            return $response;
+        }
+
+        $email = User::where('email',$request->email)->get();
+        $phone = User::where('phone_number',$request->phone_number)->get();
+
+        if(count($email) == 1 || count($phone) == 1)
+        {
+            $response['status'] = 'fail';
+            $response['message'] = 'Email or Phone number already in use';
 
             return $response;
         }
@@ -381,7 +488,8 @@ class ApiController extends Controller
             $add_user = new User();
             $add_user->fullname = $request->fullname;
             $add_user->email = $request->email;
-            $add_user->role_id = "2";
+            $add_user->role_id = $request->role_id;
+            $add_user->station_id = $request->station_id;
             $add_user->password = bcrypt($request->password);
             $add_user->status = 1;
             $add_user->phone_number = $request->phone_number;
@@ -398,7 +506,9 @@ class ApiController extends Controller
         }catch (\Exception $e)
         {
             $response['status'] = 'fail';
-            $response['message'] = 'Oops something went wrong!';
+            $response['message'] = "Oops something went!";
+
+            Log::info('message',['Registration Error'=>$e->getMessage()]);
 
             return $response;
         }
@@ -407,28 +517,17 @@ class ApiController extends Controller
     }
 
 
-    public function appReport(Request  $request)
+    public function appReport($id)
     {
 
-//        $sql="SELECT created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
-//
-//            FROM incidents_tracker
-//                INNER JOIN users as A on incidents_tracker.caller_id=A.id
-//                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
-//                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
-//                INNER JOIN status as D on incidents_tracker.status_id=D.id
-//                INNER JOIN priorities as E on incidents_tracker.priority_id=D.id
-//            ORDER BY incidents_tracker.id DESC
-//            ";
-
         try {
-            $sql="SELECT COUNT(status_id) as count, status_id, D.name as status
+            $sql="SELECT COUNT(*) as count, status_id, D.name as status
 
             FROM incidents_tracker
 
             INNER JOIN status as D on incidents_tracker.status_id=D.id
 
-             WHERE assigned_id=".$request->assigned_id."
+            WHERE assigned_id=".$id."
 
             GROUP BY  status_id
             ";

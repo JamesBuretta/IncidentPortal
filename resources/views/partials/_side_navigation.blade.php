@@ -225,7 +225,7 @@
         </li>
 
         <li class="nav-item">
-            <a href="{{route('my-profile')}}" class="nav-link @if(Route::is('my-profile')) active @endif">
+            <a href="{{route('create_incident')}}" class="nav-link @if(Route::is('create_incident')) active @endif">
             <i class="nav-icon far fa fa-plus-circle"></i>
                 <p>
                     Create Incident
@@ -261,7 +261,7 @@
             </ul>
         </li>
 
-        
+
 
         @can('menu-access-control', 'profile')
         <li class="nav-item has-treeview">

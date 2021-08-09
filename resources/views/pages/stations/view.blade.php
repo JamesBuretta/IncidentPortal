@@ -70,7 +70,7 @@
                                     <th scope="col">Email Address</th>
                                     <th scope="col">Longitude</th>
                                     <th scope="col">Lattitude</th>
-                                    <th scope="col">station</th>
+                                    <th scope="col">Company</th>
                                     <th scope="col">Options</th>
                                 </tr>
                             </thead>

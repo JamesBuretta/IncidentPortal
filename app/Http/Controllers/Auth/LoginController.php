@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use MongoDB\Driver\Session;
 
 class LoginController extends Controller
 {
@@ -42,27 +44,40 @@ class LoginController extends Controller
 
     protected function sendLoginResponse(Request $request)
     {
-        $request->session()->regenerate();
+        try {
+            $request->session()->regenerate();
 
-        $this->clearLoginAttempts($request);
+            $this->clearLoginAttempts($request);
 
-        $check_user = User::where('email',$request->email)->count();
+            $check_user = User::where('email', $request->email)->count();
 
-        if ($check_user > 0){
-            $user_status = User::where('email',$request->email)->first();
-            if($user_status->status == 0){
-                $this->guard()->logout();
+            if ($check_user > 0) {
+                $user_status = User::where('email', $request->email)->first();
+                if ($user_status->status == 0) {
+                    $this->guard()->logout();
 
-                $request->session()->invalidate();
+                    $request->session()->invalidate();
 
-                $request->session()->regenerateToken();
+                    $request->session()->regenerateToken();
 
-                return response()->json(['errors' => ['error-details' => ['Your Account is Deactivated']]],422);
+                    return response()->json(['errors' => ['error-details' => ['Your Account is Deactivated']]], 422);
+                }
+            }else{
+                Session::flash('message', "Something went wrong");
+
+                return redirect()->route("auth_login");
             }
-        }
 
-        if($this->guard()->user()->role['role_name'] == 'admin'){
+//        if($this->guard()->user()->role['role_name'] == 'admin'){
             return redirect()->route("admin_dashboard");
+//        }
+        }catch (\Exception $e)
+        {
+            Log::info('message',['Errors'=>$e->getMessage()]);
+
+            Session::flash('message', $e->getMessage());
+
+            return redirect()->route("auth_login");
         }
     }
 

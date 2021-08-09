@@ -1,12 +1,14 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace App\Http\Controllers;
 
+use App\Models\Incident;
 use App\Models\Municipal;
 use App\Models\Role;
 use App\Models\Station;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -28,6 +30,59 @@ class GuestController extends Controller
 
     public function password_reset(){
         return view('auth.forgot_password');
+    }
+
+    public function login(Request $request)
+    {
+        try {
+
+            $request->validate([
+                'email' => 'required',
+                'password' => 'required',
+            ]);
+
+
+            $credentials = $request->only('email', 'password');
+            if (Auth::attempt($credentials)) {
+                $inprogress = count(Incident::where('status_id','1')->get());
+                $closed = count(Incident::where('status_id','2')->get());
+                $cancelled = count(Incident::where('status_id','3')->get());
+                $assigned = count(Incident::where('status_id','1')->get());
+
+
+                $data_sets= DB::select("
+        SELECT
+        COUNT(*) as count,
+        DATE_FORMAT(created_datetime, '%Y-%m-%d') as date
+        FROM
+        incidents_tracker
+        GROUP BY DATE_FORMAT(created_datetime, '%Y-%m-%d');
+        ");
+
+
+
+                $result[] = ['Date','Incidents'];
+                foreach ($data_sets as $key => $value) {
+                    $result[++$key] = [$value->date, (int)$value->count];
+                }
+                $incidents_total_daily = json_encode($result);
+
+
+                return view('pages.index',compact('inprogress','closed','cancelled','assigned','incidents_total_daily'));
+            } else{
+                $request->session()->flash('message', 'Oops something went wrong');
+
+                return redirect()->route("login");
+            }
+        }
+        catch(\Exception $e){
+
+            Log::error("message",['LoginRequest'=>$request,'Error'=>$e->getMessage()]);
+
+            $request->session()->flash('message', $e->getMessage());
+
+            return redirect()->route("login");
+        }
     }
 
     public function create_account(Request $request){

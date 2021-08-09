@@ -44,11 +44,11 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/auth/register', [GuestController::class, 'register_page'])->name('auth_register');
     Route::post('/auth/create/account', [GuestController::class, 'create_account'])->name('create_account');
     Route::get('/auth/password-reset', [GuestController::class, 'password_reset'])->name('auth_password_reset');
-    Route::post('/auth/secure/login', [LoginController::class, 'login'])->name('login');
+    Route::post('/auth/login', [GuestController::class, 'login'])->name('login');
 });
 
-// Authenticated User Routes...
-Route::group(['middleware' => ['web', 'auth', 'user']], function () {
+// Authenticated User Routes...['web', 'auth', 'user']
+Route::group(['middleware' => ['web']], function () {
     Route::get('/dashboard', [defaultController::class, 'dashboard'])->name('admin_dashboard');
     Route::get('/profile', [defaultController::class, 'profile'])->name('my-profile');
     Route::put('/profile-update/{user_id}', [defaultController::class, 'update_profile'])->name('update_profile');
@@ -65,16 +65,12 @@ Route::group(['middleware' => ['web', 'auth', 'user']], function () {
     //Manage User Access
     Route::get('/user/access/{user_id}/control', [UserController::class, 'user_access'])->name('user_access');
     Route::put('/update/user/access/{user_id}', [UserController::class, 'update_access'])->name('update-user-access');
-
-
     /**
      * New Routes
      */
     //Manage User Access
     Route::get('/companies', [CompaniesController::class, 'view_companies'])->name('view_companies');
     Route::post('/company/add', [CompaniesController::class, 'save_company'])->name('save_company');
-
-
 
     //vendors
     Route::get('/vendors', [VendorsController::class, 'view'])->name('view_vendors');
@@ -91,7 +87,7 @@ Route::group(['middleware' => ['web', 'auth', 'user']], function () {
     Route::get('/assets/edit/{asset_id}', [AssetsController::class, 'edit'])->name('edit_asset');
     Route::post('/assets/update', [AssetsController::class, 'update'])->name('update_asset');
     Route::post('/assets/delete', [AssetsController::class, 'delete'])->name('delete_asset');
-    
+
     //companies
     Route::get('/companies', [CompaniesController::class, 'view'])->name('view_companies');
     Route::get('/companies/create', [CompaniesController::class, 'create'])->name('create_company');
@@ -123,79 +119,10 @@ Route::group(['middleware' => ['web', 'auth', 'user']], function () {
     Route::post('/categories/update', [CategoriesController::class, 'update'])->name('update_category');
     Route::post('/categories/delete', [CategoriesController::class, 'delete'])->name('delete_category');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //Manage PRN
-    Route::get('/request-prn', [PRNRequestController::class, 'request_prn'])->name('request_prn');
-    Route::post('/request-prn/server', [PRNRequestController::class, 'business_request_prn'])->name('business_request_prn');
-
-    //View Business
-    Route::get('/business-list', [BusinessController::class, 'view_business'])->name('view-business');
-    Route::get('/business/details/{id}', [BusinessController::class, 'view_single_business'])->name('view_single_business');
-
     //Payment's
     Route::get('/payments', [PaymentController::class, 'payments_information'])->name('payments_info');
     Route::get('/payments/history/graph', [PaymentController::class, 'load_payment_graph_data'])->name('load_payment_graph_data');
     Route::get('/download/invoice/{invoiceID}', [PaymentController::class, 'download_invoice'])->name('download_invoice');
-
-    // Customer Support
-    Route::get('/contact/support', [CustomerSupportController::class, 'contact_support'])->name('contact_support');
-    Route::post('/send/message/support', [CustomerSupportController::class, 'send_message_support'])->name('send_message_support');
-    Route::get('/live/support', [CustomerSupportController::class, 'live_support'])->name('live_support');
-
-    //FAQ Routes
-    Route::get('/view/added/faq', [FAQController::class, 'view_added_faq'])->name('view_added_faq');
-    Route::get('/view/faq', [FAQController::class, 'view_user_faq'])->name('view_user_faq');
-    Route::get('/load/faq/{filter}', [FAQController::class, 'load_faq_data'])->name('load_faq_data');
-    Route::get('sitemap', [GuestController::class, 'sitemap'])->name('sitemap');
-    Route::post('pay/licence', [PaymentController::class, 'payBusinessLicence'])->name('pay/licence');
-
-    // //Station Management
-    // Route::get('view_stations', [StationController::class, 'index'])->name('view_stations');
-
-    // Route::get('create_station', [StationController::class, 'create'])->name('create_station');
-
-    // Route::post('create_station', [StationController::class, 'store'])->name('store_station');
-
-    // Route::get('view_station/{id}', [StationController::class, 'edit'])->name('edit_station');
-
-    // Route::put('update_station', [StationController::class, 'update'])->name('update_station');
-
-    // Route::get('delete_station/{id}', [StationController::class, 'destroy'])->name('destroy_station');
 
     //Role Management
     Route::get('view_roles/{id}', [RoleController::class, 'edit'])->name('view_roles');

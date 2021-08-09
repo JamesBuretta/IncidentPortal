@@ -138,6 +138,7 @@
                     <table id="example1"  class="table table-striped table-valign-middle">
                         <thead>
                         <tr>
+                            <th>Image</th>
                             <th>Assigned To</th>
                             <th>Caller Name</th>
                             <th>Priority</th>
@@ -154,6 +155,8 @@
                         <tbody>
                         @foreach($incidents as $details)
                             <tr>
+
+                                <td><img src={{ "https://incidents.pushads.co.tz/storage/app/public/".$details->image }} width="100px" height="100px" alt="No Image"></td>
                                 <td>{{$details->assigned }}</td>
                                 <td>{{$details->caller }}</td>
                                 <td>{{$details->priority }}</td>
@@ -172,9 +175,14 @@
                                     @endif
 
                                     @if($details->status === "Closed")
-                                    <span class="badge badge-sucess text-white text-capitalize">
+                                    <span class="badge badge-danger text-capitalize">
                                     {{$details->status ?? '--'}}
                                     </span>
+                                    @endif
+                                    @if($details->status === "Approved")
+                                        <span class="badge badge-success text-white text-capitalize">
+                                        {{$details->status ?? '--'}}
+                                        </span>
                                     @endif
                                 </td>
                                 <td>{{$details->subject ?? '--'}}</td>
@@ -184,7 +192,11 @@
                                 <td>{{$details->closed_datetime ?? '--'}}</td>
                                 <td>
                                     <div class="form-horizontal">
-                                    <a href="{{ url('view_incidents/'.$details->id) }}"   class="btn btn-primary">Update</a>
+                                        @if ($details->status === "Un-attended")
+
+                                        <a href="{{ url('view_incidents/'.$details->id) }}"   class="btn btn-primary">Update</a>
+
+                                        @endif
 {{--                                    <a  href="#" onclick="handleClose('{{ url('close') }}','{{ $details->id }}')" class="btn btn-success" data-toggle="modal"   data-target="#close">Close</a>--}}
 {{--                                    <a  href="#" onclick="handleCancel('{{ url('cancel') }}','{{ $details->id }}')" class="btn btn-danger" data-toggle="modal"   data-target="#cancel">Cancel</a>--}}
                                     </div>

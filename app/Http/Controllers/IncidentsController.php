@@ -21,7 +21,7 @@ class IncidentsController extends Controller
         $status = Status::all();
         $callers = User::all();
 
-        $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+        $sql="SELECT incidents_tracker.id,created_datetime,subject,description,image,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
             FROM incidents_tracker
                 INNER JOIN users as A on incidents_tracker.caller_id=A.id
                 INNER JOIN users as B on incidents_tracker.assigned_id=B.id
@@ -94,10 +94,11 @@ class IncidentsController extends Controller
 
             return view('incidents.edit',compact('incident','impacts','priorities','status','callers'));
 
-
         }catch (\Exception $e)
         {
-            return redirect('view_incidents')->with('notification',"Oops looks like something went wrong!")->with('color',$color);
+            Session::flash('danger','Oops Something went wrong '.$e->getMessage());
+
+            return redirect()->back();
         }
     }
 
@@ -174,7 +175,7 @@ class IncidentsController extends Controller
                     'description'=>$request->description,
                     'status_id'=>$request->status_id,
                     'closing_comments'=>$request->closing_comment,
-                    'cancel_comments'=>$request->cancel_comment,
+                    'cancel_comments'=>NULL,
                     'closed_datetime'=>NOW(),
                     'cancelled_datetime'=>NULL
                 ]
@@ -197,9 +198,34 @@ class IncidentsController extends Controller
                     'subject'=>$request->subject,
                     'description'=>$request->description,
                     'status_id'=>$request->status_id,
-                    'closing_comments'=>$request->closing_comment,
+                    'closing_comments'=>NULL,
                     'cancel_comments'=>$request->cancel_comment,
                     'cancelled_datetime'=>NOW(),
+                    'closed_datetime'=>NULL,
+                ]
+            );
+
+            if($update==true)
+            {
+                $incident = Incident::where('id',$request->id)->get();
+                $this->incidentTracker($incident);
+            }
+
+        }
+
+        else if($request->status_id == 4)
+        {
+            $update = Incident::where('id',$request->id)->update(
+                [
+                    'assigned_id'=>$request->assigned_id,
+                    'impact_id'=>$request->impact_id,
+                    'priority_id'=>$request->priority_id,
+                    'subject'=>$request->subject,
+                    'description'=>$request->description,
+                    'status_id'=>$request->status_id,
+                    'closing_comments'=>NULL,
+                    'cancel_comments'=>NULL,
+                    'cancelled_datetime'=>NULL,
                     'closed_datetime'=>NULL,
                 ]
             );
@@ -324,15 +350,25 @@ class IncidentsController extends Controller
         $callers = User::all();
 
         $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
-
             FROM incidents_tracker
                 INNER JOIN users as A on incidents_tracker.caller_id=A.id
                 INNER JOIN users as B on incidents_tracker.assigned_id=B.id
                 INNER JOIN impact as C on incidents_tracker.impact_id=C.id
                 INNER JOIN status as D on incidents_tracker.status_id=D.id
-                INNER JOIN priorities as E on incidents_tracker.priority_id=D.id
-            ORDER BY incidents_tracker.id DESC
+                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+            ORDER BY incidents_tracker.created_datetime DESC
             ";
+
+//        $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+//
+//            FROM incidents_tracker
+//                INNER JOIN users as A on incidents_tracker.caller_id=A.id
+//                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
+//                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
+//                INNER JOIN status as D on incidents_tracker.status_id=D.id
+//                INNER JOIN priorities as E on incidents_tracker.priority_id=D.id
+//            ORDER BY incidents_tracker.id DESC
+//            ";
 
         $incidents = DB::select(DB::raw($sql));
 

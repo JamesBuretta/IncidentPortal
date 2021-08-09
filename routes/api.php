@@ -21,13 +21,15 @@ use App\Http\Controllers\Users\UserController;
 Route::group(['prefix' => 'v1'], function () {
     Route::post('login', [ApiController::class, 'login'])->name('login');
     Route::post('change_password', [ApiController::class, 'changePassword'])->name('change_password');
-    Route::post('register', [ApiController::class, 'registration'])->name('register');
-    Route::get('incidents',[ApiController::class,'incidents'])->name('incidents');
+    Route::post('register', [ApiController::class, 'registration'])->name('registration');
+    Route::get('incidents/{id}',[ApiController::class,'incidents'])->name('incidents');
     Route::get('priorities',[ApiController::class,'priorities'])->name('priorities');
     Route::get('users',[ApiController::class,'users'])->name('users');
     Route::post('add/incident',[ApiController::class,'storeIncident'])->name('add/incident');
     Route::get('system_data',[ApiController::class,'systemData'])->name('system_data');
-    Route::post('report',[ApiController::class,'appReport'])->name('report');
+    Route::get('report/{id}',[ApiController::class,'appReport'])->name('report');
+    Route::get('stations',[ApiController::class,'stations'])->name('stations');
+    Route::post('close/incident',[ApiController::class,'closeIncident'])->name('closeIncident');
 
 });
 
