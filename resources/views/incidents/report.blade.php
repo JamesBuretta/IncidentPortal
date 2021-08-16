@@ -60,7 +60,7 @@
                     {{ csrf_field() }}
                     {{ method_field('POST') }}
                     <div class="row">
-                    
+
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label for="name">From</label>
@@ -89,7 +89,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="reports_table" class="table table-striped table-valign-middle">
+                    <table id="example1" class="table table-striped table-valign-middle">
                         <thead>
                             <tr>
                                 <th>Assigned To</th>
@@ -113,21 +113,26 @@
                                 <td>{{$details->impact }}</td>
                                 <td>
                                     @if($details->status === "Un-attended")
-                                    <span class="badge badge-primary text-white text-capitalize">
-                                        {{$details->status ?? '--'}}
+                                        <span class="badge badge-primary text-white text-capitalize">
+                                    {{$details->status ?? '--'}}
                                     </span>
                                     @endif
 
                                     @if($details->status === "Cancelled")
-                                    <span class="badge badge-danger text-white text-capitalize">
-                                        {{$details->status ?? '--'}}
+                                        <span class="badge badge-danger text-white text-capitalize">
+                                    {{$details->status ?? '--'}}
                                     </span>
                                     @endif
 
                                     @if($details->status === "Closed")
-                                    <span class="badge badge-sucess text-white text-capitalize">
-                                        {{$details->status ?? '--'}}
+                                        <span class="badge badge-danger text-capitalize">
+                                    {{$details->status ?? '--'}}
                                     </span>
+                                    @endif
+                                    @if($details->status === "Approved")
+                                        <span class="badge badge-success text-white text-capitalize">
+                                        {{$details->status ?? '--'}}
+                                        </span>
                                     @endif
                                 </td>
                                 <td>{{$details->subject ?? '--'}}</td>
@@ -162,6 +167,10 @@
 @section('page-script')
 <script>
 
-
+    $('#example1').dataTable({
+        order: [
+            [9, 'desc']
+        ]
+    });
 </script>
 @endsection

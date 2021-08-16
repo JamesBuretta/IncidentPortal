@@ -146,6 +146,18 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group mb-3">
+                            <select name="company_id" class="form-control" required>
+                                <option value=""> -- Select Company -- </option>
+                                @foreach($companies as $company)
+                                    <option value="{{$company->id}}">{{ucfirst($company->name)}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mb-3">
                             <select name="station_id" class="form-control" required>
                                 <option value=""> -- Select Station -- </option>
                                 @foreach($stations as $station)

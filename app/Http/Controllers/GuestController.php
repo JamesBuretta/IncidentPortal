@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Companies;
 use App\Models\Incident;
 use App\Models\Municipal;
 use App\Models\Role;
@@ -25,7 +26,8 @@ class GuestController extends Controller
         $municipals = Municipal::all();
         $roles = Role::all();
         $stations = Station::all();
-        return view('auth.register',compact('municipals','roles','stations'));
+        $companies = Companies::all();
+        return view('auth.register',compact('municipals','roles','stations','companies'));
     }
 
     public function password_reset(){
@@ -91,6 +93,7 @@ class GuestController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'station_id' => ['required'],
+            'company_id' => ['required'],
             'role_id' => ['required']
         ]);
 
@@ -106,6 +109,7 @@ class GuestController extends Controller
                             $save_details->phone_number = $request->phone;
                             $save_details->password = $password;
                             $save_details->station_id = $request->station_id;
+                            $save_details->company_id = $request->company_id;
                             $save_details->role_id =2;
                             $save_details->access = 2;
                             $save_details->status = 1;

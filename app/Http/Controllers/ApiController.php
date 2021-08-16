@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\Helper;
 use App\Models\Impact;
 use App\Models\Incident;
 use App\Models\IncidentTracker;
@@ -201,10 +202,37 @@ class ApiController extends Controller
         }
     }
 
+    public static function add_prefix($phone)
+    {
+        return strlen($phone) <= 9 ? '255' . $phone : preg_replace('/^0/', '255', $phone);
+    }
+
+    public function sendSms($request)
+    {
+            $to = $this->add_prefix($request['phone_number']);
+            $message = "Dear ".$request['fullname']." An Incident with ID ".$request['incident_tracker']." has been assigned to you, awaiting approval";
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.evancejaye.com/sms/index.php?message='.urlencode($message).'&to='.$to,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            Log::info("SMS",['message'=>$response]);
+    }
     public function storeIncident(Request $request)
     {
         //Insertion goes here
         try{
+            $incident_ticket = "SL".$this->generateTxnID(10);
 
             $incident = new Incident();
             $incident->caller_id = $request->caller_id;
@@ -214,19 +242,29 @@ class ApiController extends Controller
             $incident->subject = $request->subject;
             $incident->description = $request->description;
             $incident->status_id = 1;
+            $incident->incident_ticket = $incident_ticket;
             $incident->created_datetime = NOW();
             $incident->cancelled_datetime = NUll;
             $incident->closed_datetime = NULL;
-            $incident->image = $this->
-            processImage($request->image,$request);
+            $incident->image = $this->processImage($request->image,$request);
             $incident->save();
 
             if ($incident == true) {
+                $user_details = User::where('id',$request->assigned_id)->get()[0];
+
+                $user_details['incident_tracker']=$incident_ticket;
+
+                $this->sendSms($user_details);
+
                 $response['status']="success";
                 $response['message']="Incident Added Successfully!";
+                $response['assigned_details']=$user_details;
+
+                Log::error("ApiLogs",['request'=>$response]);
             } else {
                 $response['status']="fail";
                 $response['message']="Incident was not added!";
+                Log::error("ApiLogs",['request'=>$response]);
             }
 
             Log::error("ApiLogs",['request'=>$request]);
@@ -244,6 +282,19 @@ class ApiController extends Controller
             return $response;
         }
     }
+
+    public function generateTxnID($n) {
+
+        $generator = "1357902468";
+        $result = "";
+
+        for ($i = 1; $i <= $n; $i++) {
+            $result .= substr($generator, (rand()%(strlen($generator))), 1);
+        }
+
+        return $result;
+    }
+
 
     public function processImage($image,$request)
     {

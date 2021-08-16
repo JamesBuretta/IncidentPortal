@@ -30,6 +30,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('report/{id}',[ApiController::class,'appReport'])->name('report');
     Route::get('stations',[ApiController::class,'stations'])->name('stations');
     Route::post('close/incident',[ApiController::class,'closeIncident'])->name('closeIncident');
+    Route::get('send/sms',[ApiController::class,'sendSms'])->name('sendSms');
 
 });
 

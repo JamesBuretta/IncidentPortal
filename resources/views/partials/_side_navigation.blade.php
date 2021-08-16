@@ -23,6 +23,9 @@
         </li>
         @endcan
 
+        @if (\Illuminate\Support\Facades\Auth::user()->role_id == "1" )
+
+
         <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
                 <i class="nav-icon far fa  fa-building"></i>
@@ -131,8 +134,6 @@
         </li>
 
 
-
-
         <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
                 <i class="nav-icon far fa  fa-folder"></i>
@@ -213,54 +214,27 @@
             </ul>
         </li>
 
+        @endif
+
         <li class="nav-header">Incidents</li>
 
-        <li class="nav-item">
-            <a href="{{route('my-profile')}}" class="nav-link @if(Route::is('my-profile')) active @endif">
-                <i class="nav-icon far fa-calendar-alt"></i>
-                <p>
-                    My Incidents
-                </p>
-            </a>
-        </li>
+{{--        <li class="nav-item">--}}
+{{--            <a href="{{route('my-profile')}}" class="nav-link @if(Route::is('my-profile')) active @endif">--}}
+{{--                <i class="nav-icon far fa-calendar-alt"></i>--}}
+{{--                <p>--}}
+{{--                    My Incidents--}}
+{{--                </p>--}}
+{{--            </a>--}}
+{{--        </li>--}}
 
-        <li class="nav-item">
-            <a href="{{route('create_incident')}}" class="nav-link @if(Route::is('create_incident')) active @endif">
-            <i class="nav-icon far fa fa-plus-circle"></i>
-                <p>
-                    Create Incident
-                </p>
-            </a>
-        </li>
-
-        <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-                <i class="nav-icon far fa  fa-bookmark"></i>
-                <p>
-                    Reports
-                    <i class="fas fa-angle-left right"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview">
-
-                <li class="nav-item">
-                    <a href="{{route('view_allocations')}}" class="nav-link @if(Route::is('view_allocations')) active @endif">
-                        <i class="nav-icon far fa fa-list-ul"></i>
-                        <p>Open incidents</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{route('view_allocations')}}" class="nav-link @if(Route::is('view_allocations')) active @endif">
-                        <i class="nav-icon far fa fa-list-ul"></i>
-                        <p>Closed incidents</p>
-                    </a>
-                </li>
-
-
-            </ul>
-        </li>
-
+{{--        <li class="nav-item">--}}
+{{--            <a href="{{route('create_incident')}}" class="nav-link @if(Route::is('create_incident')) active @endif">--}}
+{{--            <i class="nav-icon far fa fa-plus-circle"></i>--}}
+{{--                <p>--}}
+{{--                    Create Incident--}}
+{{--                </p>--}}
+{{--            </a>--}}
+{{--        </li>--}}
 
 
         @can('menu-access-control', 'profile')
@@ -298,6 +272,34 @@
             </ul>
         </li>
         @endcan
+
+{{--        <li class="nav-item has-treeview">--}}
+{{--            <a href="#" class="nav-link">--}}
+{{--                <i class="nav-icon far fa  fa-bookmark"></i>--}}
+{{--                <p>--}}
+{{--                    Reports--}}
+{{--                    <i class="fas fa-angle-left right"></i>--}}
+{{--                </p>--}}
+{{--            </a>--}}
+{{--            <ul class="nav nav-treeview">--}}
+
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{route('view_allocations')}}" class="nav-link @if(Route::is('view_allocations')) active @endif">--}}
+{{--                        <i class="nav-icon far fa fa-list-ul"></i>--}}
+{{--                        <p>Open incidents</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{route('view_allocations')}}" class="nav-link @if(Route::is('view_allocations')) active @endif">--}}
+{{--                        <i class="nav-icon far fa fa-list-ul"></i>--}}
+{{--                        <p>Closed incidents</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+
+
+{{--            </ul>--}}
+{{--        </li>--}}
 
 
     </ul>

@@ -10,6 +10,7 @@ use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class IncidentsController extends Controller
@@ -61,6 +62,7 @@ class IncidentsController extends Controller
             $incident->subject = $request->subject;
             $incident->description = $request->description;
             $incident->status_id = 1;
+            $incident->incident_ticket = "SL".$this->generateTxnID(10);
             $incident->created_datetime = NOW();
             $incident->cancelled_datetime = NUll;
             $incident->closed_datetime = NULL;
@@ -80,6 +82,18 @@ class IncidentsController extends Controller
             Session::flash('danger','An error occured!');
             return redirect()->back();
         }
+    }
+
+    public function generateTxnID($n) {
+
+        $generator = "1357902468";
+        $result = "";
+
+        for ($i = 1; $i <= $n; $i++) {
+            $result .= substr($generator, (rand()%(strlen($generator))), 1);
+        }
+
+        return $result;
     }
 
     public function edit($id)
@@ -232,6 +246,8 @@ class IncidentsController extends Controller
 
             if($update==true)
             {
+                $request = User::where("id",$request->assigned_id)->get()[0];
+                $this->sendSms($request);
                 $incident = Incident::where('id',$request->id)->get();
                 $this->incidentTracker($incident);
             }
@@ -240,6 +256,33 @@ class IncidentsController extends Controller
 
 
         return $update;
+    }
+
+    public static function add_prefix($phone)
+    {
+        return strlen($phone) <= 9 ? '255' . $phone : preg_replace('/^0/', '255', $phone);
+    }
+
+    public function sendSms($request)
+    {
+        $to = $this->add_prefix($request->phone_number);
+        $message = "Dear ".$request->fullname.", Incident assigned has been approved please visit app for more info!";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.evancejaye.com/sms/index.php?message='.urlencode($message).'&to='.$to,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        Log::info("SMS",['message'=>$response]);
     }
 
 
@@ -400,16 +443,13 @@ class IncidentsController extends Controller
 
 
         $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
-
             FROM incidents_tracker
                 INNER JOIN users as A on incidents_tracker.caller_id=A.id
                 INNER JOIN users as B on incidents_tracker.assigned_id=B.id
                 INNER JOIN impact as C on incidents_tracker.impact_id=C.id
                 INNER JOIN status as D on incidents_tracker.status_id=D.id
-                INNER JOIN priorities as E on incidents_tracker.priority_id=D.id
-            WHERE
-                $date_filter
-            ORDER BY incidents_tracker.id DESC
+                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+            ORDER BY incidents_tracker.created_datetime DESC
             ";
 
         $incidents = DB::select(DB::raw($sql));

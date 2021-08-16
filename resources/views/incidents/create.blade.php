@@ -222,7 +222,7 @@
 
         $('#example1').dataTable({
             order: [
-                [7, 'desc']
+                [9, 'desc']
             ]
         });
 
