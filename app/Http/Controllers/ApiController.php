@@ -254,7 +254,7 @@ class ApiController extends Controller
 
                 $user_details['incident_tracker']=$incident_ticket;
 
-                $this->sendSms($user_details);
+//                $this->sendSms($user_details);
 
                 $response['status']="success";
                 $response['message']="Incident Added Successfully!";

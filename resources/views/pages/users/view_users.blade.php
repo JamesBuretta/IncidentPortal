@@ -90,9 +90,9 @@
                                                     <i class="fa fa-edit" style="margin: 0;"></i>
                                                 </button>
 
-                                                <a href="{{route('user_access',$user->id)}}" title="User Permission" class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-eye" style="margin: 0;"></i>
-                                                </a>
+{{--                                                <a href="{{route('user_access',$user->id)}}" title="User Permission" class="btn btn-primary btn-sm">--}}
+{{--                                                    <i class="fa fa-eye" style="margin: 0;"></i>--}}
+{{--                                                </a>--}}
 
                                                 <!-- Modal -->
                                                 {!! Form::model($user, ['route' => ['user_password_reset',$user->id],'method' => 'PUT']) !!}
@@ -154,7 +154,7 @@
                                                                         <div class="col-md-5">
                                                                             <div class="form-group">
                                                                                 <label>User Role</label>
-                                                                                <select name="role" class="form-control">
+                                                                                <select name="role_id" class="form-control">
                                                                                     <option value=""> -- Default -- </option>
                                                                                     @foreach(\App\Models\Role::all() as $role)
                                                                                         <option value="{{$role->id}}" {{($user->role_id == $role->id)? "selected":""}}> {{$role->role_name}} </option>
@@ -164,24 +164,29 @@
                                                                         </div>
                                                                         <div class="col-md-7">
                                                                             <div class="form-group">
-                                                                                <label>Municipal</label>
-                                                                                <select name="municipal_id" class="form-control">
+                                                                                <label>Company</label>
+                                                                                <select name="company_id" class="form-control">
                                                                                     <option value=""> -- Default -- </option>
-                                                                                    @foreach($municipals as $municipal)
-                                                                                        <option value="{{$municipal->id}}" {{($user->municipal_id == $municipal->id)? "selected":""}}> {{$municipal->municipal_description_name}} </option>
+                                                                                    @foreach($companies as $municipal)
+                                                                                        <option value="{{$municipal->id}}" {{($user->company_id == $municipal->id)? "selected":""}}> {{$municipal->name}} </option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <div class="col-md-4">
+                                                                        <div class="col-md-6">
                                                                             <div class="form-group">
-                                                                                <label>TPIN</label>
-                                                                                {{Form::text('tpin', null, ['placeholder' => 'TPIN','class' => 'form-control','required' => ''])}}
+                                                                                <label>Station</label>
+                                                                                <select name="station_id" class="form-control">
+                                                                                    <option value=""> -- Default -- </option>
+                                                                                    @foreach($stations as $municipal)
+                                                                                        <option value="{{$municipal->id}}" {{($user->station_id == $municipal->id)? "selected":""}}> {{$municipal->name}} </option>
+                                                                                    @endforeach
+                                                                                </select>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-md-8">
+                                                                        <div class="col-md-6">
                                                                             <div class="form-group">
                                                                                 <label>Phone Number</label>
                                                                                 {{Form::text('phone_number', null, ['placeholder' => 'Phone Number','class' => 'form-control','required' => ''])}}

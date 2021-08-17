@@ -139,6 +139,7 @@
                         <thead>
                         <tr>
                             <th>Image</th>
+                            <th>Ticket ID</th>
                             <th>Assigned To</th>
                             <th>Caller Name</th>
                             <th>Priority</th>
@@ -157,6 +158,7 @@
                             <tr>
 
                                 <td><img src={{ "https://incidents.pushads.co.tz/storage/app/public/".$details->image }} width="100px" height="100px" alt="No Image"></td>
+                                <td>{{$details->incident_ticket ?? ' ' }}</td>
                                 <td>{{$details->assigned }}</td>
                                 <td>{{$details->caller }}</td>
                                 <td>{{$details->priority }}</td>
@@ -192,11 +194,11 @@
                                 <td>{{$details->closed_datetime ?? '--'}}</td>
                                 <td>
                                     <div class="form-horizontal">
-                                        @if ($details->status === "Un-attended")
+{{--                                        @if ($details->status === "Un-attended")--}}
 
                                         <a href="{{ url('view_incidents/'.$details->id) }}"   class="btn btn-primary">Update</a>
 
-                                        @endif
+{{--                                        @endif--}}
 {{--                                    <a  href="#" onclick="handleClose('{{ url('close') }}','{{ $details->id }}')" class="btn btn-success" data-toggle="modal"   data-target="#close">Close</a>--}}
 {{--                                    <a  href="#" onclick="handleCancel('{{ url('cancel') }}','{{ $details->id }}')" class="btn btn-danger" data-toggle="modal"   data-target="#cancel">Cancel</a>--}}
                                     </div>

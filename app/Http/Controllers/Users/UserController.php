@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Users;
 use App\Http\Controllers\Controller;
+use App\Models\Companies;
 use App\Models\MenuAccess;
 use App\Models\Municipal;
 use App\Models\PortalAccess;
 use App\Models\Role;
+use App\Models\Station;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -23,8 +25,10 @@ class UserController extends Controller
     public function view_users(){
         $users = User::all();
         $user_accesses = PortalAccess::all();
-        $municipals = Municipal::all();
-        return view('pages.users.view_users',compact('users','user_accesses','municipals'));
+        $companies = Companies::all();
+        $stations = Station::all();
+
+        return view('pages.users.view_users',compact('users','user_accesses','companies','stations'));
     }
 
     public function update_access(Request $request,$user_id){
@@ -178,21 +182,16 @@ class UserController extends Controller
             $this->validate($request, [
                 'email' => 'required',
                 'fullname' => 'required',
-                'tpin' => 'required',
                 'phone_number' => 'required',
-                'access' => 'required',
-                'account_status' => 'required',
-                'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
+                'role_id' =>'required'
             ]);
         }
         else{
             $this->validate($request, [
                 'email' => 'required',
                 'fullname' => 'required',
-                'tpin' => 'required',
                 'phone_number' => 'required',
-                'account_status' => 'required',
-                'access' => 'required',
+                'role_id'=>'required'
             ]);
         }
 
@@ -200,23 +199,11 @@ class UserController extends Controller
         $add_user = User::where('id',$user_id)->first();
         $add_user->fullname = $request->fullname;
         $add_user->email = $request->email;
-        $add_user->tpin = $request->tpin;
         $add_user->phone_number = $request->phone_number;
-        $add_user->access = $request->access;
-        $add_user->municipal_id = ($add_user->role_id == 1) ? '-' : $request->municipal_id;
-        $add_user->password = bcrypt(123456);
+        $add_user->role_id = $request->role_id;
+        $add_user->company_id = $request->company_id;
+        $add_user->station_id = $request->station_id;
         $add_user->status = $request->account_status;
-
-        if($request->hasfile('profile'))
-        {
-            $file = $request->file('profile');
-            $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =time().'.'.$extension;
-            $file->move(public_path('images/profiles'), $filename);
-
-            $add_user->profile = $filename;
-        }
-
         $add_user->save();
 
         Session::flash('success','User Information Updated Successfully');

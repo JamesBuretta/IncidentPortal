@@ -77,13 +77,13 @@
                             <tbody>
                                 @foreach($stations as $station)
                                 <tr>
-                                    <th>{{ $loop->iteration }}</th>
-                                    <td>{{ $station->name }}</td>
-                                    <td>{{ $station->phone_number }}</td>
-                                    <td>{{ $station->email }}</td>
-                                    <td>{{ $station->longt }}</td>
-                                    <td>{{ $station->latt }}</td>
-                                    <td>{{ $station->company->name }}</td>
+                                    <th>{{ $loop->iteration ?? '' }}</th>
+                                    <td>{{ $station->name ?? '' }}</td>
+                                    <td>{{ $station->phone_number ?? '' }}</td>
+                                    <td>{{ $station->email ?? '' }}</td>
+                                    <td>{{ $station->longt ?? '' }}</td>
+                                    <td>{{ $station->latt ?? '' }}</td>
+                                    <td>{{ $station->company->name ?? '' }}</td>
                                     <td>
                                         <form action="{{ route('delete_station') }}" method="POST">
                                             {{ csrf_field() }}

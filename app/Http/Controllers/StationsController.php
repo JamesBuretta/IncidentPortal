@@ -29,7 +29,7 @@ class StationsController extends Controller
     }
 
     public function view(){
-        $stations = stations::all();
+        $stations = Stations::all();
         return view('pages.stations.view', compact('stations'));
     }
 
@@ -45,7 +45,7 @@ class StationsController extends Controller
             'phone_number' => 'required|unique:stations',
             'email' => 'required|unique:stations',
             'company_id' => 'required',
-            
+
         ]);
         $row = new Stations();
         $row->name = $request->name;
@@ -60,7 +60,7 @@ class StationsController extends Controller
         return redirect()->back();
     }
 
-    
+
 
     public function update(Request $request){
         $this->validate($request, [
@@ -68,7 +68,7 @@ class StationsController extends Controller
             'phone_number' => 'required',
             'email' => 'required',
             'company_id' => 'required',
-            
+
         ]);
         $row =  Stations::where('id',$request->station_id)->first();
         $row->name = $request->name;

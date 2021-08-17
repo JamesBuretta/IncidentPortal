@@ -22,7 +22,7 @@ class IncidentsController extends Controller
         $status = Status::all();
         $callers = User::all();
 
-        $sql="SELECT incidents_tracker.id,created_datetime,subject,description,image,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+        $sql="SELECT incidents_tracker.id,incidents_tracker.incident_ticket,created_datetime,closed_datetime,cancelled_datetime,subject,description,image,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
             FROM incidents_tracker
                 INNER JOIN users as A on incidents_tracker.caller_id=A.id
                 INNER JOIN users as B on incidents_tracker.assigned_id=B.id
