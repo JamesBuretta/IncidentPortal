@@ -228,6 +228,9 @@ class ApiController extends Controller
             curl_close($curl);
             Log::info("SMS",['message'=>$response]);
     }
+
+
+
     public function storeIncident(Request $request)
     {
         //Insertion goes here
