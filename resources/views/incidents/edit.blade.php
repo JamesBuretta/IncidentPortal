@@ -62,19 +62,21 @@
                         <input type="hidden" name="caller_id" value="{{ $incident->caller_id }}" class="form-control">
                     </div>
 
+                @if(Auth::user()->role_id == 1)
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group mb-3">
                                 <label for="name">Assigned To*</label>
                                 <select name="assigned_id" class="form-control" required>
                                     <option value=""> -- Assign To -- </option>
-                                    @foreach($callers as $role)
-                                        <option value="{{$role->id ?? ''}}" @if($incident->assigned_id == $role->id) selected="selected" @endif>{{ucfirst($role->fullname)}}</option>
+                                    @foreach($callers as $caller)
+                                        <option value="{{$caller->id ?? ''}}" @if($incident->assigned_id == $caller->id) selected="selected" @endif>{{ucfirst($caller->fullname)}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
+                @endif
 
                     <div class="row">
                         <div class="col-md-12">
@@ -82,8 +84,8 @@
                                 <label for="name">Impact*</label>
                                 <select name="impact_id" class="form-control" required>
                                     <option value=""> -- Impact -- </option>
-                                    @foreach($impacts as $role)
-                                        <option value="{{$role->id ?? ''}}" @if($incident->impact_id == $role->id) selected="selected" @endif>{{ucfirst($role->name)}}</option>
+                                    @foreach($impacts as $impact)
+                                        <option value="{{$impact->id ?? ''}}" @if($incident->impact_id == $impact->id) selected="selected" @endif>{{ucfirst($impact->name)}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -132,6 +134,7 @@
                     </div>
                 </div>
 
+                @if(Auth::user()->role_id == 1)
                 <div class="form-group" id="cancel_view">
                     <label for="name">Cancelling Comments</label>
                     <textarea id="w3review" name="closing_comment" id="close_value" rows="4" cols="50" class="form-control">
@@ -140,11 +143,13 @@
 
                         </textarea>
                 </div>
+                @endif
+
 
 
                 <div class="form-group" id="close_view">
                     <label for="name">Closing Comments</label>
-                    <textarea id="w3review" name="cancel_comment" rows="4" id="cancel_value" cols="50" class="form-control" >
+                    <textarea id="w3review" name="cancel_comment" rows="4" id="cancel_value" cols="50" class="form-control" disabled>
 
                             {{ $incident->closing_comments }}
 

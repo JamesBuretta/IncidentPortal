@@ -5,9 +5,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Companies;
 use App\Models\MenuAccess;
 use App\Models\Municipal;
+use App\Models\OperationNature;
 use App\Models\PortalAccess;
 use App\Models\Role;
 use App\Models\Station;
+use App\Models\Stations;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -18,15 +20,19 @@ class UserController extends Controller
 {
     public function add_users(){
         $roles = Role::all();
+        $companies = Companies::all();
+        $natures = OperationNature::all();
+        $stations = Stations::all();
         $municipals = Municipal::all();
-        return view('pages.users.add_users',compact('roles','municipals'));
+        return view('pages.users.add_users',compact('roles','municipals','companies','natures','stations'));
     }
 
     public function view_users(){
         $users = User::all();
         $user_accesses = PortalAccess::all();
         $companies = Companies::all();
-        $stations = Station::all();
+        $stations = Stations::all();
+        $natures = OperationNature::all();
 
         return view('pages.users.view_users',compact('users','user_accesses','companies','stations'));
     }

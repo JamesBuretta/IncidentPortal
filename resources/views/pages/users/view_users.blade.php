@@ -50,7 +50,9 @@
                     <!-- general form elements -->
                     <div class="card card-info card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">View User's</h3>
+                            <a class="btn btn-success btn-sm" href="{{ url('add-users') }}">
+                                Create User
+                            </a>
                         </div>
                         <!-- /.card-header -->
                         <div class="row" style="margin: 10px;">
@@ -167,8 +169,8 @@
                                                                                 <label>Company</label>
                                                                                 <select name="company_id" class="form-control">
                                                                                     <option value=""> -- Default -- </option>
-                                                                                    @foreach($companies as $municipal)
-                                                                                        <option value="{{$municipal->id}}" {{($user->company_id == $municipal->id)? "selected":""}}> {{$municipal->name}} </option>
+                                                                                    @foreach($companies as $company)
+                                                                                        <option value="{{$company->id}}" {{($user->company_id == $company->id)? "selected":""}}> {{$company->name}} </option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>

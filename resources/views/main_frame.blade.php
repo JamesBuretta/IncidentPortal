@@ -37,6 +37,11 @@
             min-width: 200px !important;
             max-width: 250px !important;
         }
+
+         body {
+             background-image: url("{{ asset('images/Screen-BG-02.jpg') }}");
+         }
+
     </style>
 
     @yield('custom-page-style')
@@ -54,8 +59,8 @@
 
 
         <a href="{{ url('dashboard') }}" class="brand-link">
-            <img src="{{ asset('/images/header_logo.png') }}" alt="Simba Equipments Logo" class="brand-image img-circle elevation-3" >
-            <span class="brand-text font-weight-bold"><span style="color: white"> Simba</span><span style="color: red"> Equipment</span></span>
+            <img src="{{ asset('/images/header_logo2.png') }}" alt="Simba Equipments Logo" width="50%" height="100px">
+{{--            <span class="brand-text font-weight-bold"><span style="color: white"> Simba</span><span style="color: red"> Equipment</span></span>--}}
         </a>
 
         <!-- Sidebar -->

@@ -31,6 +31,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('stations',[ApiController::class,'stations'])->name('stations');
     Route::post('close/incident',[ApiController::class,'closeIncident'])->name('closeIncident');
     Route::get('send/sms',[ApiController::class,'sendSms'])->name('sendSms');
+    Route::get('sms',[ApiController::class,'multipleSms'])->name('sms');
 
 });
 

@@ -66,8 +66,13 @@ class ApiController extends Controller
                 ]
             );
 
+
+
+
+
             if($close==true)
             {
+                $this->multipleSms($request);
                 $data = array();
                 $data['message']="Incident Closed successfully!";
                 $data['status']="success";
@@ -92,6 +97,43 @@ class ApiController extends Controller
 
             return $data;
         }
+    }
+
+
+    public function closeIncidentSms($request,$incident_ticket)
+    {
+        $to = $this->add_prefix($request['phone_number']);
+        $message = "Incident with ticket ID ".$incident_ticket." has been closed!";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.evancejaye.com/sms/index.php?message='.urlencode($message).'&to='.$to,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        Log::info("SMS",['message'=>$response]);
+    }
+
+
+    public function multipleSms($request)
+    {
+        $incident = Incident::where('id',$request->id)->get()[0];
+        $users = User::where('role_id','1')->orWhere('id',$incident->caller_id)->get();
+
+        foreach($users as $user)
+        {
+            $this->closeIncidentSms($user,$incident->incident_ticket);
+        }
+
+        $response = array("message"=>"All Sms Were Sent");
     }
 
     public function incidents($id)
@@ -231,6 +273,8 @@ class ApiController extends Controller
 
 
 
+
+
     public function storeIncident(Request $request)
     {
         //Insertion goes here
@@ -239,7 +283,7 @@ class ApiController extends Controller
 
             $incident = new Incident();
             $incident->caller_id = $request->caller_id;
-            $incident->assigned_id = $request->assigned_id;
+//            $incident->assigned_id = $request->assigned_id;
             $incident->impact_id = $request->impact_id;
             $incident->priority_id = $request->priority_id;
             $incident->subject = $request->subject;
@@ -253,17 +297,11 @@ class ApiController extends Controller
             $incident->save();
 
             if ($incident == true) {
-                $user_details = User::where('id',$request->assigned_id)->get()[0];
-
-                $user_details['incident_tracker']=$incident_ticket;
-
-//                $this->sendSms($user_details);
 
                 $response['status']="success";
                 $response['message']="Incident Added Successfully!";
-                $response['assigned_details']=$user_details;
-
                 Log::error("ApiLogs",['request'=>$response]);
+
             } else {
                 $response['status']="fail";
                 $response['message']="Incident was not added!";
@@ -569,7 +607,6 @@ class ApiController extends Controller
 
 
     }
-
 
     public function appReport($id)
     {

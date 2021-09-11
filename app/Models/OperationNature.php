@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Station extends Model
+class OperationNature extends Model
 {
     use HasFactory;
 
-    public $timestamps=false;
+    protected $table="tbl_operation_nature";
 
-    protected $fillable=['name'];
+    public $timestamps=false;
 }

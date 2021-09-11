@@ -25,7 +25,7 @@ class IncidentsController extends Controller
         $sql="SELECT incidents_tracker.id,incidents_tracker.incident_ticket,created_datetime,closed_datetime,cancelled_datetime,subject,description,image,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
             FROM incidents_tracker
                 INNER JOIN users as A on incidents_tracker.caller_id=A.id
-                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
+                LEFT JOIN users as B on incidents_tracker.assigned_id=B.id
                 INNER JOIN impact as C on incidents_tracker.impact_id=C.id
                 INNER JOIN status as D on incidents_tracker.status_id=D.id
                 INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
@@ -132,6 +132,8 @@ class IncidentsController extends Controller
             $update = $this->process($request);
 
             if ($update == true) {
+                $userDetails = User::where('id',$request->assigned_id)->get()[0];
+                $this->sendSms($userDetails);
                 Session::flash('success','Incidence Updated');
                 return redirect()->back();
             } else {
@@ -246,8 +248,7 @@ class IncidentsController extends Controller
 
             if($update==true)
             {
-                $request = User::where("id",$request->assigned_id)->get()[0];
-                $this->sendSms($request);
+                $this->multipleSms();
                 $incident = Incident::where('id',$request->id)->get();
                 $this->incidentTracker($incident);
             }
@@ -258,6 +259,42 @@ class IncidentsController extends Controller
         return $update;
     }
 
+    public function callCenterSms($request)
+    {
+        $to = $this->add_prefix($request['phone_number']);
+        $message = "Dear Call Center new Incident has been logged awaiting technician allocation!";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.evancejaye.com/sms/index.php?message='.urlencode($message).'&to='.$to,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        Log::info("SMS",['message'=>$response]);
+    }
+
+
+    public function multipleSms()
+    {
+        $users = User::where('role_id','1')->get();
+
+        foreach($users as $user)
+        {
+            $this->callCenterSms($user);
+        }
+
+        $response = array("message"=>"All Sms Were Sent");
+    }
+
+
     public static function add_prefix($phone)
     {
         return strlen($phone) <= 9 ? '255' . $phone : preg_replace('/^0/', '255', $phone);
@@ -266,7 +303,7 @@ class IncidentsController extends Controller
     public function sendSms($request)
     {
         $to = $this->add_prefix($request->phone_number);
-        $message = "Dear ".$request->fullname.", Incident assigned has been approved please visit app for more info!";
+        $message = "Dear ".$request->fullname.", Incident has been assigned to you, visit application for more details!";
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://api.evancejaye.com/sms/index.php?message='.urlencode($message).'&to='.$to,

@@ -101,49 +101,15 @@ class Helper
 
         try{
 
-            $object = new PhoneNumber(PhoneNumber::make($request->phone_number, $request->country)->formatE164());
-
-            $geoCoder = \libphonenumber\geocoding\PhoneNumberOfflineGeocoder::getInstance();
-            $country_name = \libphonenumber\PhoneNumberUtil::getInstance()->parse($request->phone_number, $request->country);
-
-            $carrierMapper = \libphonenumber\PhoneNumberToCarrierMapper::getInstance();
-            $chNumber = \libphonenumber\PhoneNumberUtil::getInstance()->parse($request->phone_number, $request->country);
-
-            $timezoneMapper = \libphonenumber\PhoneNumberToTimeZonesMapper::getInstance();
-            $usNumber = \libphonenumber\PhoneNumberUtil::getInstance()->parse($object->formatInternational(), $request->country);
-
-            if(count($timezoneMapper->getTimeZonesForNumber($usNumber))==1)
-            {
-                $time_zone = $timezoneMapper->getTimeZonesForNumber($usNumber)[0];
-            }
-            else{
-                $time_zone = $timezoneMapper->getTimeZonesForNumber($usNumber);
-            }
-
-
-            $phone_number = PhoneNumber::make($request->phone_number, $request->country)->formatE164();
+            $phone_number = PhoneNumber::make($request->phone_number, "TZS")->formatE164();
 
             return $phone_number;
 
-            $data['data'] = ['type'=> (string) $object->getType(),
-                'country_code'=>(string) $object->getCountry(),
-                'country_name'=>$geoCoder->getDescriptionForNumber($country_name,'en'),
-                'network_operator'=> $carrierMapper->getNameForNumber($chNumber,'en'),
-                'time_zone'=>$time_zone,
-                'phone_number'=>PhoneNumber::make($request->phone_number, $request->country)->formatE164()];
-            $data['message'] = 'Phone number is a valid phone number';
-            $data['notification'] = 'success';
-
-
-            return json_encode($data);
-
         }catch (\Exception $e)
         {
-            Log::channel('userMgt')->debug('VALIDATE NUMBER :-->'.$e->getLine().'----->'.$e->getTrace().'----->'.$e->getMessage());
             $data['message']=$e->getMessage();
             $data['notification']='failure';
-
-            return json_encode($data);
+            Log::info('message',['PhoneNumber'=>$e->getMessage()]);
         }
 
 

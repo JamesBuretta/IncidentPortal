@@ -24,6 +24,11 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
     <style type="text/css">
+
+        body {
+            background-image: url("{{ asset('images/Screen-BG-02.jpg') }}");
+        }
+
         .image-login{
             max-height: 100px;
         }
@@ -79,19 +84,21 @@
             display: none;
         }
 
+
+
     </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-    <div class="login-logo">
-        <a href="#"><b>Incidents</b> PORTAL</a>
-    </div>
+
     <!-- /.login-logo -->
     <div class="card">
+
         <div class="card-body login-card-body">
             <p class="login-box-msg">
-                <img src="{{asset('images/simba_oil.png')}}" width="200px"  class="image-login">
+                <img src="{{asset('images/header_logo1.png')}}"  height="200px">
             </p>
+
 
             @if(session('fail'))
                 <script>
@@ -145,11 +152,11 @@
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-6">
-                        <p style="margin-top: 5px;">
-                            <a href="{{ route('auth_password_reset') }}">forgot your password ?</a>
-                        </p>
-                    </div>
+{{--                    <div class="col-6">--}}
+{{--                        <p style="margin-top: 5px;">--}}
+{{--                            <a href="{{ route('auth_password_reset') }}">forgot your password ?</a>--}}
+{{--                        </p>--}}
+{{--                    </div>--}}
                     <!-- /.col -->
                 </div>
 
@@ -162,9 +169,9 @@
 
 
             <!-- /.social-auth-links -->
-            <p class="mb-0 text-center">
-                <a href="{{route('auth_register')}}" class="text-center">Register new Account</a>
-            </p>
+{{--            <p class="mb-0 text-center">--}}
+{{--                <a href="{{route('auth_register')}}" class="text-center">Register new Account</a>--}}
+{{--            </p>--}}
         </div>
         <!-- /.login-card-body -->
     </div>

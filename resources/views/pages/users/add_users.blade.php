@@ -6,7 +6,7 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{route('portal_dashboard')}}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="">Home</a></li>
                         <li class="breadcrumb-item active">Add User</li>
                     </ol>
                 </div><!-- /.col -->
@@ -87,6 +87,45 @@
                                                     @if($rl->role_name != 'user')
                                                       <option value="{{$rl->id}}"  {{ (old("role_id") == $rl->id ? "selected":"") }}>{{ucfirst($rl->role_name)}}</option>
                                                     @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Nature Of Operation</label>
+                                            <select name="role_id" class="form-control" required>
+                                                <option value=""> -- Default -- </option>
+                                                @foreach($natures as $nature)
+                                                        <option value="{{$nature->id}}" }>{{ucfirst($rl->name)}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Nature Of Operation</label>
+                                            <select name="role_id" class="form-control" required>
+                                                <option value=""> -- Default -- </option>
+                                                @foreach($companies as $company)
+                                                    <option value="{{$company->id}}" }>{{ucfirst($company->name)}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Nature Of Operation</label>
+                                            <select name="role_id" class="form-control" required>
+                                                <option value=""> -- Default -- </option>
+                                                @foreach($stations as $station)
+                                                    <option value="{{$station->id}}" }>{{ucfirst($station->name)}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

@@ -36,7 +36,7 @@
                     <div class="inner">
                         <h3>{{$inprogress}}</h3>
 
-                        <p>Un Attended</p>
+                        <p>Awaiting Approval</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
