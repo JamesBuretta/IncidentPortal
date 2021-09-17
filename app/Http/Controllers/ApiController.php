@@ -99,7 +99,6 @@ class ApiController extends Controller
         }
     }
 
-
     public function closeIncidentSms($request,$incident_ticket)
     {
         $to = $this->add_prefix($request['phone_number']);
@@ -121,7 +120,6 @@ class ApiController extends Controller
         curl_close($curl);
         Log::info("SMS",['message'=>$response]);
     }
-
 
     public function multipleSms($request)
     {
@@ -271,10 +269,6 @@ class ApiController extends Controller
             Log::info("SMS",['message'=>$response]);
     }
 
-
-
-
-
     public function storeIncident(Request $request)
     {
         //Insertion goes here
@@ -335,7 +329,6 @@ class ApiController extends Controller
 
         return $result;
     }
-
 
     public function processImage($image,$request)
     {

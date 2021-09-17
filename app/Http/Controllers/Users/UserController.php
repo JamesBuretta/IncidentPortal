@@ -23,8 +23,8 @@ class UserController extends Controller
         $companies = Companies::all();
         $natures = OperationNature::all();
         $stations = Stations::all();
-        $municipals = Municipal::all();
-        return view('pages.users.add_users',compact('roles','municipals','companies','natures','stations'));
+
+        return view('pages.users.add_users',compact('roles','companies','natures','stations'));
     }
 
     public function view_users(){
@@ -34,7 +34,7 @@ class UserController extends Controller
         $stations = Stations::all();
         $natures = OperationNature::all();
 
-        return view('pages.users.view_users',compact('users','user_accesses','companies','stations'));
+        return view('pages.users.view_users',compact('users','user_accesses','companies','stations','natures'));
     }
 
     public function update_access(Request $request,$user_id){
@@ -127,31 +127,42 @@ class UserController extends Controller
         if($request->hasfile('profile'))
         {
             $this->validate($request, [
+                'user_identity'=>'required',
                 'email' => 'required',
+                'phone_number' => 'required',
                 'fullname' => 'required',
                 'role_id' => 'required',
-                'municipal_id' => 'required',
+                'company_id'=>'required',
+                'station_id'=> 'required',
                 'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
             ]);
         }
         else{
             $this->validate($request, [
+                'user_identity'=>'required',
                 'email' => 'required',
+                'phone_number' => 'required',
                 'fullname' => 'required',
-                'municipal_id' => 'required',
                 'role_id' => 'required',
+                'company_id'=>'required',
+                'station_id'=> 'required',
             ]);
         }
 
 
        $add_user = new User();
        $add_user->fullname = $request->fullname;
+       $add_user->user_identity = $request->user_identity;
+       $add_user->phone_number = $request->phone_number;
        $add_user->email = $request->email;
+       $add_user->station_id = $request->station_id;
+       $add_user->company_id = $request->company_id;
        $add_user->role_id = $request->role_id;
-       $add_user->municipal_id = ($request->role_id == 1) ? '-' : $request->municipal_id;
        $add_user->password = bcrypt(123456);
        $add_user->status = 1;
        $add_user->access = ($request->role_id == 1) ? 1 : 2;
+
+       //TODO: Send SMS
 
         if($request->hasfile('profile'))
         {

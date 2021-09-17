@@ -66,45 +66,61 @@
                         <form action="{{ route('save_company') }}" method="POST">
                             {{ csrf_field() }}
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="inputCompanyName" class="form-label">Station Name:</label>
                                         <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="Enter company name" required>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-md-4">
+                            <div class="row">
+
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="inputCompanyName" class="form-label">Phone Number:</label>
-                                        <input type="text" class="form-control" name="phone_number" value="{{old('phone_number')}}" placeholder="Enter vendor phone number" required>
+                                        <input type="text" class="form-control" name="phone_number" value="{{old('phone_number')}}" placeholder="Enter station phone number" required>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-md-4">
+                            <div class="row">
+
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="inputCompanyName" class="form-label">Email Address:</label>
-                                        <input type="text" class="form-control" name="email" value="{{old('email')}}" placeholder="Enter vendor email address" required>
+                                        <input type="text" class="form-control" name="email" value="{{old('email')}}" placeholder="Enter station email address" required>
                                     </div>
                                 </div>
+                            </div>
 
-                                
-                                <div class="col-md-4">
+                            <div class="row">
+
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="inputCompanyName" class="form-label">Longitude:</label>
                                         <input type="text" class="form-control" name="longt" value="{{old('longt')}}" placeholder="Enter longitude gps position" required>
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="inputCompanyName" class="form-label">Lattitude:</label>
                                         <input type="text" class="form-control" name="latt" value="{{old('latt')}}" placeholder="Enter lattitude gps position" required>
                                     </div>
                                 </div>
 
+                            </div>
 
 
-                                <div class="col-md-4">
+
+                            <div class="row">
+
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="inputCompanyName" class="form-label">Company:</label>
                                         <select name="company_id" class="form-control form-select" aria-label="Default select example">

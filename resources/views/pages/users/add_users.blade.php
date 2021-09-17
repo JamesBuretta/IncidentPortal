@@ -58,13 +58,23 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-7">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">User ID</label>
+                                            <input type="text" name="user_identity" class="form-control" id="exampleInputEmail1" placeholder="Enter User ID" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Email address</label>
                                             <input type="email" name="email" class="form-control" id="exampleInputEmail1" value="{{old('email')}}" placeholder="Enter email" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Phone Number</label>
                                             <input type="text" name="phone_number" class="form-control" id="exampleInputEmail1" value="{{old('phone_number')}}"  placeholder="Enter Phone Number" required>
@@ -72,13 +82,15 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-7">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Full Name</label>
                                             <input type="text" name="fullname" class="form-control" id="exampleInputEmail1" value="{{old('fullname')}}" placeholder="Enter fullname" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Role</label>
                                             <select name="role_id" class="form-control" required>
@@ -92,24 +104,24 @@
                                         </div>
                                     </div>
                                 </div>
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-md-12">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <label>Nature Of Operation</label>--}}
+{{--                                            <select name="nature_id" class="form-control" required>--}}
+{{--                                                <option value=""> -- Default -- </option>--}}
+{{--                                                @foreach($natures as $nature)--}}
+{{--                                                        <option value="{{$nature->id}}" }>{{ucfirst($nature->name)}}</option>--}}
+{{--                                                @endforeach--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Nature Of Operation</label>
-                                            <select name="role_id" class="form-control" required>
-                                                <option value=""> -- Default -- </option>
-                                                @foreach($natures as $nature)
-                                                        <option value="{{$nature->id}}" }>{{ucfirst($rl->name)}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Nature Of Operation</label>
-                                            <select name="role_id" class="form-control" required>
+                                            <label>Company</label>
+                                            <select name="company_id" class="form-control" required>
                                                 <option value=""> -- Default -- </option>
                                                 @foreach($companies as $company)
                                                     <option value="{{$company->id}}" }>{{ucfirst($company->name)}}</option>
@@ -119,10 +131,10 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-5">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Nature Of Operation</label>
-                                            <select name="role_id" class="form-control" required>
+                                            <label>Stations</label>
+                                            <select name="station_id" class="form-control" required>
                                                 <option value=""> -- Default -- </option>
                                                 @foreach($stations as $station)
                                                     <option value="{{$station->id}}" }>{{ucfirst($station->name)}}</option>

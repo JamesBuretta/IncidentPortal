@@ -25,9 +25,7 @@
 
     <style type="text/css">
 
-        body {
-            background-image: url("{{ asset('images/Screen-BG-02.jpg') }}");
-        }
+
 
         .image-login{
             max-height: 100px;
@@ -85,6 +83,10 @@
         }
 
 
+        body {
+            background-image: url("{{ asset('images/Screen-BG-02.jpg') }}");
+        }
+
 
     </style>
 </head>
@@ -96,7 +98,7 @@
 
         <div class="card-body login-card-body">
             <p class="login-box-msg">
-                <img src="{{asset('images/header_logo1.png')}}"  height="200px">
+                <img src="{{asset('images/lusan_logo2.png')}}" class="img-responsive">
             </p>
 
 

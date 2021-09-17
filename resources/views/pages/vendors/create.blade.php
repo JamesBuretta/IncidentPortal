@@ -66,26 +66,34 @@
                         <form action="{{ route('save_vendor') }}" method="POST">
                             {{ csrf_field() }}
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="inputCompanyName" class="form-label">Vendor Name:</label>
                                         <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="Enter vendor name" required>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="inputCompanyName" class="form-label">Phone Number:</label>
                                         <input type="text" class="form-control" name="phone_number" value="{{old('phone_number')}}" placeholder="Enter vendor phone number" required>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-md-4">
+                            <div class="row">
+
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="inputCompanyName" class="form-label">Email Address:</label>
                                         <input type="text" class="form-control" name="email_address" value="{{old('email_address')}}" placeholder="Enter vendor email address" required>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row">
 
                                 <div class="col-md-12">
                                     <div class="mb-3">

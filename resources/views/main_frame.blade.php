@@ -39,7 +39,7 @@
         }
 
          body {
-             background-image: url("{{ asset('images/Screen-BG-02.jpg') }}");
+
          }
 
     </style>
@@ -59,7 +59,7 @@
 
 
         <a href="{{ url('dashboard') }}" class="brand-link">
-            <img src="{{ asset('/images/header_logo2.png') }}" alt="Simba Equipments Logo" width="50%" height="100px">
+            <img src="{{ asset('/images/lusan_logo1.png') }}" alt="Simba Equipments Logo" >
 {{--            <span class="brand-text font-weight-bold"><span style="color: white"> Simba</span><span style="color: red"> Equipment</span></span>--}}
         </a>
 
@@ -76,7 +76,7 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="background-image:url({{asset('images/Screen-BG-02.jpg')}}); background-size:cover;">
         <!-- Content Header (Page header) -->
           @yield('top-details')
         <!-- /.content-header -->

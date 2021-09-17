@@ -10,7 +10,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Add Station</li>
+                    <li class="breadcrumb-item active">Add Category</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -66,15 +66,19 @@
                         <form action="{{ route('save_category') }}" method="POST">
                             {{ csrf_field() }}
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label  class="form-label">Station Name:</label>
+                                        <label  class="form-label">Category Name:</label>
                                         <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="Enter category name" required>
                                     </div>
                                 </div>
-                                
 
-                                <div class="col-md-6">
+                            </div>
+
+                            <div class="row">
+
+
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label  class="form-label">Manufacturer:</label>
                                         <select name="vendor_id" class="form-control form-select" aria-label="Default select example">
@@ -85,8 +89,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-
 
 
                             </div>

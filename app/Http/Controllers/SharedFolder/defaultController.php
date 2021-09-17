@@ -66,7 +66,7 @@ class defaultController extends Controller
 
     public function profile(){
         $user_roles = Role::all();
-        $municipals = Municipal::all();
+
         $incidents = Incident::where('assigned_id',Auth::id())->get();
 
         return view('pages.profile',compact('user_roles','incidents'));
