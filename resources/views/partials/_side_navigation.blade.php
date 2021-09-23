@@ -218,24 +218,6 @@
 
         <li class="nav-header">Incidents</li>
 
-{{--        <li class="nav-item">--}}
-{{--            <a href="{{route('my-profile')}}" class="nav-link @if(Route::is('my-profile')) active @endif">--}}
-{{--                <i class="nav-icon far fa-calendar-alt"></i>--}}
-{{--                <p>--}}
-{{--                    My Incidents--}}
-{{--                </p>--}}
-{{--            </a>--}}
-{{--        </li>--}}
-
-{{--        <li class="nav-item">--}}
-{{--            <a href="{{route('create_incident')}}" class="nav-link @if(Route::is('create_incident')) active @endif">--}}
-{{--            <i class="nav-icon far fa fa-plus-circle"></i>--}}
-{{--                <p>--}}
-{{--                    Create Incident--}}
-{{--                </p>--}}
-{{--            </a>--}}
-{{--        </li>--}}
-
 
         @can('menu-access-control', 'profile')
         <li class="nav-item has-treeview">
@@ -258,6 +240,13 @@
                     <a href="{{route('view_incidents')}}" class="nav-link @if(Route::is('view_incidents')) active @endif">
                         <i class="far fa-circle nav-icon"></i>
                         <p>View Incidents</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{route('job_assessments')}}" class="nav-link @if(Route::is('job_assessments')) active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View Job Assessement</p>
                     </a>
                 </li>
 

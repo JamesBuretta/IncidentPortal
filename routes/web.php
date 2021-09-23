@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\IncidentsController;
+use App\Http\Controllers\Permit\PermitWebController;
 use App\Http\Controllers\Users\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SharedFolder\defaultController;
@@ -170,6 +171,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('cancel', [IncidentsController::class, 'cancel'])->name('cancel');
     Route::get('reports', [IncidentsController::class, 'report'])->name('reports');
     Route::post('reports_filtered', [IncidentsController::class, 'reportfiltered'])->name('reports_filtered');
+
+    /*
+     * manage job assessment
+     */
+    Route::get('job_assessments',[PermitWebController::class,'index'])->name('job_assessments');
+    Route::get('job_assessment/{id}',[PermitWebController::class,'view'])->name('job_assessement/{id}');
 });
 
 Route::group(['middleware' => ['auth']], function () {

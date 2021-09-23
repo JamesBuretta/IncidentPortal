@@ -21,7 +21,12 @@ class User extends Authenticatable
 
     public function stations()
     {
-        return $this->belongsTo(Station::class);
+        return $this->belongsTo(Stations::class,'station_id','id');
+    }
+
+    public function companies()
+    {
+        return $this->belongsTo(Companies::class,'company_id','id');
     }
     /**
      * The attributes that are mass assignable.

@@ -87,7 +87,7 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <strong>Copyright &copy; <?php echo date('Y'); ?><span style="color: black"> Simba</span><span style="color: red"> Equipment</span>.</strong>
+        Copyright &copy; <?php echo date('Y'); ?><span style="color: black"> <img src="{{ asset('images/lusan_logo2.png.png') }}" alt="">
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
             <b>Version</b> 1.0.0

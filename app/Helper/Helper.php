@@ -1,14 +1,13 @@
-<?php
-
+<?php /** @noinspection ALL */
 
 namespace App\Helper;
 
-
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Propaganistas\LaravelPhone\PhoneNumber;
 
-class Helper
+class helper
 {
     public function generateTxnID($n) {
 
@@ -32,14 +31,6 @@ class Helper
 
         // Return result
         return $result;
-    }
-
-    public function airtelTransID()
-    {
-
-        $transID="MP".$this->generateTxnID(6).$this->generateTxnID(4)."C".$this->generateTxnID(5);
-
-        return $transID;
     }
 
     public static function XMLStringToObject($xml_string)

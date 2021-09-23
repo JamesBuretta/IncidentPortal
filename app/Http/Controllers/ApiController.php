@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper\Helper;
+use App\Models\Companies;
 use App\Models\Impact;
 use App\Models\Incident;
 use App\Models\IncidentTracker;
@@ -35,10 +36,33 @@ class ApiController extends Controller
                     return response()->json(['status' => 'fail', 'message' => 'Phone number does not exist'], 200);
                 }
 
-                $response['userDetails'] = User::where('phone_number',request('phone_number'))->get();
+                $userDetails = User::where('phone_number',request('phone_number'))->get();
+
+                $impacts = Impact::all();
+                $priorities = Priority::all();
+                $status = Status::all();
+                $companies = Companies::all();
+                $stations = Station::where("company_id",$userDetails[0]->company_id)->get();
+                $roles = Role::all();
+
+
+                $data = array();
+
+                $data['impacts']=$impacts;
+                $data['priorities']=$priorities;
+                $data['status']=$status;
+                $data['stations']=$stations;
+                $data['companies']=$companies;
+                $data['roles']=$roles;
+
+
+
+                $response['userDetails'] = $userDetails;
+                $response['company_name'] = $userDetails[0]->companies['name'];
                 $response['status'] = 'success';
                 $response['message'] = 'Authorized user';
                 $response['token'] = $user->createToken('MyApp')->accessToken;
+                $response['systemData']=$data;
 
                 return $response;
 
@@ -134,7 +158,7 @@ class ApiController extends Controller
         $response = array("message"=>"All Sms Were Sent");
     }
 
-    public function incidents($id)
+    public function incidents(Request $request)
     {
 
         try {
@@ -147,7 +171,6 @@ class ApiController extends Controller
                 INNER JOIN impact as C on incidents_tracker.impact_id=C.id
                 INNER JOIN status as D on incidents_tracker.status_id=D.id
                 INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
-            WHERE assigned_id=".$id." AND incidents_tracker.status_id=4
             ORDER BY incidents_tracker.id DESC
             ";
 
@@ -162,7 +185,157 @@ class ApiController extends Controller
             return $response;
         }
 
-    }//Password@2021
+    }
+
+    public function incidentsDashboard(Request $request)
+    {
+
+        try {
+
+            $new = Incident::where('status_id',"1")->where("assigned_id",$request->assigned_id)->count();
+            $closed = Incident::where('status_id',"2")->where("assigned_id",$request->assigned_id)->count();
+            $cancelled = Incident::where('status_id',"3")->where("assigned_id",$request->assigned_id)->count();
+            $inprogres = Incident::where('status_id',"4")->where("assigned_id",$request->assigned_id)->count();
+            $approved = Incident::where('status_id',"5")->where("assigned_id",$request->assigned_id)->count();
+            $assigned = Incident::where('status_id',"6")->where("assigned_id",$request->assigned_id)->count();
+
+            $data = array(
+                "open"=>$new,
+                "closed"=>$closed,
+                "cancelled"=>$cancelled,
+                "inprogress"=>$inprogres,
+                "approved"=>$approved,
+                "assiged"=>$assigned);
+
+            return $data;
+
+        }catch (\Exception $e)
+        {
+            $response['status']="fail";
+            $response['message']=$e->getMessage();
+
+            return $response;
+        }
+
+    }
+
+    public function incidentsByCompanyId(Request $request)
+    {
+
+        try {
+
+            $new = Incident::where('status_id',"1")->where("company_id",$request->company_id)->count();
+            $closed = Incident::where('status_id',"2")->where("company_id",$request->company_id)->count();
+            $cancelled = Incident::where('status_id',"3")->where("company_id",$request->company_id)->count();
+            $inprogres = Incident::where('status_id',"4")->where("company_id",$request->company_id)->count();
+            $approved = Incident::where('status_id',"5")->where("company_id",$request->company_id)->count();
+            $assigned = Incident::where('status_id',"6")->where("company_id",$request->company_id)->count();
+
+            $data = array(
+                "open"=>$new,
+                "closed"=>$closed,
+                "cancelled"=>$cancelled,
+                "inprogress"=>$inprogres,
+                "approved"=>$approved,
+                "assiged"=>$assigned);
+
+            return $data;
+
+        }catch (\Exception $e)
+        {
+            $response['status']="fail";
+            $response['message']=$e->getMessage();
+
+            return $response;
+        }
+
+    }
+
+    public function incidentsByCreatedById(Request $request)
+    {
+        try {
+            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+
+            FROM incidents_tracker
+
+                INNER JOIN users as A on incidents_tracker.caller_id=A.id
+                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
+                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
+                INNER JOIN status as D on incidents_tracker.status_id=D.id
+                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+            WHERE caller_id=".$request->caller_id."
+            ORDER BY incidents_tracker.id DESC
+            ";
+
+            $incidents = DB::select(DB::raw($sql));
+
+            return $incidents;
+        }catch (\Exception $e)
+        {
+            $response['status']="fail";
+            $response['message']=$e->getMessage();
+
+            return $response;
+        }
+    }
+
+    public function incidentsByAssignedById(Request $request)
+    {
+        try {
+            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+
+            FROM incidents_tracker
+
+                INNER JOIN users as A on incidents_tracker.caller_id=A.id
+                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
+                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
+                INNER JOIN status as D on incidents_tracker.status_id=D.id
+                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+            WHERE assigned_id=".$request->assigned_id."
+            ORDER BY incidents_tracker.id DESC
+            ";
+
+            $incidents = DB::select(DB::raw($sql));
+
+            return $incidents;
+        }catch (\Exception $e)
+        {
+            $response['status']="fail";
+            $response['message']=$e->getMessage();
+
+            return $response;
+        }
+    }
+
+    public function incidentsPerStatus(Request $request)
+    {
+
+        try {
+            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+
+            FROM incidents_tracker
+
+                INNER JOIN users as A on incidents_tracker.caller_id=A.id
+                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
+                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
+                INNER JOIN status as D on incidents_tracker.status_id=D.id
+                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+            WHERE assigned_id=".$request->assigned_id."incidents_tracker.status=1
+            ORDER BY incidents_tracker.id DESC
+            ";
+
+            $incidents = DB::select(DB::raw($sql));
+
+            return $incidents;
+        }catch (\Exception $e)
+        {
+            $response['status']="fail";
+            $response['message']=$e->getMessage();
+
+            return $response;
+        }
+
+    }
 
     public function systemData()
     {
@@ -189,8 +362,10 @@ class ApiController extends Controller
         }catch (\Exception $e)
         {
             $data = array();
-            $data['message']="Oops something went wrong!";
+            $data['message']="Oops something went wrong!".$e->getMessage();
             $data['status']="fail";
+
+            return $data;
         }
     }
 
@@ -352,12 +527,10 @@ class ApiController extends Controller
 
     public function changePassword(Request $request)
     {
-        //Insertion goes here
+
         try{
 
-
-
-            $update = User::where('id',$request->id)->update([
+            $update = User::where('id',$request->user_id)->update([
                 'password'=>bcrypt($request->password)
             ]);
 
@@ -497,6 +670,80 @@ class ApiController extends Controller
 
         }
 
+        else if($request->status_id == 4)
+        {
+            $update = Incident::where('id',$request->id)->update(
+                [
+                    'assigned_id'=>$request->assigned_id,
+                    'impact_id'=>$request->impact_id,
+                    'priority_id'=>$request->priority_id,
+                    'subject'=>$request->subject,
+                    'description'=>$request->description,
+                    'status_id'=>$request->status_id,
+                    'closing_comments'=>$request->closing_comment,
+                    'cancel_comments'=>$request->cancel_comment,
+                    'cancelled_datetime'=>NOW(),
+                    'closed_datetime'=>NULL,
+                ]
+            );
+
+            if($update==true)
+            {
+                $incident = Incident::where('id',$request->id)->get();
+                $this->incidentTracker($incident);
+            }
+
+        }
+
+        else if($request->status_id == 5)
+        {
+            $update = Incident::where('id',$request->id)->update(
+                [
+                    'assigned_id'=>$request->assigned_id,
+                    'impact_id'=>$request->impact_id,
+                    'priority_id'=>$request->priority_id,
+                    'subject'=>$request->subject,
+                    'description'=>$request->description,
+                    'status_id'=>$request->status_id,
+                    'closing_comments'=>$request->closing_comment,
+                    'cancel_comments'=>$request->cancel_comment,
+                    'cancelled_datetime'=>NOW(),
+                    'closed_datetime'=>NULL,
+                ]
+            );
+
+            if($update==true)
+            {
+                $incident = Incident::where('id',$request->id)->get();
+                $this->incidentTracker($incident);
+            }
+
+        }
+
+        else if($request->status_id == 6)
+        {
+            $update = Incident::where('id',$request->id)->update(
+                [
+                    'assigned_id'=>$request->assigned_id,
+                    'impact_id'=>$request->impact_id,
+                    'priority_id'=>$request->priority_id,
+                    'subject'=>$request->subject,
+                    'description'=>$request->description,
+                    'status_id'=>$request->status_id,
+                    'closing_comments'=>$request->closing_comment,
+                    'cancel_comments'=>$request->cancel_comment,
+                    'cancelled_datetime'=>NOW(),
+                    'closed_datetime'=>NULL,
+                ]
+            );
+
+            if($update==true)
+            {
+                $incident = Incident::where('id',$request->id)->get();
+                $this->incidentTracker($incident);
+            }
+
+        }
 
         return $update;
     }
