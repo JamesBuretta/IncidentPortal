@@ -56,7 +56,7 @@ class IncidentsController extends Controller
 
             $incident = new Incident();
             $incident->caller_id = $request->caller_id;
-            $incident->assigned_id = $request->assigned_id;
+//            $incident->assigned_id = $request->assigned_id;
             $incident->impact_id = $request->impact_id;
             $incident->priority_id = $request->priority_id;
             $incident->subject = $request->subject;

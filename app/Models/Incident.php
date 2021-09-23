@@ -37,4 +37,9 @@ class Incident extends Model
     {
         return $this->belongsTo(Status::class,'status_id');
     }
+
+    public function stations()
+    {
+        return $this->belongsTo(Stations::class,"station_id");
+    }
 }

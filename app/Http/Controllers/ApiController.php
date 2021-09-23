@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use function PHPUnit\Framework\isEmpty;
 
 class ApiController extends Controller
 {
@@ -162,7 +163,8 @@ class ApiController extends Controller
     {
 
         try {
-            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority,
+       F.name as station_name
 
             FROM incidents_tracker
 
@@ -171,6 +173,7 @@ class ApiController extends Controller
                 INNER JOIN impact as C on incidents_tracker.impact_id=C.id
                 INNER JOIN status as D on incidents_tracker.status_id=D.id
                 INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+                INNER JOIN stations as F on incidents_tracker.station_id=F.id
             ORDER BY incidents_tracker.id DESC
             ";
 
@@ -254,22 +257,32 @@ class ApiController extends Controller
     public function incidentsByCreatedById(Request $request)
     {
         try {
-            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
+            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority,
+            F.name as station_name
 
             FROM incidents_tracker
 
                 INNER JOIN users as A on incidents_tracker.caller_id=A.id
-                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
+                LEFT JOIN users as B on incidents_tracker.assigned_id=B.id
                 INNER JOIN impact as C on incidents_tracker.impact_id=C.id
                 INNER JOIN status as D on incidents_tracker.status_id=D.id
                 INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+                LEFT JOIN stations as F on incidents_tracker.station_id=F.id
             WHERE caller_id=".$request->caller_id."
             ORDER BY incidents_tracker.id DESC
             ";
 
             $incidents = DB::select(DB::raw($sql));
-
-            return $incidents;
+            $ret = array();
+            if(count($incidents) > 0){
+                $ret['status'] = "success";
+                $ret["message"] = "Incidents retrieved successfully.";
+                $ret["incidents"][] = $incidents;
+            }else{
+                $ret['status'] = "fail";
+                $ret["message"] = "Incidents retrieved un successfully.";
+            }
+            return $ret;
         }catch (\Exception $e)
         {
             $response['status']="fail";
@@ -283,7 +296,7 @@ class ApiController extends Controller
     {
         try {
             $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
-
+,F.name as station_name
             FROM incidents_tracker
 
                 INNER JOIN users as A on incidents_tracker.caller_id=A.id
@@ -291,6 +304,7 @@ class ApiController extends Controller
                 INNER JOIN impact as C on incidents_tracker.impact_id=C.id
                 INNER JOIN status as D on incidents_tracker.status_id=D.id
                 INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+         INNER JOIN stations as F on incidents_tracker.station_id=F.id
             WHERE assigned_id=".$request->assigned_id."
             ORDER BY incidents_tracker.id DESC
             ";
@@ -312,7 +326,7 @@ class ApiController extends Controller
 
         try {
             $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
-
+,F.name as station_name
             FROM incidents_tracker
 
                 INNER JOIN users as A on incidents_tracker.caller_id=A.id
@@ -320,6 +334,7 @@ class ApiController extends Controller
                 INNER JOIN impact as C on incidents_tracker.impact_id=C.id
                 INNER JOIN status as D on incidents_tracker.status_id=D.id
                 INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+         INNER JOIN stations as F on incidents_tracker.station_id=F.id
             WHERE assigned_id=".$request->assigned_id."incidents_tracker.status=1
             ORDER BY incidents_tracker.id DESC
             ";
@@ -453,6 +468,7 @@ class ApiController extends Controller
             $incident = new Incident();
             $incident->caller_id = $request->caller_id;
 //            $incident->assigned_id = $request->assigned_id;
+            $incident->station_id = $request->station_id;
             $incident->impact_id = $request->impact_id;
             $incident->priority_id = $request->priority_id;
             $incident->subject = $request->subject;
@@ -596,6 +612,7 @@ class ApiController extends Controller
 
     public function process(Request $request)
     {
+
         if($request->status_id == 1)
         {
             $update = Incident::where('id',$request->id)->update(

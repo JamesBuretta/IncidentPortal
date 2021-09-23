@@ -166,31 +166,32 @@
                                 <td>{{$details->priority }}</td>
                                 <td>{{$details->impact }}</td>
                                 <td>
-                                    @if($details->status === "Un-attended")
-                                    <span class="badge badge-primary text-white text-capitalize">
-                                    {{$details->status ?? '--'}}
-                                    </span>
-                                    @endif
+                                    {{ $details->status }}
+{{--                                    @if($details->status === "Un-attended")--}}
+{{--                                    <span class="badge badge-primary text-white text-capitalize">--}}
+{{--                                    {{$details->status ?? '--'}}--}}
+{{--                                    </span>--}}
+{{--                                    @endif--}}
 
-                                    @if($details->status === "Cancelled")
-                                    <span class="badge badge-danger text-white text-capitalize">
-                                    {{$details->status ?? '--'}}
-                                    </span>
-                                    @endif
+{{--                                    @if($details->status === "Cancelled")--}}
+{{--                                    <span class="badge badge-danger text-white text-capitalize">--}}
+{{--                                    {{$details->status ?? '--'}}--}}
+{{--                                    </span>--}}
+{{--                                    @endif--}}
 
-                                    @if($details->status === "Closed")
-                                    <span class="badge badge-danger text-capitalize">
-                                    {{$details->status ?? '--'}}
-                                    </span>
-                                    @endif
-                                    @if($details->status === "Approved")
-                                        <span class="badge badge-success text-white text-capitalize">
-                                        {{$details->status ?? '--'}}
-                                        </span>
-                                    @endif
+{{--                                    @if($details->status === "Closed")--}}
+{{--                                    <span class="badge badge-danger text-capitalize">--}}
+{{--                                    {{$details->status ?? '--'}}--}}
+{{--                                    </span>--}}
+{{--                                    @endif--}}
+{{--                                    @if($details->status === "Approved")--}}
+{{--                                        <span class="badge badge-success text-white text-capitalize">--}}
+{{--                                        {{$details->status ?? '--'}}--}}
+{{--                                        </span>--}}
+{{--                                    @endif--}}
                                 </td>
-                                <td>{{$details->subject ?? '--'}}</td>
-                                <td>{{$details->description ?? '--'}}</td>
+                                <td>{{urldecode($details->subject) ?? '--'}}</td>
+                                <td>{{urldecode($details->description) ?? '--'}}</td>
                                 <td>{{$details->created_datetime ?? '--'}}</td>
                                 <td>{{$details->cancelled_datetime ?? '--'}}</td>
                                 <td>{{$details->closed_datetime ?? '--'}}</td>
