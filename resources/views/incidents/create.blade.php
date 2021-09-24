@@ -199,7 +199,31 @@
                                     <div class="form-horizontal">
 {{--                                        @if ($details->status === "Un-attended")--}}
 
-                                        <a href="{{ url('view_incidents/'.$details->id) }}"   class="btn btn-primary">Update</a>
+                                        <div class="row">
+
+                                        @if($details->status == "Open")
+                                        <a href="#"   class="btn btn-primary assign-technician">Assign</a>
+                                        @endif
+
+                                        @if($details->status == "Assigned")
+                                            <a href="#"   class="btn btn-primary approve-permit">Request Permit</a>
+                                        @endif
+
+
+                                        @if($details->status == "In Progress")
+                                            <a href="#"   class="btn btn-primary grant-permit">Grant/Revoke Permit</a>
+                                        @endif
+
+                                        @if($details->status == "Approved Work Permit")
+                                            <a href="#"   class="btn btn-primary close-incident">Close Indident</a>
+                                        @endif
+
+                                        @if($details->status != "Closed")
+                                            <a href="#"   class="btn btn-danger cancel-incident">Cancel</a>
+                                        @endif
+
+                                        </div>
+
 
 {{--                                        @endif--}}
 {{--                                    <a  href="#" onclick="handleClose('{{ url('close') }}','{{ $details->id }}')" class="btn btn-success" data-toggle="modal"   data-target="#close">Close</a>--}}
@@ -217,12 +241,72 @@
         @include('dialog.close')
         @include('dialog.cancel')
 
+        @include('incidents.modals.assign')
+        @include('incidents.modals.cancel')
+
 </section>
 
 @endsection
 
 @section('page-script')
     <script>
+
+
+{{--Assign Incident Logic--}}
+            $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('body').on('click', '.assign-technician', function (event) {
+            event.preventDefault();
+            var bin = $(this).data('bin_number');
+            var id = $(this).data('id');
+            var cat = $(this).data('category');
+            var currency = $(this).data('currency');
+
+            $('#edit-assigned-modal').modal('show');
+            $('#bin_id').val(id);
+            $('#bin_number').val(bin);
+            $('#bin_category').val(cat);
+            $('#bin_currency').val(currency);
+        });
+        });
+
+        //Cancel-Incident Logic
+
+$(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('body').on('click', '.cancel-incident', function (event) {
+        event.preventDefault();
+        var bin = $(this).data('bin_number');
+        var id = $(this).data('id');
+        var cat = $(this).data('category');
+        var currency = $(this).data('currency');
+
+        $('#edit-cancel-modal').modal('show');
+        $('#bin_id').val(id);
+        $('#bin_number').val(bin);
+        $('#bin_category').val(cat);
+        $('#bin_currency').val(currency);
+    });
+});
+
+
+//TODO: Request Permit
+
+//TODO: Close Incident / Submit Job
+
+//TODO: Submit Job Card
+
+
 
 
         $('#example1').dataTable({

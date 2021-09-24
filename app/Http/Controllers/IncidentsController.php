@@ -9,6 +9,7 @@ use App\Models\Priority;
 use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -22,6 +23,10 @@ class IncidentsController extends Controller
         $status = Status::all();
         $callers = User::all();
 
+        $user = User::where("id",Auth::id())->get()[0];
+
+        $technicians = User::where("company_id",$user->company_id)->get();
+
         $sql="SELECT incidents_tracker.id,incidents_tracker.incident_ticket,created_datetime,closed_datetime,cancelled_datetime,subject,description,image,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
             FROM incidents_tracker
                 INNER JOIN users as A on incidents_tracker.caller_id=A.id
@@ -34,7 +39,7 @@ class IncidentsController extends Controller
 
         $incidents = DB::select(DB::raw($sql));
 
-        return view('incidents.create',compact('impacts','priorities','status','callers','incidents'));
+        return view('incidents.create',compact('impacts','priorities','status','callers','incidents','technicians'));
     }
 
 
