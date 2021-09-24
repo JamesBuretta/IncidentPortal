@@ -16,6 +16,33 @@ use Illuminate\Support\Facades\Session;
 
 class IncidentsController extends Controller
 {
+    public function assignIncident(Request $request)
+    {
+        try{
+
+            $update = IncidentTracker::where("id",$request->id)->update([
+                "assigned_id"=>$request->assigned_id
+            ]);
+
+            if($update==true)
+            {
+                Session::flash('success','Incident Has been assigned to technician');
+                return redirect()->back();
+            }
+            else{
+                Session::flash('success','Oops something went wrong');
+                return redirect()->back();
+            }
+
+        }
+        catch (\Throwable $e)
+        {
+            Session::flash('success','Oops looks like an error occured');
+            return redirect()->back();
+        }
+    }
+
+
     public function index()
     {
         $impacts = Impact::all();

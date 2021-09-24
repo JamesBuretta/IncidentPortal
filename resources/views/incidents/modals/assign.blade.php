@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="edit-assigned-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form method="post" action="{{ url('bin-prefix/update')  }}">
+    <form method="post" action="{{ url('assign/incident')  }}">
         @csrf
 
         <div class="modal-dialog modal-md" role="document" >
