@@ -202,7 +202,7 @@
                                         <div class="row">
 
                                         @if($details->status == "Open")
-                                        <a href="#"   class="btn btn-primary assign-technician">Assign</a>
+                                        <a href="#"   class="btn btn-primary assign-technician" data-assigned-value-id="{{ $details->id }}">Assign</a>
                                         @endif
 
                                         @if($details->status == "Assigned")
@@ -243,6 +243,7 @@
 
         @include('incidents.modals.assign')
         @include('incidents.modals.cancel')
+        @include('incidents.modals.permit')
 
 </section>
 
@@ -262,20 +263,40 @@
 
             $('body').on('click', '.assign-technician', function (event) {
             event.preventDefault();
-            var bin = $(this).data('bin_number');
-            var id = $(this).data('id');
-            var cat = $(this).data('category');
-            var currency = $(this).data('currency');
+            var assigned_id = $(this).data('assigned-value-id');
+
 
             $('#edit-assigned-modal').modal('show');
-            $('#bin_id').val(id);
-            $('#bin_number').val(bin);
-            $('#bin_category').val(cat);
-            $('#bin_currency').val(currency);
+            $('#assigned-value-id').val(assigned_id);
         });
         });
 
         //Cancel-Incident Logic
+
+$(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('body').on('click', '.approve-permit', function (event) {
+        event.preventDefault();
+        var bin = $(this).data('bin_number');
+        var id = $(this).data('id');
+        var cat = $(this).data('category');
+        var currency = $(this).data('currency');
+
+        $('#edit-job-assessment-modal').modal('show');
+        $('#bin_id').val(id);
+        $('#bin_number').val(bin);
+        $('#bin_category').val(cat);
+        $('#bin_currency').val(currency);
+    });
+});
+
+
+//TODO: Request Permit
 
 $(document).ready(function () {
     $.ajaxSetup({
@@ -298,9 +319,6 @@ $(document).ready(function () {
         $('#bin_currency').val(currency);
     });
 });
-
-
-//TODO: Request Permit
 
 //TODO: Close Incident / Submit Job
 

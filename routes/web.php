@@ -171,7 +171,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('cancel', [IncidentsController::class, 'cancel'])->name('cancel');
     Route::get('reports', [IncidentsController::class, 'report'])->name('reports');
     Route::post('reports_filtered', [IncidentsController::class, 'reportfiltered'])->name('reports_filtered');
-    Route::post('assign/incident',IncidentsController::class,'assignIncident')->name('assign/incident');
+    Route::post('assign/incident',[IncidentsController::class,'assignIncident'])->name('assign/incident');
 
     /*
      * manage job assessment

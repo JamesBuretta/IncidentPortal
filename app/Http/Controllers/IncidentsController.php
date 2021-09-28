@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Impact;
 use App\Models\Incident;
 use App\Models\IncidentTracker;
+use App\Models\JobAssessment;
 use App\Models\Priority;
 use App\Models\Status;
 use App\Models\User;
@@ -20,8 +21,10 @@ class IncidentsController extends Controller
     {
         try{
 
+            $status="6";
             $update = IncidentTracker::where("id",$request->id)->update([
-                "assigned_id"=>$request->assigned_id
+                "assigned_id"=>$request->assigned_id,
+                "status_id"=>$status
             ]);
 
             if($update==true)
@@ -42,6 +45,62 @@ class IncidentsController extends Controller
         }
     }
 
+    public function closeIncident(Request $request)
+    {
+        try{
+
+            $status="2";
+            $update = IncidentTracker::where("id",$request->id)->update([
+                "closing_comments"=>$request->cancel_comments,
+                "status_id"=>$status
+            ]);
+
+            if($update==true)
+            {
+                Session::flash('success','Incident has been closed successfully');
+                return redirect()->back();
+            }
+            else{
+                Session::flash('success','Oops something went wrong');
+                return redirect()->back();
+            }
+
+        }catch (\Throwable $e)
+        {
+            Log::info("message",["MessageError"=>$e->getMessage()]);
+
+            Session::flash('success','Oops looks like an error occured');
+            return redirect()->back();
+        }
+    }
+
+    public function cancelIncident(Request $request)
+    {
+        try{
+            $status="3";
+            $update = IncidentTracker::where("id",$request->id)->update([
+                "cancel_comments"=>$request->cancel_comments,
+                "status_id"=>$status
+            ]);
+
+            if($update==true)
+            {
+                Session::flash('success','Incident has been cancelled successfully');
+                return redirect()->back();
+            }
+            else{
+                Session::flash('success','Oops something went wrong');
+                return redirect()->back();
+            }
+
+        }catch (\Throwable $e)
+        {
+            Log::info("message",["MessageError"=>$e->getMessage()]);
+
+            Session::flash('success','Oops looks like an error occured');
+            return redirect()->back();
+        }
+    }
 
     public function index()
     {

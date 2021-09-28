@@ -9,7 +9,7 @@ class IncidentTracker extends Model
 {
     use HasFactory;
 
-    public $table="incidents_logs";
+    public $table="incidents_tracker";
 
     public $timestamps=false;
 
