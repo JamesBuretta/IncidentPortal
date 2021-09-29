@@ -15,119 +15,99 @@
                 <div class="modal-body">
                     <div class="row">
 
-                        <div class="col-md-12">
+                        <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
 
                                     <div class="row">
 
-                                        <div class="col-md-12">
+                                        <div class="row">
 
-                                            <div class="form-group">
+                                            <div class="form-group col-lg-6">
 
-                                                <div class="form-group">
+                                                <div class="form-group col-lg-6">
                                                     <label for="name">Job Desc*</label>
                                                     <input type="text" name="job_desc"  class="form-control">
                                                 </div>
 
                                             </div>
 
-                                        </div>
-
-                                        <div class="col-md-12">
-
-                                            <div class="form-group">
+                                            <div class="form-group col-lg-6">
                                                 <label for="name">Spare Required*</label>
                                                 <input type="text" name="spare_required"  class="form-control">
                                             </div>
+
                                         </div>
 
-                                        <div class="col-md-12">
-                                            <div class="form-group">
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
                                                 <label for="name">Comments*</label>
                                                 <input type="text" name="comments"  class="form-control">
                                             </div>
-                                        </div>
 
-                                        <div class="col-md-12">
-
-                                            <div class="form-group">
+                                            <div class="form-group col-lg-6">
                                                 <label for="name">Work Force*</label>
                                                 <input type="text" name="work_force"  class="form-control">
                                             </div>
-
                                         </div>
 
-                                        <div class="col-md-12">
-                                            <div class="form-group">
+                                        <div class="row">
+
+                                            <div class="form-group col-lg-6">
                                                 <label for="name">Team Leader*</label>
                                                 <input type="text" name="team_leader"  class="form-control">
                                             </div>
-                                        </div>
 
-                                        <div class="col-md-12">
-
-                                            <div class="form-group">
+                                            <div class="form-group col-lg-6">
                                                 <label for="name">Equipment Tools List*</label>
                                                 <input type="text" name="equipment_tools_list"  class="form-control">
                                             </div>
-
                                         </div>
 
-                                        <div class="col-md-12">
 
-                                            <div class="form-group">
+                                        <div class="row">
+
+                                            <div class="form-group col-lg-6">
                                                 <label for="name">Permit Cert*</label>
                                                 <input type="text" name="permit_cert"  class="form-control">
                                             </div>
 
-                                        </div>
-
-                                        <div class="col-md-12">
-
-                                            <div class="form-group">
+                                            <div class="form-group col-lg-6">
                                                 <label for="name">Job Summary*</label>
                                                 <input type="textarea" name="job_summary"  class="form-control">
                                             </div>
 
                                         </div>
 
-                                        <div class="col-md-12">
 
-                                            <div class="form-group">
+                                        <div class="row">
+
+                                            <div class="form-group col-lg-6">
                                                 <label for="name">Total Time Taken*</label>
                                                 <input type="text" name="total_time_taken"  class="form-control">
                                             </div>
 
-                                        </div>
-
-                                        <div class="col-md-12">
-
-                                            <div class="form-group">
+                                            <div class="form-group col-lg-6">
                                                 <label for="name">Out Standing Work*</label>
                                                 <input type="text" name="out_standing_work"  class="form-control">
                                             </div>
 
                                         </div>
 
-                                        <div class="col-md-12">
+                                        <div class="row">
 
-                                            <div class="form-group">
+                                            <div class="form-group col-lg-6">
                                                 <label for="name">Spare Parts Used*</label>
                                                 <input type="text" name="job_summary"  class="form-control">
                                             </div>
 
-                                        </div>
-
-                                        <div class="col-md-12">
-
-                                            <div class="form-group">
+                                            <div class="form-group col-lg-6">
                                                 <label for="name">Extra Comments*</label>
                                                 <input type="text" name="extra_comments"  class="form-control">
                                             </div>
 
                                         </div>
-
 
                                     </div>
 

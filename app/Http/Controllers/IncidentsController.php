@@ -51,7 +51,7 @@ class IncidentsController extends Controller
 
             $status="2";
             $update = IncidentTracker::where("id",$request->id)->update([
-                "closing_comments"=>$request->cancel_comments,
+                "closing_comments"=>$request->closing_comments,
                 "status_id"=>$status
             ]);
 
