@@ -77,53 +77,6 @@ class ApiController extends Controller
         }
     }
 
-    public function closeIncident(Request $request)
-    {
-        try{
-
-            $status=2;
-            $close = Incident::where('id',$request->id)->update(
-                [
-                    'status_id'=>$status,
-                    'closing_comments'=>$request->comment,
-                    'closed_datetime'=>NOW(),
-                    'cancelled_datetime'=>NULL
-                ]
-            );
-
-
-
-
-
-            if($close==true)
-            {
-                $this->multipleSms($request);
-                $data = array();
-                $data['message']="Incident Closed successfully!";
-                $data['status']="success";
-
-                return $data;
-            }
-            else{
-                $data = array();
-                $data['message']="Incident Not Updated!";
-                $data['status']="fail";
-
-                return $data;
-            }
-
-        }catch (\Exception $e)
-        {
-            $data = array();
-            $data['message']="Oops looks like something went wrong!";
-            $data['status']="fail";
-
-            Log::info("message",['ErrorLogs'=>$e->getMessage()]);
-
-            return $data;
-        }
-    }
-
     public function closeIncidentSms($request,$incident_ticket)
     {
         $to = $this->add_prefix($request['phone_number']);
@@ -467,7 +420,6 @@ class ApiController extends Controller
 
             $incident = new Incident();
             $incident->caller_id = $request->caller_id;
-//            $incident->assigned_id = $request->assigned_id;
             $incident->station_id = $request->station_id;
             $incident->impact_id = $request->impact_id;
             $incident->priority_id = $request->priority_id;
@@ -610,48 +562,24 @@ class ApiController extends Controller
         return $response;
     }
 
+
+    /*
+     * Incident Process summary
+     */
     public function process(Request $request)
     {
 
-        if($request->status_id == 1)
+        /*
+         * Close Incident
+         */
+        if($request->status_id == 2)
         {
             $update = Incident::where('id',$request->id)->update(
                 [
-                    'assigned_id'=>$request->assigned_id,
-                    'impact_id'=>$request->impact_id,
-                    'priority_id'=>$request->priority_id,
-                    'subject'=>$request->subject,
-                    'description'=>$request->description,
-                    'status_id'=>$request->status_id,
-                    'closing_comments'=>NULL,
-                    'cancel_comments'=>NULL,
-                    'closed_datetime'=>NULL,
-                    'cancelled_datetime'=>NULL
-                ]
-            );
-
-            if($update==true)
-            {
-                $incident = Incident::where('id',$request->id)->get();
-                $this->incidentTracker($incident);
-            }
-
-        }
-
-        else if($request->status_id == 2)
-        {
-            $update = Incident::where('id',$request->id)->update(
-                [
-                    'assigned_id'=>$request->assigned_id,
-                    'impact_id'=>$request->impact_id,
-                    'priority_id'=>$request->priority_id,
-                    'subject'=>$request->subject,
-                    'description'=>$request->description,
                     'status_id'=>$request->status_id,
                     'closing_comments'=>$request->closing_comment,
-                    'cancel_comments'=>$request->cancel_comment,
                     'closed_datetime'=>NOW(),
-                    'cancelled_datetime'=>NULL
+                    'assigned_id'=>$request->user_id
                 ]
             );
 
@@ -662,20 +590,17 @@ class ApiController extends Controller
             }
         }
 
+        /*
+         * Cancelled Incident
+         */
         else if($request->status_id == 3)
         {
             $update = Incident::where('id',$request->id)->update(
                 [
-                    'assigned_id'=>$request->assigned_id,
-                    'impact_id'=>$request->impact_id,
-                    'priority_id'=>$request->priority_id,
-                    'subject'=>$request->subject,
-                    'description'=>$request->description,
                     'status_id'=>$request->status_id,
-                    'closing_comments'=>$request->closing_comment,
                     'cancel_comments'=>$request->cancel_comment,
                     'cancelled_datetime'=>NOW(),
-                    'closed_datetime'=>NULL,
+                    'caller_id'=>$request->user_id
                 ]
             );
 
@@ -687,20 +612,16 @@ class ApiController extends Controller
 
         }
 
+        /*
+         * Approve Incident
+         */
         else if($request->status_id == 4)
         {
             $update = Incident::where('id',$request->id)->update(
                 [
-                    'assigned_id'=>$request->assigned_id,
-                    'impact_id'=>$request->impact_id,
-                    'priority_id'=>$request->priority_id,
-                    'subject'=>$request->subject,
-                    'description'=>$request->description,
                     'status_id'=>$request->status_id,
-                    'closing_comments'=>$request->closing_comment,
-                    'cancel_comments'=>$request->cancel_comment,
-                    'cancelled_datetime'=>NOW(),
-                    'closed_datetime'=>NULL,
+                    'approved_datetime'=>NOW(),
+                    'approver_id'=>$request->user_id
                 ]
             );
 
@@ -712,6 +633,9 @@ class ApiController extends Controller
 
         }
 
+        /*
+         * Pending Approval
+         */
         else if($request->status_id == 5)
         {
             $update = Incident::where('id',$request->id)->update(
@@ -737,20 +661,15 @@ class ApiController extends Controller
 
         }
 
+        /*
+         * Assigned
+         */
         else if($request->status_id == 6)
         {
             $update = Incident::where('id',$request->id)->update(
                 [
                     'assigned_id'=>$request->assigned_id,
-                    'impact_id'=>$request->impact_id,
-                    'priority_id'=>$request->priority_id,
-                    'subject'=>$request->subject,
-                    'description'=>$request->description,
-                    'status_id'=>$request->status_id,
-                    'closing_comments'=>$request->closing_comment,
-                    'cancel_comments'=>$request->cancel_comment,
-                    'cancelled_datetime'=>NOW(),
-                    'closed_datetime'=>NULL,
+                    'simba_admin_id'=>$request->user_id
                 ]
             );
 
@@ -763,6 +682,209 @@ class ApiController extends Controller
         }
 
         return $update;
+    }
+
+    /*
+     * Close Incident
+     */
+    public function closeIncident(Request $request)
+    {
+        try{
+
+            $status=2;
+            $update = Incident::where('id',$request->id)->update(
+                [
+                    'status_id'=>$status,
+                    'closing_comments'=>$request->closing_comment,
+                    'closed_datetime'=>NOW()
+                ]
+            );
+
+            if($update==true)
+            {
+                $response['status']="success";
+                $response['message']="Incident has been closed!";
+
+                return $response;
+            }else{
+                $response['status']="failed";
+                $response['message']="Something went wrong!";
+
+                return $response;
+            }
+
+        }catch (\Throwable $e)
+        {
+            $response['status']="failed";
+            $response['message']="An Error Occured!";
+
+            Log::info("message",['Error'=>$e->getMessage()]);
+
+            return $response;
+        }
+    }
+
+    /*
+     * Assign Incident
+     */
+    public function assignIncident(Request $request)
+    {
+        try{
+
+            $status=6;
+            $update = Incident::where('id',$request->id)->update(
+                [
+                    'assigned_id'=>$request->assigned_id,
+                    'simba_admin_id'=>$request->user_id,
+                    'status_id'=>$status,
+                    'assigned_datetime'=>NOW()
+                ]
+            );
+
+            if($update==true)
+            {
+                $response['status']="success";
+                $response['message']="Incident has been assigned!";
+
+                return $response;
+            }else{
+                $response['status']="failed";
+                $response['message']="Something went wrong!";
+
+                return $response;
+            }
+
+        }catch (\Throwable $e)
+        {
+            $response['status']="failed";
+            $response['message']="An Error Occured!";
+
+            Log::info("message",['Error'=>$e->getMessage()]);
+
+            return $response;
+        }
+    }
+
+    /*
+     * Request for Approval
+     */
+    public function requestIncidentPermit(Request $request)
+    {
+        try{
+
+            //TODO: Get job assessment form request during this process
+
+            $status=5;
+            $update = Incident::where('id',$request->id)->update(
+                [
+                    'status_id'=>$status,
+                    'request_approval_datetime'=>NOW()
+                ]
+            );
+
+            if($update==true)
+            {
+                $response['status']="success";
+                $response['message']="Incident permission request sent!";
+
+                return $response;
+            }else{
+                $response['status']="failed";
+                $response['message']="Something went wrong!";
+
+                return $response;
+            }
+
+        }catch (\Throwable $e)
+        {
+            $response['status']="failed";
+            $response['message']="An Error Occured!";
+
+            Log::info("message",['Error'=>$e->getMessage()]);
+
+            return $response;
+        }
+    }
+
+    /*
+     * Approve Incident
+     */
+    public function approveIncident(Request $request)
+    {
+        try{
+
+            $status=4;
+            $update = Incident::where('id',$request->id)->update(
+                [
+                    'status_id'=>$status,
+                    'approved_datetime'=>NOW(),
+                    'approver_id'=>$request->user_id
+                ]
+            );
+
+            if($update==true)
+            {
+                $response['status']="success";
+                $response['message']="Incident has been approved!";
+
+                return $response;
+            }else{
+                $response['status']="failed";
+                $response['message']="Something went wrong!";
+
+                return $response;
+            }
+
+        }catch (\Throwable $e)
+        {
+            $response['status']="failed";
+            $response['message']="An Error Occured!";
+
+            Log::info("message",['Error'=>$e->getMessage()]);
+
+            return $response;
+        }
+    }
+
+    /*
+     * Cancel Incident
+     */
+    public function cancelIncident(Request $request)
+    {
+        try{
+
+            $status=3;
+            $update = Incident::where('id',$request->id)->update(
+                [
+                    'status_id'=>$status,
+                    'cancel_comments'=>$request->cancel_comment,
+                    'cancelled_datetime'=>NOW(),
+                    'canceller_id'=>$request->user_id
+                ]
+            );
+
+            if($update==true)
+            {
+                $response['status']="success";
+                $response['message']="Incident has been cancelled!";
+
+                return $response;
+            }else{
+                $response['status']="failed";
+                $response['message']="Something went wrong!";
+
+                return $response;
+            }
+
+        }catch (\Throwable $e)
+        {
+            $response['status']="failed";
+            $response['message']="An Error Occured!";
+
+            Log::info("message",['Error'=>$e->getMessage()]);
+
+            return $response;
+        }
     }
 
     public function incidentTracker($request)

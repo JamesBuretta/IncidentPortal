@@ -37,4 +37,14 @@ class IncidentTracker extends Model
     {
         return $this->belongsTo(Status::class,'status_id');
     }
+
+    public function admin()
+    {
+        return $this->belongsTo(User::class,'simba_admin_id');
+    }
+
+    public function approver()
+    {
+        return $this->belongsTo(User::class,'approver_id');
+    }
 }

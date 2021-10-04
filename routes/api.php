@@ -40,6 +40,13 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('create/job_assessment',[PermitApiController::class,'store']);
     Route::get('view/job_assessment',[PermitApiController::class,'retrieve']);
     Route::get('incidents/status/update',[ApiController::class,'process']);
+
+    //Incident Process Links
+    Route::post('close/incident',[ApiController::class,'closeIncident']);
+    Route::post('assign/incident',[ApiController::class,'assignIncident']);
+    Route::post('request/incident/permission',[ApiController::class,'requestIncidentPermit']);
+    Route::post('approve/incident',[ApiController::class,'approveIncident']);
+    Route::post('cancel/incident',[ApiController::class,'cancelIncident']);
 });
 
 
