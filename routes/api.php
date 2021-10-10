@@ -24,6 +24,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('change_password', [ApiController::class, 'changePassword'])->name('change_password');
     Route::post('register', [ApiController::class, 'registration'])->name('registration');
     Route::post('incidents',[ApiController::class,'incidents'])->name('incidents');
+    Route::post('retrieve/incident',[ApiController::class,'retrieveIncident'])->name('retrieve/incident');
     Route::post('incidents/per_caller',[ApiController::class,'incidentsByCreatedById'])->name('incidents/per_caller');
     Route::post('incidents/dashboard',[ApiController::class,'incidentsDashboard'])->name('incidents/dashboard');
     Route::post('incidents/per_company',[ApiController::class,'incidentsByCompanyId'])->name('incidents/per_company');

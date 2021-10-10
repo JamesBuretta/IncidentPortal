@@ -143,6 +143,37 @@ class ApiController extends Controller
 
     }
 
+    public function retrieveIncident(Request $request)
+    {
+
+        try {
+            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority,
+       F.name as station_name
+
+            FROM incidents_tracker
+
+                INNER JOIN users as A on incidents_tracker.caller_id=A.id
+                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
+                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
+                INNER JOIN status as D on incidents_tracker.status_id=D.id
+                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
+                INNER JOIN stations as F on incidents_tracker.station_id=F.id
+            WHERE incidents_tracker.id=".$request->id
+            ;
+
+            $incidents = DB::select(DB::raw($sql));
+
+            return $incidents;
+        }catch (\Exception $e)
+        {
+            $response['status']="fail";
+            $response['message']=$e->getMessage();
+
+            return $response;
+        }
+
+    }
+
     public function incidentsDashboard(Request $request)
     {
 
