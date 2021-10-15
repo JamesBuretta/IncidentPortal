@@ -149,26 +149,5 @@
         });
     }
 
-    function downloadReport(paymentID) {
-        var url_data = '{{ route("download_invoice", ":id") }}';
-        url_data = url_data.replace(':id', paymentID);
-
-        //Button Loader
-        $("#print_btn_" + paymentID).html('<i class="fa fa-spin fa-spinner" style="padding: 2px;"></i>');
-
-        $.ajax({
-            url: url_data,
-            type: 'GET',
-            success: function() {
-                //Restore Button Loader
-                $("#print_btn_" + paymentID).html('<i class="fa fa-print" style="padding: 2px;"></i>');
-            },
-            error: function(xhr, status, error) {
-                //Restore Button Loader
-                $("#print_btn_" + paymentID).html('<i class="fa fa-print" style="padding: 2px;"></i>');
-                console.log(xhr);
-            }
-        });
-    }
 </script>
 @endsection

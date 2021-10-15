@@ -11,6 +11,7 @@ use App\Models\MenuAccess;
 use App\Models\Priority;
 use App\Models\Role;
 use App\Models\Station;
+use App\Models\Stations;
 use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\File;
@@ -43,7 +44,7 @@ class ApiController extends Controller
                 $priorities = Priority::all();
                 $status = Status::all();
                 $companies = Companies::all();
-                $stations = Station::where("company_id",$userDetails[0]->company_id)->get();
+                $stations = Stations::where("company_id",$userDetails[0]->company_id)->get();
                 $roles = Role::all();
 
 
@@ -147,7 +148,7 @@ class ApiController extends Controller
     {
 
         try {
-            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority,
+            $sql="SELECT incidents_tracker.*,incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority,
        F.name as station_name
 
             FROM incidents_tracker
@@ -524,6 +525,8 @@ class ApiController extends Controller
         return $imageName;
     }
 
+
+
     public function changePassword(Request $request)
     {
 
@@ -726,6 +729,7 @@ class ApiController extends Controller
             $update = Incident::where('id',$request->id)->update(
                 [
                     'status_id'=>$status,
+                    'job_card'=>$this->processImage($request->job_card),
                     'closing_comments'=>$request->closing_comment,
                     'closed_datetime'=>NOW()
                 ]
