@@ -7,6 +7,7 @@ use App\Models\Companies;
 use App\Models\Impact;
 use App\Models\Incident;
 use App\Models\IncidentTracker;
+use App\Models\JobAssessment;
 use App\Models\MenuAccess;
 use App\Models\Priority;
 use App\Models\Role;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use function PHPUnit\Framework\isEmpty;
 
 class ApiController extends Controller
@@ -677,7 +679,24 @@ class ApiController extends Controller
 
     public function storeIncident(Request $request)
     {
-        //Insertion goes here
+        $rules = array(
+            "caller_id"=>"required",
+            "station_id"=>"required",
+            "impact_id"=>"required",
+            "priority_id"=>"required",
+            "subject"=>"required",
+            "description"=>"required",
+            "image"=>"required"
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+
+            $request["status"]="fail";
+            $request['message'] = "Make sure all mandatory fields are filled!";
+            return $request;
+        }
+
         try{
             $incident_ticket = "SL".$this->generateTxnID(10);
 
@@ -956,6 +975,20 @@ class ApiController extends Controller
      */
     public function closeIncident(Request $request)
     {
+        $rules = array(
+            "job_card"=>"required",
+            "closing_comments"=>"required",
+            "closing_comments"=>"required",
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+
+            $request["status"]="fail";
+            $request['message'] = "Make sure all mandatory fields are filled!";
+            return $request;
+        }
+
         try{
 
             $status=2;
@@ -997,6 +1030,20 @@ class ApiController extends Controller
      */
     public function assignIncident(Request $request)
     {
+        $rules = array(
+            "assigned_id"=>"required",
+            "user_id"=>"required"
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+
+            $request["status"]="fail";
+            $request['message'] = "Make sure all mandatory fields are filled!";
+            return $request;
+        }
+
+
         try{
 
             $status=6;
@@ -1038,9 +1085,23 @@ class ApiController extends Controller
      */
     public function requestIncidentPermit(Request $request)
     {
+        $rules = array(
+            "id"=>"required",
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+
+            $request["status"]="fail";
+            $request['message'] = "Incident ID required";
+            return $request;
+        }
         try{
 
             //TODO: Get job assessment form request during this process
+            DB::beginTransaction();
+
+
 
             $status=5;
             $update = Incident::where('id',$request->id)->update(
@@ -1050,13 +1111,20 @@ class ApiController extends Controller
                 ]
             );
 
+            $this->jobAssessementRequest($request);
+
+
             if($update==true)
             {
+
                 $response['status']="success";
                 $response['message']="Incident permission request sent!";
 
                 return $response;
             }else{
+
+                DB::rollBack();
+
                 $response['status']="failed";
                 $response['message']="Something went wrong!";
 
@@ -1065,6 +1133,8 @@ class ApiController extends Controller
 
         }catch (\Throwable $e)
         {
+            DB::rollBack();
+
             $response['status']="failed";
             $response['message']="An Error Occured!";
 
@@ -1079,6 +1149,17 @@ class ApiController extends Controller
      */
     public function approveIncident(Request $request)
     {
+        $rules = array(
+            "user_id"=>"required"
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+
+            $request["status"]="fail";
+            $request['message'] = "User ID required!";
+            return $request;
+        }
         try{
 
             $status=4;
@@ -1119,6 +1200,19 @@ class ApiController extends Controller
      */
     public function cancelIncident(Request $request)
     {
+        $rules = array(
+            "cancel_comment"=>"required",
+            "user_id"=>"required"
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+
+            $request["status"]="fail";
+            $request['message'] = "Make sure all mandatory fields are filled!";
+            return $request;
+        }
+
         try{
 
             $status=3;
@@ -1281,5 +1375,86 @@ class ApiController extends Controller
             return $response;
         }
 
+    }
+
+    public function jobAssessementRequest($request)
+    {
+        $rules = array(
+            "id"=>"required",
+            "job_desc"=>"required",
+            "spare_required"=>"required",
+            "comments"=>"required",
+            "work_force"=>"required",
+            "team_leader"=>"required",
+            "equipment_tools_list"=>"required",
+            "permit_cert"=>"required",
+            "job_no"=>"required",
+            "job_summary"=>"required",
+            "total_time_taken"=>"required",
+            "outstanding_work"=>"required",
+            "spare_parts_used"=>"required",
+            "extra_comments"=>"required",
+            "user_id"=>"required",
+            "incident_id"=>"required"
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            $request["status"]="fail";
+            $request['message'] = "All fields are required";
+            return $request;
+        }
+
+        try{
+            $helper = new helper();
+
+            $job_id = "JOB".$helper->generateTxnID(6);
+
+            $save = new JobAssessment();
+            $save->job_desc = $request->job_desc;
+            $save->spare_required = $request->spare_required;
+            $save->comments = $request->comments;
+            $save->work_force = $request->work_force;
+            $save->team_leader = $request->team_leader;
+            $save->equipment_tools_list = $request->equipment_tools_list;
+            $save->permit_cert = $request->permit_cert;
+            $save->job_no = $request->job_no;
+            $save->job_summary = $request->job_summary;
+            $save->total_time_taken = $request->total_time_taken;
+            $save->outstanding_work = $request->outstanding_work;
+            $save->spare_parts_used = $request->comments;
+            $save->extra_comments = $request->extra_comments;
+            $save->user_id = $request->user_id;
+            $save->incident_id = $request->incident_id;
+            $save->job_id = $job_id;
+            $save->save();
+
+            if($save==true)
+            {
+                DB::commit();
+
+                $response['message']="Job Assessment form submitted";
+                $response['status']="success";
+
+                return $response;
+            }else{
+
+                DB::rollBack();
+
+                $response['message']="Something went wrong!";
+                $response['status']="fail";
+
+                return $response;
+            }
+
+        }catch (\Throwable $e)
+        {
+            DB::rollBack();
+
+            $response['message']="An Error Occured";
+            $response['status']="fail";
+
+            return $response;
+        }
     }
 }

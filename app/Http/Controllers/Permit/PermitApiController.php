@@ -12,11 +12,9 @@ class PermitApiController extends Controller
     public function store(Request $request)
     {
         try{
-
-
             $helper = new helper();
 
-            $job_id = "JOB".$this->generateTxnID(6);
+            $job_id = "JOB".$helper->generateTxnID(6);
 
             $save = new JobAssessment();
             $save->job_desc = $request->job_desc;

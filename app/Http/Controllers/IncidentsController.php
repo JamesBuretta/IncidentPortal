@@ -598,6 +598,7 @@ class IncidentsController extends Controller
         $company_id =  Auth::user()->company_id;
         $role_id="4";
         $dealer="2";
+        $technician="1";
         $client="3";
 
         $technicians = User::where("company_id",$company_id)->where('role_id',$role_id)->get();
@@ -607,6 +608,7 @@ class IncidentsController extends Controller
         $status = Status::all();
         $callers = User::where("company_id",$company_id)
             ->where('role_id',$dealer)
+            ->orWhere('role_id',$technician)
             ->orWhere('role_id',$client)
             ->get();
 
@@ -634,7 +636,7 @@ class IncidentsController extends Controller
     }
 
 
-    public function reportfiltered(Request $r){
+    public function reportfiltered2(Request $r){
         $impacts = Impact::all();
         $priorities = Priority::all();
         $status = Status::all();
@@ -678,13 +680,14 @@ class IncidentsController extends Controller
         ));
     }
 
-    public function lusanSystemReports(Request $request)
+    public function reportfiltered(Request $request)
     {
         try{
             $company_id =  Auth::user()->company_id;
             $role_id="4";
             $dealer="2";
             $client="3";
+            $technician="3";
 
             $technicians = User::where("company_id",$company_id)->where('role_id',$role_id)->get();
 
@@ -694,6 +697,7 @@ class IncidentsController extends Controller
             $callers = User::where("company_id",$company_id)
                 ->where('role_id',$dealer)
                 ->orWhere('role_id',$client)
+                ->orWhere('role_id',$technician)
                 ->get();
 
             //Stations
@@ -758,7 +762,7 @@ class IncidentsController extends Controller
                 $created_datetime="it.created_datetime";
             }
             else{
-                $from = date(Helper::extract_datetime_portal('2020-01-01'));
+                $from = date(Helper::extract_datetime('2020-01-01'));
                 $to = NOW();
                 $datetime=array($from,$to);
                 $created_datetime="it.created_datetime";
