@@ -48,6 +48,10 @@ Route::group(['prefix' => 'v1'], function () {
     Route::post('request/incident/permission',[ApiController::class,'requestIncidentPermit']);
     Route::post('approve/incident',[ApiController::class,'approveIncident']);
     Route::post('cancel/incident',[ApiController::class,'cancelIncident']);
+
+    //Reports
+    Route::post('incident/reports',[ApiController::class,'reports']);
+
 });
 
 

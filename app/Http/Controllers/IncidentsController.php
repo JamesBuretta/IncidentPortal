@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\helper;
+use App\Models\Companies;
 use App\Models\Impact;
 use App\Models\Incident;
 use App\Models\IncidentTracker;
 use App\Models\JobAssessment;
 use App\Models\Priority;
+use App\Models\Stations;
 use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -111,19 +114,96 @@ class IncidentsController extends Controller
 
         $user = User::where("id",Auth::id())->get()[0];
 
-        $technicians = User::where("company_id",$user->company_id)->get();
+        $company_id =  Auth::user()->company_id;
+        $role_id="4";
 
-        $sql="SELECT incidents_tracker.id,incidents_tracker.incident_ticket,created_datetime,closed_datetime,cancelled_datetime,subject,description,image,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
-            FROM incidents_tracker
-                INNER JOIN users as A on incidents_tracker.caller_id=A.id
-                LEFT JOIN users as B on incidents_tracker.assigned_id=B.id
-                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
-                INNER JOIN status as D on incidents_tracker.status_id=D.id
-                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
-            ORDER BY incidents_tracker.created_datetime DESC
-            ";
+        $technicians = User::where("company_id",$company_id)->where('role_id',$role_id)->get();
 
-        $incidents = DB::select(DB::raw($sql));
+        //Administrator sees everything
+        if(Auth::user()->role_id=="1") {
+            $technicians = User::where('role_id',$role_id)->get();
+            $incidents = DB::table('incidents_tracker as it')->select(
+                'it.id',
+                'it.incident_ticket',
+                'it.created_datetime',
+                'it.subject',
+                'it.image',
+                'it.description',
+                'A.fullname as caller',
+                'B.fullname as assigned',
+                'C.name as impact',
+                'D.name as status',
+                'E.name as priority')
+                ->join('users as A', 'it.caller_id', '=', 'A.id')
+                ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+                ->join('impact as C', 'it.impact_id', '=', 'C.id')
+                ->join('status as D', 'it.status_id', '=', 'D.id')
+                ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+                ->orderBy('it.created_datetime', 'DESC')
+                ->get();
+        }
+        //Client and Dealer see only their company stations
+        else if(Auth::user()->role_id=="2" || Auth::user()->role_id=="3")
+        {
+            $stations = Stations::select('id')->where('company_id',$company_id)->get();
+
+            $array = array();
+            $value = 0;
+
+            foreach($stations as $station)
+            {
+
+                $array[$value]=$station->id;
+
+                $value++;
+            }
+
+
+            $incidents = DB::table('incidents_tracker as it')->select(
+                'it.id',
+                'it.incident_ticket',
+                'it.created_datetime',
+                'it.subject',
+                'it.image',
+                'it.description',
+                'A.fullname as caller',
+                'B.fullname as assigned',
+                'C.name as impact',
+                'D.name as status',
+                'E.name as priority')
+                ->join('users as A', 'it.caller_id', '=', 'A.id')
+                ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+                ->join('impact as C', 'it.impact_id', '=', 'C.id')
+                ->join('status as D', 'it.status_id', '=', 'D.id')
+                ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+                ->whereIn('it.station_id',$array)
+                ->orderBy('it.created_datetime', 'DESC')
+                ->get();
+        }
+        //Technician only sees incidents assigned to him/her
+        else if(Auth::user()->role_id=="4")
+        {
+            $incidents = DB::table('incidents_tracker as it')->select(
+                'it.id',
+                'it.incident_ticket',
+                'it.created_datetime',
+                'it.subject',
+                'it.image',
+                'it.description',
+                'A.fullname as caller',
+                'B.fullname as assigned',
+                'C.name as impact',
+                'D.name as status',
+                'E.name as priority')
+                ->join('users as A', 'it.caller_id', '=', 'A.id')
+                ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+                ->join('impact as C', 'it.impact_id', '=', 'C.id')
+                ->join('status as D', 'it.status_id', '=', 'D.id')
+                ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+                ->where('it.assigned_id',$user->id)
+                ->orderBy('it.created_datetime', 'DESC')
+                ->get();
+        }
 
         return view('incidents.create',compact('impacts','priorities','status','callers','incidents','technicians'));
     }
@@ -515,41 +595,52 @@ class IncidentsController extends Controller
     }
 
     public function report(){
+        $company_id =  Auth::user()->company_id;
+        $role_id="4";
+        $dealer="2";
+        $client="3";
+
+        $technicians = User::where("company_id",$company_id)->where('role_id',$role_id)->get();
+
         $impacts = Impact::all();
         $priorities = Priority::all();
         $status = Status::all();
-        $callers = User::all();
+        $callers = User::where("company_id",$company_id)
+            ->where('role_id',$dealer)
+            ->orWhere('role_id',$client)
+            ->get();
 
-        $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
-            FROM incidents_tracker
-                INNER JOIN users as A on incidents_tracker.caller_id=A.id
-                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
-                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
-                INNER JOIN status as D on incidents_tracker.status_id=D.id
-                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
-            ORDER BY incidents_tracker.created_datetime DESC
-            ";
+        $incidents = DB::table('incidents_tracker as it')->select(
+            'it.id',
+            'it.incident_ticket',
+            'it.created_datetime',
+            'it.subject',
+            'it.image',
+            'it.description',
+            'A.fullname as caller',
+            'B.fullname as assigned',
+            'C.name as impact',
+            'D.name as status',
+            'E.name as priority')
+            ->join('users as A', 'it.caller_id', '=', 'A.id')
+            ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+            ->join('impact as C', 'it.impact_id', '=', 'C.id')
+            ->join('status as D', 'it.status_id', '=', 'D.id')
+            ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+            ->orderBy('it.created_datetime', 'DESC')
+            ->get();
 
-//        $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
-//
-//            FROM incidents_tracker
-//                INNER JOIN users as A on incidents_tracker.caller_id=A.id
-//                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
-//                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
-//                INNER JOIN status as D on incidents_tracker.status_id=D.id
-//                INNER JOIN priorities as E on incidents_tracker.priority_id=D.id
-//            ORDER BY incidents_tracker.id DESC
-//            ";
-
-        $incidents = DB::select(DB::raw($sql));
-
-        return view('incidents.report',compact('impacts','priorities','status','callers','incidents'));
+        return view('incidents.report',compact('impacts','technicians','priorities','status','callers','incidents'));
     }
+
+
     public function reportfiltered(Request $r){
         $impacts = Impact::all();
         $priorities = Priority::all();
         $status = Status::all();
         $callers = User::all();
+        $callers = User::all();
+
 
         //date filtering
         if(isset($r->from_date)){
@@ -566,8 +657,6 @@ class IncidentsController extends Controller
         }else{
             $date_filter = "";
         }
-
-
 
 
         $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
@@ -587,6 +676,135 @@ class IncidentsController extends Controller
         'from_date',
         'to_date'
         ));
+    }
+
+    public function lusanSystemReports(Request $request)
+    {
+        try{
+            $company_id =  Auth::user()->company_id;
+            $role_id="4";
+            $dealer="2";
+            $client="3";
+
+            $technicians = User::where("company_id",$company_id)->where('role_id',$role_id)->get();
+
+            $impacts = Impact::all();
+            $priorities = Priority::all();
+            $status = Status::all();
+            $callers = User::where("company_id",$company_id)
+                ->where('role_id',$dealer)
+                ->orWhere('role_id',$client)
+                ->get();
+
+            //Stations
+            if(isset($request->station_id))
+            {
+                $station=array('it.station_id'=>$request->station_id);
+            }
+            else{
+                $station=array();
+            }
+
+            //Status
+            if(isset($request->status_id))
+            {
+                $status=array('it.status_id'=>$request->status_id);
+            }
+            else{
+                $status=array();
+            }
+
+            //Assigned
+            if(isset($request->assigned_id))
+            {
+                $assigned=array('it.assigned_id'=>$request->assigned_id);
+            }
+            else{
+                $assigned=array();
+            }
+
+            //Caller
+            if(isset($request->caller_id))
+            {
+                $caller=array('it.caller_id'=>$request->caller_id);
+            }
+            else{
+                $caller=array();
+            }
+
+            //Impact
+            if(isset($request->impact_id))
+            {
+                $impact=array('it.impact_id'=>$request->impact_id);
+            }
+            else{
+                $impact=array();
+            }
+
+            //Priority
+            if(isset($request->priority_id))
+            {
+                $priority=array('it.priority_id'=>$request->priority_id);
+            }
+            else{
+                $priority=array();
+            }
+
+
+            //From Date and To Date
+            if(isset($request->from_date) && isset($request->to_date))
+            {
+                $datetime=array(Helper::extract_datetime_portal($request->from_date),Helper::extract_datetime_portal($request->to_date));
+                $created_datetime="it.created_datetime";
+            }
+            else{
+                $from = date(Helper::extract_datetime_portal('2020-01-01'));
+                $to = NOW();
+                $datetime=array($from,$to);
+                $created_datetime="it.created_datetime";
+            }
+
+
+            $incidents = DB::table('incidents_tracker as it')->select(
+                'it.id',
+                'it.incident_ticket',
+                'it.created_datetime',
+                'it.subject',
+                'it.image',
+                'it.description',
+                'A.fullname as caller',
+                'B.fullname as assigned',
+                'C.name as impact',
+                'D.name as status',
+                'E.name as priority',
+                'F.name as station_name')
+                ->join('users as A', 'it.caller_id', '=', 'A.id')
+                ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+                ->join('impact as C', 'it.impact_id', '=', 'C.id')
+                ->join('status as D', 'it.status_id', '=', 'D.id')
+                ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+                ->leftJoin('stations as F', 'it.station_id', '=', 'F.id')
+                ->where($station)
+                ->where($status)
+                ->where($impact)
+                ->where($caller)
+                ->where($assigned)
+                ->whereBetween($created_datetime,$datetime)
+                ->get();
+
+            return view('incidents.report',compact('impacts','technicians','priorities','status','callers','incidents'));
+
+        }
+        catch (\Throwable $e)
+        {
+            $response = array(
+                "status"=>"fail",
+                "message"=>"Failed to pull report",
+                "error"=>$e->getMessage()
+            );
+
+            return $response;
+        }
     }
 
 

@@ -117,54 +117,201 @@ class ApiController extends Controller
     {
 
         try {
-            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority,
-       F.name as station_name
+            $incidents = DB::table('incidents_tracker as it')->select(
+                'it.id',
+                'it.incident_ticket',
+                'it.created_datetime',
+                'it.subject',
+                'it.image',
+                'it.description',
+                'A.fullname as caller',
+                'B.fullname as assigned',
+                'C.name as impact',
+                'D.name as status',
+                'E.name as priority',
+            'F.name as station_name')
+                ->join('users as A', 'it.caller_id', '=', 'A.id')
+                ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+                ->join('impact as C', 'it.impact_id', '=', 'C.id')
+                ->join('status as D', 'it.status_id', '=', 'D.id')
+                ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+                ->leftJoin('stations as F', 'it.station_id', '=', 'F.id')
+                ->orderBy('it.created_datetime', 'DESC')
+                ->get();
 
-            FROM incidents_tracker
+            $response =array(
+                "status"=>"success",
+                "message"=>"Incidents Retrieved Successfully",
+                "incidents"=>$incidents
+            );
 
-                INNER JOIN users as A on incidents_tracker.caller_id=A.id
-                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
-                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
-                INNER JOIN status as D on incidents_tracker.status_id=D.id
-                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
-                INNER JOIN stations as F on incidents_tracker.station_id=F.id
-            ORDER BY incidents_tracker.id DESC
-            ";
+            return $response;
 
-            $incidents = DB::select(DB::raw($sql));
-
-            return $incidents;
         }catch (\Exception $e)
         {
             $response['status']="fail";
-            $response['message']=$e->getMessage();
+            $response['message']="Oops something went wrong!";
 
             return $response;
         }
 
     }
 
+    public function reports(Request $request)
+    {
+        try{
+            //Stations
+            if(isset($request->station_id))
+            {
+                $station=array('it.station_id'=>$request->station_id);
+            }
+            else{
+                $station=array();
+            }
+
+            //Status
+            if(isset($request->status_id))
+            {
+                $status=array('it.status_id'=>$request->status_id);
+            }
+            else{
+                $status=array();
+            }
+
+            //Assigned
+            if(isset($request->assigned_id))
+            {
+                $assigned=array('it.assigned_id'=>$request->assigned_id);
+            }
+            else{
+                $assigned=array();
+            }
+
+            //Caller
+            if(isset($request->caller_id))
+            {
+                $caller=array('it.caller_id'=>$request->caller_id);
+            }
+            else{
+                $caller=array();
+            }
+
+            //Impact
+            if(isset($request->impact_id))
+            {
+                $impact=array('it.impact_id'=>$request->impact_id);
+            }
+            else{
+                $impact=array();
+            }
+
+            //Priority
+            if(isset($request->priority_id))
+            {
+                $priority=array('it.priority_id'=>$request->priority_id);
+            }
+            else{
+                $priority=array();
+            }
+
+
+            //From Date and To Date
+            if(isset($request->from_date) && isset($request->to_date))
+            {
+                $datetime=array(Helper::extract_datetime($request->from_date),Helper::extract_datetime($request->to_date));
+                $created_datetime="it.created_datetime";
+            }
+            else{
+                $from = date(Helper::extract_datetime('2020-01-01'));
+                $to = NOW();
+                $datetime=array($from,$to);
+                $created_datetime="it.created_datetime";
+            }
+
+
+            $incidents = DB::table('incidents_tracker as it')->select(
+                'it.id',
+                'it.incident_ticket',
+                'it.created_datetime',
+                'it.subject',
+                'it.image',
+                'it.description',
+                'A.fullname as caller',
+                'B.fullname as assigned',
+                'C.name as impact',
+                'D.name as status',
+                'E.name as priority',
+                'F.name as station_name')
+                ->join('users as A', 'it.caller_id', '=', 'A.id')
+                ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+                ->join('impact as C', 'it.impact_id', '=', 'C.id')
+                ->join('status as D', 'it.status_id', '=', 'D.id')
+                ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+                ->leftJoin('stations as F', 'it.station_id', '=', 'F.id')
+                ->where($station)
+                ->where($status)
+                ->where($impact)
+                ->where($caller)
+                ->where($assigned)
+                ->whereBetween($created_datetime,$datetime)
+                ->get();
+
+            $response = array(
+                "status"=>"success",
+                "message"=>"Report pulled successfully",
+                "incidents"=>$incidents
+            );
+
+            return $response;
+
+        }
+        catch (\Throwable $e)
+        {
+            $response = array(
+                "status"=>"fail",
+                "message"=>"Failed to pull report",
+                "error"=>$e->getMessage()
+            );
+
+            return $response;
+        }
+    }
+
+
     public function retrieveIncident(Request $request)
     {
 
         try {
-            $sql="SELECT incidents_tracker.*,incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority,
-       F.name as station_name
+            $incidents = DB::table('incidents_tracker as it')->select(
+                'it.id',
+                'it.incident_ticket',
+                'it.created_datetime',
+                'it.subject',
+                'it.image',
+                'it.description',
+                'A.fullname as caller',
+                'B.fullname as assigned',
+                'C.name as impact',
+                'D.name as status',
+                'E.name as priority',
+            'F.name as station_name')
+                ->join('users as A', 'it.caller_id', '=', 'A.id')
+                ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+                ->join('impact as C', 'it.impact_id', '=', 'C.id')
+                ->join('status as D', 'it.status_id', '=', 'D.id')
+                ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+                ->leftJoin('stations as F', 'it.station_id', '=', 'F.id')
+                ->where('it.id','=',$request->id)
+                ->orderBy('it.created_datetime', 'DESC')
+                ->get();
 
-            FROM incidents_tracker
+            $response = array(
+                "status"=>"success",
+                "message"=>"Incident Retrieved Successfully",
+                "incidents"=>$incidents
+            );
 
-                INNER JOIN users as A on incidents_tracker.caller_id=A.id
-                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
-                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
-                INNER JOIN status as D on incidents_tracker.status_id=D.id
-                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
-                INNER JOIN stations as F on incidents_tracker.station_id=F.id
-            WHERE incidents_tracker.id=".$request->id
-            ;
-
-            $incidents = DB::select(DB::raw($sql));
-
-            return $incidents;
+            return $response;
         }catch (\Exception $e)
         {
             $response['status']="fail";
@@ -186,14 +333,39 @@ class ApiController extends Controller
             $inprogres = Incident::where('status_id',"4")->where("assigned_id",$request->assigned_id)->count();
             $approved = Incident::where('status_id',"5")->where("assigned_id",$request->assigned_id)->count();
             $assigned = Incident::where('status_id',"6")->where("assigned_id",$request->assigned_id)->count();
+            $incidents = DB::table('incidents_tracker as it')->select(
+                'it.id',
+                'it.incident_ticket',
+                'it.created_datetime',
+                'it.subject',
+                'it.image',
+                'it.description',
+                'A.fullname as caller',
+                'B.fullname as assigned',
+                'C.name as impact',
+                'D.name as status',
+                'E.name as priority',
+                'F.name as station_name')
+                ->join('users as A', 'it.caller_id', '=', 'A.id')
+                ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+                ->join('impact as C', 'it.impact_id', '=', 'C.id')
+                ->join('status as D', 'it.status_id', '=', 'D.id')
+                ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+                ->leftJoin('stations as F', 'it.station_id', '=', 'F.id')
+                ->where('it.assigned_id','=',$request->assigned_id)
+                ->orderBy('it.created_datetime', 'DESC')
+                ->get();
 
             $data = array(
+                "status"=>"success",
+                "message"=>"Incidents retrieved successfully",
                 "open"=>$new,
                 "closed"=>$closed,
                 "cancelled"=>$cancelled,
                 "inprogress"=>$inprogres,
                 "approved"=>$approved,
-                "assiged"=>$assigned);
+                "assiged"=>$assigned,
+                "incidents"=>$incidents);
 
             return $data;
 
@@ -212,20 +384,58 @@ class ApiController extends Controller
 
         try {
 
-            $new = Incident::where('status_id',"1")->where("company_id",$request->company_id)->count();
-            $closed = Incident::where('status_id',"2")->where("company_id",$request->company_id)->count();
-            $cancelled = Incident::where('status_id',"3")->where("company_id",$request->company_id)->count();
-            $inprogres = Incident::where('status_id',"4")->where("company_id",$request->company_id)->count();
-            $approved = Incident::where('status_id',"5")->where("company_id",$request->company_id)->count();
-            $assigned = Incident::where('status_id',"6")->where("company_id",$request->company_id)->count();
+            $stations = Stations::select('id')->where('company_id',$request->company_id)->get();
+
+            $array = array();
+            $value = 0;
+
+            foreach($stations as $station)
+            {
+
+                $array[$value]=$station->id;
+
+                $value++;
+            }
+
+            $new = Incident::where('status_id',"1")->whereIn("station_id",$array)->count();
+            $closed = Incident::where('status_id',"2")->whereIn("station_id",$array)->count();
+            $cancelled = Incident::where('status_id',"3")->whereIn("station_id",$array)->count();
+            $inprogres = Incident::where('status_id',"4")->whereIn("station_id",$array)->count();
+            $approved = Incident::where('status_id',"5")->whereIn("station_id",$array)->count();
+            $assigned = Incident::where('status_id',"6")->whereIn("station_id",$array)->count();
+            $incidents = DB::table('incidents_tracker as it')->select(
+                'it.id',
+                'it.incident_ticket',
+                'it.created_datetime',
+                'it.subject',
+                'it.image',
+                'it.description',
+                'A.fullname as caller',
+                'B.fullname as assigned',
+                'C.name as impact',
+                'D.name as status',
+                'E.name as priority',
+                'F.name as station_name')
+                ->join('users as A', 'it.caller_id', '=', 'A.id')
+                ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+                ->join('impact as C', 'it.impact_id', '=', 'C.id')
+                ->join('status as D', 'it.status_id', '=', 'D.id')
+                ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+                ->leftJoin('stations as F', 'it.station_id', '=', 'F.id')
+                ->whereIn('it.station_id',$array)
+                ->orderBy('it.created_datetime', 'DESC')
+                ->get();
 
             $data = array(
+                "status"=>"success",
+                "message"=>"Incidents Retrieved Successfully",
                 "open"=>$new,
                 "closed"=>$closed,
                 "cancelled"=>$cancelled,
                 "inprogress"=>$inprogres,
                 "approved"=>$approved,
-                "assiged"=>$assigned);
+                "assiged"=>$assigned,
+                "incidents"=>$incidents);
 
             return $data;
 
@@ -242,22 +452,29 @@ class ApiController extends Controller
     public function incidentsByCreatedById(Request $request)
     {
         try {
-            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority,
-            F.name as station_name
+            $incidents = DB::table('incidents_tracker as it')->select(
+                'it.id',
+                'it.incident_ticket',
+                'it.created_datetime',
+                'it.subject',
+                'it.image',
+                'it.description',
+                'A.fullname as caller',
+                'B.fullname as assigned',
+                'C.name as impact',
+                'D.name as status',
+                'E.name as priority',
+                'F.name as station_name')
+                ->join('users as A', 'it.caller_id', '=', 'A.id')
+                ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+                ->join('impact as C', 'it.impact_id', '=', 'C.id')
+                ->join('status as D', 'it.status_id', '=', 'D.id')
+                ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+                ->leftJoin('stations as F', 'it.station_id', '=', 'F.id')
+                ->where('it.caller_id','=',$request->caller_id)
+                ->orderBy('it.created_datetime', 'DESC')
+                ->get();
 
-            FROM incidents_tracker
-
-                INNER JOIN users as A on incidents_tracker.caller_id=A.id
-                LEFT JOIN users as B on incidents_tracker.assigned_id=B.id
-                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
-                INNER JOIN status as D on incidents_tracker.status_id=D.id
-                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
-                LEFT JOIN stations as F on incidents_tracker.station_id=F.id
-            WHERE caller_id=".$request->caller_id."
-            ORDER BY incidents_tracker.id DESC
-            ";
-
-            $incidents = DB::select(DB::raw($sql));
             $ret = array();
             if(count($incidents) > 0){
                 $ret['status'] = "success";
@@ -280,27 +497,41 @@ class ApiController extends Controller
     public function incidentsByAssignedById(Request $request)
     {
         try {
-            $sql="SELECT incidents_tracker.id,created_datetime,subject,description,A.fullname as caller, B.fullname as assigned , C.name as impact, D.name as status, E.name as priority
-,F.name as station_name
-            FROM incidents_tracker
+            $incidents = DB::table('incidents_tracker as it')->select(
+                'it.id',
+                'it.incident_ticket',
+                'it.created_datetime',
+                'it.subject',
+                'it.image',
+                'it.description',
+                'A.fullname as caller',
+                'B.fullname as assigned',
+                'C.name as impact',
+                'D.name as status',
+                'E.name as priority',
+                'F.name as station_name')
+                ->join('users as A', 'it.caller_id', '=', 'A.id')
+                ->leftJoin('users as B', 'it.assigned_id', '=', 'B.id')
+                ->join('impact as C', 'it.impact_id', '=', 'C.id')
+                ->join('status as D', 'it.status_id', '=', 'D.id')
+                ->join('priorities as E', 'it.priority_id', '=', 'E.id')
+                ->leftJoin('stations as F', 'it.station_id', '=', 'F.id')
+                ->where('it.assigned_id','=',$request->assigned_id)
+                ->orderBy('it.created_datetime', 'DESC')
+                ->get();
 
-                INNER JOIN users as A on incidents_tracker.caller_id=A.id
-                INNER JOIN users as B on incidents_tracker.assigned_id=B.id
-                INNER JOIN impact as C on incidents_tracker.impact_id=C.id
-                INNER JOIN status as D on incidents_tracker.status_id=D.id
-                INNER JOIN priorities as E on incidents_tracker.priority_id=E.id
-         INNER JOIN stations as F on incidents_tracker.station_id=F.id
-            WHERE assigned_id=".$request->assigned_id."
-            ORDER BY incidents_tracker.id DESC
-            ";
+            $response=array(
+                "status"=>"success",
+                "message"=>"Incidents Retrieved Successfully",
+                "incidents"=>$incidents,
+            );
 
-            $incidents = DB::select(DB::raw($sql));
+            return $response;
 
-            return $incidents;
         }catch (\Exception $e)
         {
             $response['status']="fail";
-            $response['message']=$e->getMessage();
+            $response['message']="Oops looks like something went wrong!";
 
             return $response;
         }
@@ -525,8 +756,6 @@ class ApiController extends Controller
         return $imageName;
     }
 
-
-
     public function changePassword(Request $request)
     {
 
@@ -596,9 +825,13 @@ class ApiController extends Controller
         return $response;
     }
 
+    /*********************************************************
+     * Below functions deal with processing incidents        *
+     * From State of Open to State of Closed                 *
+     *********************************************************/
 
     /*
-     * Incident Process summary
+     * Incident Process summary ( NOT IN USE )
      */
     public function process(Request $request)
     {

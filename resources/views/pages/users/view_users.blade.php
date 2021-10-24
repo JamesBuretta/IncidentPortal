@@ -65,6 +65,7 @@
                                         <th>Email</th>
                                         <th>Phone Number</th>
                                         <th>Role</th>
+                                        <th>Company</th>
                                         <th>Status</th>
                                         <th width="15%">Action</th>
                                     </tr>
@@ -78,6 +79,7 @@
                                             <td>{{$user->email}}</td>
                                             <td>{{$user->phone_number}}</td>
                                             <td>{{ucfirst($user->role['role_name'])}}</td>
+                                            <td>{{ucfirst($user->companies->name)}}</td>
                                             <td>{!! ($user->status == 1) ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Disabled</span>'  !!}</td>
                                             <td>
                                                 @if($user->id != Auth::user()->id)

@@ -76,6 +76,64 @@
                         </div>
                     </div>
 
+                    {{--  Filter based on User and Status  --}}
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="inputCompanyName" class="form-label">Impact</label>
+                                <select name="impact_id" class="form-control form-select" aria-label="Default select example">
+                                    <option value="" selected>Select Impact</option>
+                                    @foreach($impacts as $impact)
+                                        <option value="{{$impact->id}}">{{$impact->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="inputCompanyName" class="form-label">Priority</label>
+                                <select name="priority_id" class="form-control form-select" aria-label="Default select example">
+                                    <option value="" selected>Select Priority</option>
+                                    @foreach($priorities as $priority)
+                                        <option value="{{$priority->id}}">{{$priority->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="inputCompanyName" class="form-label">Technician</label>
+                                <select name="assigned_id" class="form-control form-select" aria-label="Default select example">
+                                    <option value="" selected>Select Technician</option>
+                                    @foreach($technicians as $impact)
+                                        <option value="{{$impact->id}}">{{$impact->fullname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="inputCompanyName" class="form-label">Client/Dealer</label>
+                                <select name="caller_id" class="form-control form-select" aria-label="Default select example">
+                                    <option value="" selected>Select Client/Dealer</option>
+                                    @foreach($callers as $priority)
+                                        <option value="{{$priority->id}}">{{$priority->fullname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
 
                     <div>
                         <input class="btn btn-success form-control" type="submit" value="Get Report">
@@ -112,31 +170,10 @@
                                 <td>{{$details->priority }}</td>
                                 <td>{{$details->impact }}</td>
                                 <td>
-                                    @if($details->status === "Un-attended")
-                                        <span class="badge badge-primary text-white text-capitalize">
-                                    {{$details->status ?? '--'}}
-                                    </span>
-                                    @endif
-
-                                    @if($details->status === "Cancelled")
-                                        <span class="badge badge-danger text-white text-capitalize">
-                                    {{$details->status ?? '--'}}
-                                    </span>
-                                    @endif
-
-                                    @if($details->status === "Closed")
-                                        <span class="badge badge-danger text-capitalize">
-                                    {{$details->status ?? '--'}}
-                                    </span>
-                                    @endif
-                                    @if($details->status === "Approved")
-                                        <span class="badge badge-success text-white text-capitalize">
-                                        {{$details->status ?? '--'}}
-                                        </span>
-                                    @endif
+                                   {{ $details->status }}
                                 </td>
-                                <td>{{$details->subject ?? '--'}}</td>
-                                <td>{{$details->description ?? '--'}}</td>
+                                <td>{{urldecode($details->subject) ?? '--'}}</td>
+                                <td>{{urldecode($details->description) ?? '--'}}</td>
                                 <td>{{$details->created_datetime ?? '--'}}</td>
                                 <td>{{$details->cancelled_datetime ?? '--'}}</td>
                                 <td>{{$details->closed_datetime ?? '--'}}</td>

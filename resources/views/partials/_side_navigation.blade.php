@@ -229,12 +229,14 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
+                @if (\Illuminate\Support\Facades\Auth::user()->role_id == "2" || \Illuminate\Support\Facades\Auth::user()->role_id == "3")
                 <li class="nav-item">
                     <a href="{{route('create_incident')}}" class="nav-link @if(Route::is('create_incident')) active @endif">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Create Incident</p>
                     </a>
                 </li>
+                @endif
 
                 <li class="nav-item">
                     <a href="{{route('view_incidents')}}" class="nav-link @if(Route::is('view_incidents')) active @endif">
@@ -243,12 +245,12 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{route('job_assessments')}}" class="nav-link @if(Route::is('job_assessments')) active @endif">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>View Job Assessement</p>
-                    </a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{route('job_assessments')}}" class="nav-link @if(Route::is('job_assessments')) active @endif">--}}
+{{--                        <i class="far fa-circle nav-icon"></i>--}}
+{{--                        <p>View Job Assessement</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
                 <li class="nav-item">
                     <a href="{{route('reports')}}" class="nav-link @if(Route::is('reports')) active @endif">
@@ -262,33 +264,6 @@
         </li>
         @endcan
 
-{{--        <li class="nav-item has-treeview">--}}
-{{--            <a href="#" class="nav-link">--}}
-{{--                <i class="nav-icon far fa  fa-bookmark"></i>--}}
-{{--                <p>--}}
-{{--                    Reports--}}
-{{--                    <i class="fas fa-angle-left right"></i>--}}
-{{--                </p>--}}
-{{--            </a>--}}
-{{--            <ul class="nav nav-treeview">--}}
-
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{route('view_allocations')}}" class="nav-link @if(Route::is('view_allocations')) active @endif">--}}
-{{--                        <i class="nav-icon far fa fa-list-ul"></i>--}}
-{{--                        <p>Open incidents</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{route('view_allocations')}}" class="nav-link @if(Route::is('view_allocations')) active @endif">--}}
-{{--                        <i class="nav-icon far fa fa-list-ul"></i>--}}
-{{--                        <p>Closed incidents</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-
-
-{{--            </ul>--}}
-{{--        </li>--}}
 
 
     </ul>

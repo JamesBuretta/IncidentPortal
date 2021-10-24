@@ -33,78 +33,24 @@ class helper
         return $result;
     }
 
-//    public static function XMLStringToObject($xml_string)
-//    {
-//        return json_decode(json_encode((array)simplexml_load_string($xml_string)));
-//    }
-//
-//    public function validateNumber(Request $request)
-//    {
-//
-//        try{
-//
-//            $object = new PhoneNumber(PhoneNumber::make($request->phone_number, $request->country)->formatE164());
-//
-//            $geoCoder = \libphonenumber\geocoding\PhoneNumberOfflineGeocoder::getInstance();
-//            $country_name = \libphonenumber\PhoneNumberUtil::getInstance()->parse($request->phone_number, $request->country);
-//
-//            $carrierMapper = \libphonenumber\PhoneNumberToCarrierMapper::getInstance();
-//            $chNumber = \libphonenumber\PhoneNumberUtil::getInstance()->parse($request->phone_number, $request->country);
-//
-//            $timezoneMapper = \libphonenumber\PhoneNumberToTimeZonesMapper::getInstance();
-//            $usNumber = \libphonenumber\PhoneNumberUtil::getInstance()->parse($object->formatInternational(), $request->country);
-//
-//            if(count($timezoneMapper->getTimeZonesForNumber($usNumber))==1)
-//            {
-//                $time_zone = $timezoneMapper->getTimeZonesForNumber($usNumber)[0];
-//            }
-//            else{
-//                $time_zone = $timezoneMapper->getTimeZonesForNumber($usNumber);
-//            }
-//
-//
-//            $data['data'] = ['type'=> (string) $object->getType(),
-//                'country_code'=>(string) $object->getCountry(),
-//                'country_name'=>$geoCoder->getDescriptionForNumber($country_name,'en'),
-//                'network_operator'=> $carrierMapper->getNameForNumber($chNumber,'en'),
-//                'time_zone'=>$time_zone,
-//                'phone_number'=>PhoneNumber::make($request->phone_number, $request->country)->formatE164()];
-//            $data['message'] = 'Phone number is a valid phone number';
-//            $data['notification'] = 'success';
-//
-//
-//            return json_encode($data);
-//
-//        }catch (\Exception $e)
-//        {
-//            Log::channel('userMgt')->debug('VALIDATE NUMBER :-->'.$e->getLine().'----->'.$e->getTrace().'----->'.$e->getMessage());
-//            $data['message']=$e->getMessage();
-//            $data['notification']='failure';
-//
-//            return json_encode($data);
-//        }
-//
-//
-//    }
-//
-//    public function getPhoneNumber($request)
-//    {
-//
-//        try{
-//
-//            $phone_number = PhoneNumber::make($request->phone_number, "TZS")->formatE164();
-//
-//            return $phone_number;
-//
-//        }catch (\Exception $e)
-//        {
-//            $data['message']=$e->getMessage();
-//            $data['notification']='failure';
-//            Log::info('message',['PhoneNumber'=>$e->getMessage()]);
-//        }
-//
-//
-//    }
+
+    public static function extract_datetime($msg)
+    {
+        $someDate =$msg." 00:00:00";
+        $dateObj = \DateTime::createFromFormat('Y-m-d H:i:s', $someDate);
+        $datetime = $dateObj->format('Y-m-d H:i:s');
+
+        return $datetime;
+    }
+
+    public static function extract_datetime_portal($msg)
+    {
+        $someDate =$msg." 00:00:00";
+        $dateObj = \DateTime::createFromFormat('d/m/Y H:i:s', $someDate);
+        $datetime = $dateObj->format('Y-m-d H:i:s');
+
+        return $datetime;
+    }
 
     public function token()
     {
