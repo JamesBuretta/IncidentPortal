@@ -680,6 +680,11 @@ class IncidentsController extends Controller
         ));
     }
 
+    public function reportLink()
+    {
+        return redirect()->route('reports');
+    }
+
     public function reportfiltered(Request $request)
     {
         try{
@@ -693,7 +698,7 @@ class IncidentsController extends Controller
 
             $impacts = Impact::all();
             $priorities = Priority::all();
-            $status = Status::all();
+
             $callers = User::where("company_id",$company_id)
                 ->where('role_id',$dealer)
                 ->orWhere('role_id',$client)
@@ -795,6 +800,8 @@ class IncidentsController extends Controller
                 ->where($assigned)
                 ->whereBetween($created_datetime,$datetime)
                 ->get();
+
+            $status = Status::all();
 
             return view('incidents.report',compact('impacts','technicians','priorities','status','callers','incidents'));
 

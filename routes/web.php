@@ -58,8 +58,8 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 // Authenticated User Routes...['web', 'auth', 'user']
-Route::group(['middleware' => ['web']], function () {
-    /*
+Route::group(['middleware' => ['web','auth']], function () {
+  /*
   * manage dashboard
   */
     Route::get('/dashboard', [defaultController::class, 'dashboard'])->name('admin_dashboard');
@@ -171,11 +171,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('cancel', [IncidentsController::class, 'cancel'])->name('cancel');
     Route::get('reports', [IncidentsController::class, 'report'])->name('reports');
     Route::post('reports_filtered', [IncidentsController::class, 'reportfiltered'])->name('reports_filtered');
+    Route::get('reports_filtered', [IncidentsController::class, 'reportLink']);
     Route::post('assign/incident',[IncidentsController::class,'assignIncident'])->name('assign/incident');
 
-    /*
+    /************************
      * manage job assessment
-     */
+     ************************/
     Route::get('job_assessments',[PermitWebController::class,'index'])->name('job_assessments');
     Route::get('job_assessment/{id}',[PermitWebController::class,'view'])->name('job_assessement/{id}');
 });

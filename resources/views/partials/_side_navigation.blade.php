@@ -245,12 +245,12 @@
                     </a>
                 </li>
 
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{route('job_assessments')}}" class="nav-link @if(Route::is('job_assessments')) active @endif">--}}
-{{--                        <i class="far fa-circle nav-icon"></i>--}}
-{{--                        <p>View Job Assessement</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                <li class="nav-item">
+                    <a href="{{route('job_assessments')}}" class="nav-link @if(Route::is('job_assessments')) active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>View Job Assessement</p>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a href="{{route('reports')}}" class="nav-link @if(Route::is('reports')) active @endif">

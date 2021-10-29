@@ -206,7 +206,7 @@
                                         @endif
 
                                         @if($details->status == "Assigned")
-                                            <a href="#"   class="btn btn-primary approve-permit">Request Permit</a>
+                                            Awaiting Permit
                                         @endif
 
 
@@ -271,8 +271,7 @@
         });
         });
 
-        //Cancel-Incident Logic
-
+{{----}}
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {

@@ -124,8 +124,6 @@
             "buttons": ["print", "csv", "excel", "pdf"]
         }).buttons().container().appendTo('#myTable_wrapper .col-md-6:eq(0)');
 
-
-
     });
 
 

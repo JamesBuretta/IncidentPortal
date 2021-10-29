@@ -14,7 +14,7 @@ class PermitWebController extends Controller
     {
         $jobs = JobAssessment::all();
 
-        return view('job_assessment.job_assess',compact('jobs'));
+        return view('job_assessment.index',compact('jobs'));
 
     }
 

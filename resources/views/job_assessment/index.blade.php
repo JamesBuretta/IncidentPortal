@@ -75,13 +75,7 @@
                     <td>{{$job->comments ?? '-' }}</td>
                     <td>
                         <div class="form-horizontal">
-                            {{--                                        @if ($job->status === "Un-attended")--}}
-
-                            <a href="{{ url('job_assessment/'.$job->id) }}"   class="btn btn-primary">View</a>
-
-                            {{--                                        @endif--}}
-                            {{--                                    <a  href="#" onclick="handleClose('{{ url('close') }}','{{ $job->id }}')" class="btn btn-success" data-toggle="modal"   data-target="#close">Close</a>--}}
-                            {{--                                    <a  href="#" onclick="handleCancel('{{ url('cancel') }}','{{ $job->id }}')" class="btn btn-danger" data-toggle="modal"   data-target="#cancel">Cancel</a>--}}
+                            <button type="button" data-toggle="modal" data-target="#job-assessement-modal" class="btn btn-primary" id="previous">View</button>
                         </div>
                     </td>
                 </tr
@@ -95,6 +89,8 @@
 </div>
 </div>
 </section>
+
+    @include('job_assessment.preview')
 
 @endsection
 

@@ -80,7 +80,19 @@
 
                     <div class="row">
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="inputCompanyName" class="form-label">Status</label>
+                                <select name="status_id" class="form-control form-select" aria-label="Default select example">
+                                    <option value="" selected>Select Status</option>
+                                    @foreach($status as $impact)
+                                        <option value="{{$impact->id}}">{{$impact->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="inputCompanyName" class="form-label">Impact</label>
                                 <select name="impact_id" class="form-control form-select" aria-label="Default select example">
@@ -92,7 +104,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="inputCompanyName" class="form-label">Priority</label>
                                 <select name="priority_id" class="form-control form-select" aria-label="Default select example">
@@ -147,7 +159,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="example1" class="table table-striped table-valign-middle">
+                    <table id="reportTable" class="table table-striped table-valign-middle">
                         <thead>
                             <tr>
                                 <th>Assigned To</th>
@@ -203,6 +215,18 @@
 
 @section('page-script')
 <script>
+
+    {{-- Report Printing--}}
+    $(document).ready(function() {
+
+        $("#reportTable").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["print", "csv", "excel", "pdf"]
+        }).buttons().container().appendTo('#reportTable_wrapper .col-md-6:eq(0)');
+
+    });
 
     $('#example1').dataTable({
         order: [
